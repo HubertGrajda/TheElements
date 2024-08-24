@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2427409575876029079
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 664653898699756984, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 664653898699756984, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 664653898699756984, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.714
+      objectReference: {fileID: 0}
+    - target: {fileID: 664653898699756984, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.291
+      objectReference: {fileID: 0}
+    - target: {fileID: 664653898699756984, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 664653898699756984, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 664653898699756984, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 664653898699756984, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 664653898699756984, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 664653898699756984, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 664653898699756984, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3586321265486766467, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: d5eb98ae8f2d59446b5aa8b5273a150d, type: 2}
+    - target: {fileID: 3586321265486766467, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -4516849580160027438, guid: d5eb98ae8f2d59446b5aa8b5273a150d, type: 2}
+    - target: {fileID: 4476515706812422854, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb13ce8add27b544e8d3b82ae7538ee3, type: 2}
+    - target: {fileID: 4476515706812422856, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_Name
+      value: WaterEXP
+      objectReference: {fileID: 0}
+    - target: {fileID: 6961424053134030790, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_Name
+      value: WaterStone (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7879349732346094979, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7fc75fe0d36ac684d98e165f0226fa14, type: 2}
+    - target: {fileID: 8622688417427845496, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -4516849580160027438, guid: d5eb98ae8f2d59446b5aa8b5273a150d, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}

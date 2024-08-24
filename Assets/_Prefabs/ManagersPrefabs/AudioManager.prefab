@@ -1,0 +1,132 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4966812549970807840
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4966812549970807841}
+  - component: {fileID: 5124294455790809945}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4966812549970807841
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4966812549970807840}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5124294455790809945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4966812549970807840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c013c80a144a31c46a20b45093a11635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: MainMenuMusic1
+    clip: {fileID: 8300000, guid: 3fc0fc27ebf04834baa4edb20a405aef, type: 3}
+    group: {fileID: -4691161689728979479, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+    volume: 0.4
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: GameMusic1
+    clip: {fileID: 8300000, guid: fa12cfe749020c74aab8f5e147582c30, type: 3}
+    group: {fileID: -4691161689728979479, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+    volume: 0.3
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: ButtonHover
+    clip: {fileID: 8300000, guid: 73e1b42cc1a88d640bab0344c935ba08, type: 3}
+    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ButtonClick
+    clip: {fileID: 8300000, guid: 7f5b1f76d0c380549a767231ee0f7db6, type: 3}
+    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: FootstepWalk
+    clip: {fileID: 8300000, guid: 9ea11a2d13d536e4e8441a0f5895995c, type: 3}
+    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+    volume: 0.41
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: FootstepRun
+    clip: {fileID: 8300000, guid: 1f2844efbf7abf647ba3d75d510f823a, type: 3}
+    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+    volume: 0.41
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: FootstepLand
+    clip: {fileID: 8300000, guid: 942019cf9ecd5854ebeb343b12b7f779, type: 3}
+    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+    volume: 0.41
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Waterball
+    clip: {fileID: 8300000, guid: e6635f9609d0cd045aa33e0224d3d098, type: 3}
+    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+    volume: 0.41
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: RollingBoulder
+    clip: {fileID: 8300000, guid: c7865fd595be8a046a018f3e24771dd6, type: 3}
+    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+    volume: 0.41
+    pitch: 0.87
+    loop: 0
+    source: {fileID: 0}
+  - name: FlameThrower
+    clip: {fileID: 8300000, guid: c7865fd595be8a046a018f3e24771dd6, type: 3}
+    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+    volume: 0.41
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Tornado
+    clip: {fileID: 8300000, guid: 7299018103695904d948d5e92f108c15, type: 3}
+    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+    volume: 0.41
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: WaterTube
+    clip: {fileID: 8300000, guid: 251f4d0bc48513347aa7c937f5392a95, type: 3}
+    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+    volume: 0.41
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  master: {fileID: 24100000, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}

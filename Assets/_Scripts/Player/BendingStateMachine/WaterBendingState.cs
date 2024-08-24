@@ -1,0 +1,19 @@
+
+public class WaterBendingState : BendingState
+{
+    
+    public WaterBendingState(PlayerBendingStateMachine fsm) : base(fsm)
+    {
+        foreach (var spell in fsm.WaterSpells)
+        {
+            spells.Add(spell);
+        }
+    }
+
+    protected override bool TryGetStateToSwitch(out State stateToSwitch)
+    {
+        stateToSwitch = default;
+        
+        return false;
+    }
+}

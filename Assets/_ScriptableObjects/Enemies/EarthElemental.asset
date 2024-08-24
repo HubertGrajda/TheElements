@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5fc23ad0125ec499f3ffa987ce3b36, type: 3}
+  m_Name: EarthElemental
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  waterResistance: 0
+  fireResistance: 0
+  earthResistance: 0
+  airResistance: 0
+  defence: 0
+  unitName: Earth Golem
+  unitDescription: Throws the stones and punches if u come too close
+  unitType: 2
+  movementSpeed: 1.35
+  meleeAttackRange: 2
+  rangedAttackRange: 6
+  followingTargetRange: 10
+  shootingFrequency: 0.52
+  shootingForce: 6.17
+  shootingSeriesCount: 3
+  projectile: {fileID: 8728013711873449644, guid: 42d3e636402797a4a873b4f8b998f690, type: 3}
