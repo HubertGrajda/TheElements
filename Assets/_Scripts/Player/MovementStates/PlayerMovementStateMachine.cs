@@ -31,7 +31,7 @@ namespace Player
         public bool IsRunningInputActive { get; private set; }
         public bool IsJumpingInputActive { get; private set; }
 
-        private Transform _cam;
+        private Transform _cameraTransform;
         private CharacterController _characterController;
     
         public Vector3 PlayerVelocity => _playerVelocity;
@@ -39,52 +39,52 @@ namespace Player
         public float CurrentSpeed { get; private set; }
 
         public PlayerMovementStats_SO MovementStats => movementsStats;
-    
+        
         protected override void Awake()
         {
             base.Awake();
         
             _characterController = GetComponent<CharacterController>();
-            _cam = Camera.main.transform;
+            _cameraTransform = Camera.main.transform;
         
             AddListeners();
-            playerActions.Enable();
+            PlayerActions.Enable();
         }
 
         private void AddListeners()
         {
-            playerActions.Jump.started += OnJumpInput;
-            playerActions.Jump.canceled += OnJumpInput;
+            PlayerActions.Jump.started += OnJumpInput;
+            PlayerActions.Jump.canceled += OnJumpInput;
         
-            playerActions.Run.started += OnRunInput;
-            playerActions.Run.canceled += OnRunInput;
+            PlayerActions.Run.started += OnRunInput;
+            PlayerActions.Run.canceled += OnRunInput;
         
-            playerActions.Crouch.started += OnCrouchInput;
-            playerActions.Crouch.canceled += OnCrouchInput;
+            PlayerActions.Crouch.started += OnCrouchInput;
+            PlayerActions.Crouch.canceled += OnCrouchInput;
         
-            playerActions.Move.performed += OnMoveInput;
-            playerActions.Move.started += OnMoveInput;
-            playerActions.Move.canceled += OnMoveInput;
+            PlayerActions.Move.performed += OnMoveInput;
+            PlayerActions.Move.started += OnMoveInput;
+            PlayerActions.Move.canceled += OnMoveInput;
 
-            Managers.PlayerManager.death += OnDeath;
+            PlayerManager.death += OnDeath;
         }
 
         private void RemoveListeners()
         {
-            playerActions.Jump.started -= OnJumpInput;
-            playerActions.Jump.canceled -= OnJumpInput;
+            PlayerActions.Jump.started -= OnJumpInput;
+            PlayerActions.Jump.canceled -= OnJumpInput;
         
-            playerActions.Run.started -= OnRunInput;
-            playerActions.Run.canceled -= OnRunInput;
+            PlayerActions.Run.started -= OnRunInput;
+            PlayerActions.Run.canceled -= OnRunInput;
         
-            playerActions.Crouch.started -= OnCrouchInput;
-            playerActions.Crouch.canceled -= OnCrouchInput;
+            PlayerActions.Crouch.started -= OnCrouchInput;
+            PlayerActions.Crouch.canceled -= OnCrouchInput;
         
-            playerActions.Move.performed -= OnMoveInput;
-            playerActions.Move.started -= OnMoveInput;
-            playerActions.Move.canceled -= OnMoveInput;
+            PlayerActions.Move.performed -= OnMoveInput;
+            PlayerActions.Move.started -= OnMoveInput;
+            PlayerActions.Move.canceled -= OnMoveInput;
         
-            Managers.PlayerManager.death -= OnDeath;
+            PlayerManager.death -= OnDeath;
         }
         protected override void Start()
         {
@@ -115,7 +115,7 @@ namespace Player
             _characterController.Move(SetDirection() * (CurrentSpeed * Time.deltaTime));
             _characterController.Move(_playerVelocity * Time.deltaTime);
 
-            anim.SetBool(Constants.AnimationNames.GROUNDED, IsGrounded);
+            Anim.SetBool(Constants.AnimationNames.GROUNDED, IsGrounded);
         }
 
         public void SetCurrentSpeed(float speed)
@@ -135,9 +135,9 @@ namespace Player
 
         private Vector3 SetDirection()
         {
-            var dir = playerActions.Move.ReadValue<Vector2>();
+            var dir = PlayerActions.Move.ReadValue<Vector2>();
 
-            _targetAngle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg + _cam.eulerAngles.y;
+            _targetAngle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg + _cameraTransform.eulerAngles.y;
             _angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetAngle, ref _turnSmoothVelocity, movementsStats.turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, _angle, 0f);
             return Quaternion.Euler(0f, _targetAngle, 0f) * Vector3.forward;;
@@ -161,7 +161,7 @@ namespace Player
 
         private void PlayFootstepSound(string soundName) //function call in animation event
         {
-            Managers.AudioManager.PlaySound(soundName);
+            AudioManager.Instance.PlaySound(soundName);
         }
 
         private void OnDeath()

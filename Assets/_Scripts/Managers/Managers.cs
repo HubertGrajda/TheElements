@@ -4,15 +4,6 @@ namespace _Scripts.Managers
 {
     public class Managers : Singleton<Managers>
     {
-        public static GameManager GameManager => GameManager.Instance;
-        public static AudioManager AudioManager => AudioManager.Instance;
-        public static UIManager UIManager => UIManager.Instance;
-        public static ObjectPoolingManager ObjectPoolingManager => ObjectPoolingManager.Instance;
-        public static InputManager InputManager => InputManager.Instance;
-        public static CamerasManager CamerasManager => CamerasManager.Instance;
-        public static ScenesManager ScenesManager => ScenesManager.Instance;
-        public static PlayerManager PlayerManager => PlayerManager.Instance;
-
         [SerializeField] private ObjectsToLoadSO objectsToLoad;
 
         public bool ManagersInitialized { get; private set; }

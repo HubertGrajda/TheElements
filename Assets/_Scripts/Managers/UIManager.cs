@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,12 +14,12 @@ namespace _Scripts.Managers
         public Menu CurrentMenu { get; private set; }
         public View CurrentView { get; set; }
 
-        public UnityAction<View> onViewOpened;
-        public UnityAction<View> onViewClosed;
+        public UnityAction<View> OnViewOpened;
+        public UnityAction<View> OnViewClosed;
 
         private void Start()
         {
-            Managers.InputManager.Inputs.UIActions.Enable();
+            InputManager.Instance.Inputs.UIActions.Enable();
         }
 
         public void SetCurrentMenu(Menu newCurrentMenu)
@@ -42,9 +43,7 @@ namespace _Scripts.Managers
 
         public void OpenPreviousMenu()
         {
-            var previousMenu = _previousMenus.Peek();
-        
-            if(previousMenu == null) return;
+            if (!_previousMenus.TryPeek(out var previousMenu)) return;
         
             if (CurrentMenu != null)
             {

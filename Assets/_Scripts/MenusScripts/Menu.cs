@@ -1,32 +1,46 @@
 using _Scripts.Managers;
 using UnityEngine;
 
-public abstract class Menu : MonoBehaviour
+namespace UI
 {
-    protected virtual void Start()
+    public abstract class Menu : MonoBehaviour
     {
-        InitUIElements();
-    }
-
-    public virtual void Open()
-    {
-        if (Managers.UIManager.CurrentMenu != null)
+        private bool _initialized;
+        protected UIManager UIManager { get; private set; }
+    
+        protected virtual void Start()
         {
-            Managers.UIManager.CurrentMenu.Close();
-        }
+            UIManager = UIManager.Instance;
         
-        gameObject.SetActive(true);
-        Managers.UIManager.SetCurrentMenu(this);
-    }
+            InitUIElements();
+            _initialized = true;
+        }
 
-    public virtual void Close()
-    {
-        gameObject.SetActive(false);
-    }
-    protected abstract void InitUIElements();
+        public virtual void Open()
+        {
+            if (!_initialized)
+            {
+                Start();
+            }
 
-    protected void OnBackButtonClicked()
-    {
-        Managers.UIManager.OpenPreviousMenu();
+            if (UIManager.CurrentMenu != null)
+            {
+                UIManager.CurrentMenu.Close();
+            }
+        
+            gameObject.SetActive(true);
+            UIManager.SetCurrentMenu(this);
+        }
+
+        public virtual void Close()
+        {
+            gameObject.SetActive(false);
+        }
+        protected abstract void InitUIElements();
+
+        protected void OnBackButtonClicked()
+        {
+            UIManager.OpenPreviousMenu();
+        }
     }
 }

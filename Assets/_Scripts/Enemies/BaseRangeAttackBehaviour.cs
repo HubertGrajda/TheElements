@@ -11,7 +11,7 @@ public abstract class BaseRangeAttackBehaviour : MonoBehaviour
     
     protected void Start()
     {
-        target = Managers.PlayerManager.PlayerRef.transform;
+        target = PlayerManager.Instance.PlayerRef.transform;
         stats = GetComponent<AIStateMachine>().stats;
     }
 

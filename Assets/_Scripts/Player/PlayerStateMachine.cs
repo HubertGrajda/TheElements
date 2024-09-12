@@ -5,18 +5,20 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerEvents))]
 public abstract class PlayerStateMachine : StateMachine
 {
-    protected PlayerInputs.PlayerActionsActions playerActions;
+    protected PlayerInputs.PlayerActionsActions PlayerActions { get; private set; }
     
-    protected Animator anim;
-    public Animator Anim => anim;
+    public Animator Anim { get; private set; }
 
     public PlayerEvents PlayerEvents { get; private set; }
 
+    protected PlayerManager PlayerManager { get; private set; }
+
     protected virtual void Awake()
     {
-        anim = GetComponent<Animator>();
+        Anim = GetComponent<Animator>();
         PlayerEvents = GetComponent<PlayerEvents>();
-        playerActions = Managers.InputManager.Inputs.PlayerActions;
+        PlayerActions = InputManager.Instance.PlayerActions;
+        PlayerManager = PlayerManager.Instance;
     }
     
 }

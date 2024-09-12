@@ -74,7 +74,7 @@ namespace _Scripts.Managers
             yield return new WaitUntil(() => levelLoader.GetCurrentAnimatorStateInfo(0).IsName(FADE_IN));
             yield return new WaitWhile(() => levelLoader.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1);
         
-            Managers.UIManager.HideCurrentView();
+            UIManager.Instance.HideCurrentView();
         }
 
         private void AfterLoad(Scene scene, LoadSceneMode mode)

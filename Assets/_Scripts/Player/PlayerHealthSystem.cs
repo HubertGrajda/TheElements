@@ -1,5 +1,4 @@
 using _Scripts.Managers;
-using UnityEngine;
 
 public class PlayerHealthSystem : BaseHealthSystem
 {
@@ -7,7 +6,7 @@ public class PlayerHealthSystem : BaseHealthSystem
     {
         if(isDead) return;
         
-        Managers.PlayerManager.death.Invoke();
+        PlayerManager.Instance.death.Invoke();
 
         base.Death();
     }

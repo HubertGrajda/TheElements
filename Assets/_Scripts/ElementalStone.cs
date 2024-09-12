@@ -1,4 +1,3 @@
-using _Scripts.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,14 +9,20 @@ public class ElementalStone : MonoBehaviour, IInteractable
 
     private bool _alreadyUsed;
     private GameObject _player;
+    private InputAction _inputAction;
     
     private static readonly int InRangeAnimParam = Animator.StringToHash("IsActive");
+
+    private void Start()
+    {
+        _inputAction = InputManager.Instance.PlayerActions.Interact;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (_alreadyUsed || !other.CompareTag(Constants.Tags.PLAYER_TAG)) return;
         
-        Managers.InputManager.PlayerActions.Interact.started += InteractionBehaviour;
+        _inputAction.started += InteractionBehaviour;
         _player = other.gameObject;
         anim.SetBool(InRangeAnimParam, true);
     }
@@ -31,7 +36,7 @@ public class ElementalStone : MonoBehaviour, IInteractable
 
     public void InteractionBehaviour(InputAction.CallbackContext context)
     {
-        Managers.InputManager.PlayerActions.Interact.started -= InteractionBehaviour;
+        _inputAction.started -= InteractionBehaviour;
         _alreadyUsed = true;
         expBall.CollectPowerUp(_player);
         anim.SetBool(InRangeAnimParam, false);

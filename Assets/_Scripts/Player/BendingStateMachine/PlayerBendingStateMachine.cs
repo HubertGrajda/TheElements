@@ -25,8 +25,9 @@ public class PlayerBendingStateMachine : PlayerStateMachine
     private AirBendingState _airBendingState;
     private EarthBendingState _earthBendingState;
 
-    private ObjectPoolingManager _objectPoolingManager;
     private BendingState CurrentBendingState => CurrentState as BendingState;
+    
+    private ObjectPoolingManager _objectPoolingManager;
     
     private bool _onCooldown;
     
@@ -44,31 +45,31 @@ public class PlayerBendingStateMachine : PlayerStateMachine
     {
         base.Start();
         
-        _objectPoolingManager = Managers.ObjectPoolingManager;
+        _objectPoolingManager = ObjectPoolingManager.Instance;
         
         AddListeners();
     }
 
     private void AddListeners()
     {
-        playerActions.WaterBending.started += OnWaterBendingStarted;
-        playerActions.EarthBending.started += OnEarthBendingStarted;
-        playerActions.AirBending.started += OnAirBendingStarted;
-        playerActions.FireBending.started += OnFireBendingStarted;
+        PlayerActions.WaterBending.started += OnWaterBendingStarted;
+        PlayerActions.EarthBending.started += OnEarthBendingStarted;
+        PlayerActions.AirBending.started += OnAirBendingStarted;
+        PlayerActions.FireBending.started += OnFireBendingStarted;
         
-        playerActions.CastSpell.started += CastSpell;
-        playerActions.CastSpell.canceled += CancelSpellCasting;
+        PlayerActions.CastSpell.started += CastSpell;
+        PlayerActions.CastSpell.canceled += CancelSpellCasting;
     }
 
     private void RemoveListeners()
     {
-        playerActions.WaterBending.started -= OnWaterBendingStarted;
-        playerActions.EarthBending.started -= OnEarthBendingStarted;
-        playerActions.AirBending.started -= OnAirBendingStarted;
-        playerActions.FireBending.started -= OnFireBendingStarted;
+        PlayerActions.WaterBending.started -= OnWaterBendingStarted;
+        PlayerActions.EarthBending.started -= OnEarthBendingStarted;
+        PlayerActions.AirBending.started -= OnAirBendingStarted;
+        PlayerActions.FireBending.started -= OnFireBendingStarted;
         
-        playerActions.CastSpell.started -= CastSpell; 
-        playerActions.CastSpell.canceled -= CancelSpellCasting;
+        PlayerActions.CastSpell.started -= CastSpell; 
+        PlayerActions.CastSpell.canceled -= CancelSpellCasting;
     }
 
     
@@ -105,12 +106,12 @@ public class PlayerBendingStateMachine : PlayerStateMachine
         _spellToCast = _objectPoolingManager.GetFromPool(CurrentBendingState.SelectedSpell);
         StartCoroutine(Cooldown(_spellToCast.SpellData.Cooldown));
         
-        Managers.PlayerManager.spellCastingStarted.Invoke(_spellToCast);
+        PlayerManager.spellCastingStarted.Invoke(_spellToCast);
     }
 
     private void CancelSpellCasting(InputAction.CallbackContext _)
     {
-        Managers.PlayerManager.spellCastingCanceled.Invoke(_spellToCast);
+        PlayerManager.spellCastingCanceled.Invoke(_spellToCast);
     }
 
     private void OnWaterBendingStarted(InputAction.CallbackContext _) => ChangeState(_waterBendingState);

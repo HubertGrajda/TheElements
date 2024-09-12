@@ -1,25 +1,29 @@
 using _Scripts.Managers;
 using UnityEngine;
 
-public class PauseView : View
+namespace UI
 {
-    [SerializeField] private Menu defaultMenu;
-
-    private void Start()
+    public class PauseView : InputView
     {
-        Managers.GameManager.ChangeState(GameManager.GameState.DuringGameplay); // TODO
-        Managers.InputManager.Inputs.UIActions.PauseView.started += ToggleByInput;
-    }
+        [SerializeField] private Menu defaultMenu;
 
-    protected override void Show()
-    {
-        defaultMenu.Open();
+        protected override void Start()
+        {
+            base.Start();
         
-        base.Show();
-    }
+            GameManager.ChangeState(GameManager.GameState.DuringGameplay); // TODO
+        }
 
-    private void OnDestroy()
-    {
-        Managers.InputManager.Inputs.UIActions.PauseView.started -= ToggleByInput;
+        protected override void AssignInputAction()
+        {
+            inputAction = InputManager.Instance.UIActions.PauseView;
+        }
+
+        protected override void Show()
+        {
+            defaultMenu.Open();
+        
+            base.Show();
+        }
     }
 }

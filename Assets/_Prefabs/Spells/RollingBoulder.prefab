@@ -211,12 +211,14 @@ MonoBehaviour:
   dealDamageInTime: 0
   damagingFrequency: 0
   damage: 1
-  speed: 5
+  speed: 7
   disableDelay: 3
   detectingDistance: 3
-  distanceBetweenGround: 0.3
+  distanceBetweenGround: 0.1
   heightAdjustmentSpeed: 0.5
-  fallingSpeed: 0.05
+  fallingSpeed: 4
+  slowingDownTime: 1
+  delayToSlowDown: 0.5
 --- !u!82 &-52093542002808752
 AudioSource:
   m_ObjectHideFlags: 0

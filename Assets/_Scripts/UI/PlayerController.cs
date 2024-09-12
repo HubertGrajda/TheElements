@@ -5,6 +5,6 @@ public class PlayerController : MonoBehaviour
 {
     private void Start()
     {
-        Managers.PlayerManager.SetUpPlayerRef(gameObject);
+        PlayerManager.Instance.SetUpPlayerRef(gameObject);
     }
 }

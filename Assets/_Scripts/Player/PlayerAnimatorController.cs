@@ -6,9 +6,13 @@ using UnityEngine;
 public class PlayerAnimatorController : MonoBehaviour
 {
     private Animator _anim;
+    private PlayerManager _playerManager;
+    
+    
     private void Awake()
     {
         _anim = GetComponent<Animator>();
+        _playerManager = PlayerManager.Instance;
     }
 
     private void Start()
@@ -18,16 +22,16 @@ public class PlayerAnimatorController : MonoBehaviour
 
     private void AddListeners()
     {
-        Managers.PlayerManager.death += OnDeath;
-        Managers.PlayerManager.spellCastingStarted += OnSpellCastingStarted;
-        Managers.PlayerManager.spellCastingCanceled += OnSpellCastingCanceled;
+        _playerManager.death += OnDeath;
+        _playerManager.spellCastingStarted += OnSpellCastingStarted;
+        _playerManager.spellCastingCanceled += OnSpellCastingCanceled;
     }
 
     private void RemoveListeners()
     {
-        Managers.PlayerManager.death -= OnDeath;
-        Managers.PlayerManager.spellCastingStarted -= OnSpellCastingStarted;
-        Managers.PlayerManager.spellCastingCanceled -= OnSpellCastingCanceled;
+        _playerManager.death -= OnDeath;
+        _playerManager.spellCastingStarted -= OnSpellCastingStarted;
+        _playerManager.spellCastingCanceled -= OnSpellCastingCanceled;
     }
 
     private void OnDeath()

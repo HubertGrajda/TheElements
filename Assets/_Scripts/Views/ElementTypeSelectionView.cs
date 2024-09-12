@@ -1,45 +1,56 @@
 using _Scripts.Managers;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ElementTypeSelectionView : View
+namespace UI
 {
-    private void Start()
+    public class ElementTypeSelectionView : InputView
     {
-        Managers.InputManager.Inputs.UIActions.ElementTypeSelectionView.started += ToggleByInput;
-        Managers.InputManager.Inputs.UIActions.ElementTypeSelectionView.canceled += ToggleByInput;
-    }
+        [SerializeField] private float transitionTime = 0.5f;
+        [SerializeField] private float slowedTimeScale = 0.1f;
+    
+        private CameraManager _cameraManager;
 
-    private void OnDisable()
-    {
-        Managers.InputManager.Inputs.UIActions.ElementTypeSelectionView.started -= ToggleByInput;
-        Managers.InputManager.Inputs.UIActions.ElementTypeSelectionView.canceled -= ToggleByInput;
-    }
-
-    protected override void ToggleByInput(InputAction.CallbackContext context)
-    {
-        if (context.started)
+        private const float DEFAULT_TIMESCALE = 1f;
+    
+        protected override void Start()
         {
-            Show();
+            base.Start();
+        
+            _cameraManager = CameraManager.Instance;
         }
 
-        if (context.canceled)
+        protected override void AssignInputAction()
         {
-            StartCoroutine(Managers.GameManager.ChangeTimeScale(1f, 0.5f));
-            Hide();
+            inputAction = InputManager.Instance.Inputs.UIActions.ElementTypeSelectionView;
         }
-    }
+    
+        protected override void ToggleByInput(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                Show();
+            }
 
-    protected override void Show()
-    {
-        base.Show();
-        Managers.CamerasManager.ToggleMainCameraMovement(false);
-        StartCoroutine(Managers.GameManager.ChangeTimeScale(0.1f, 0.5f));
-    }
+            if (context.canceled)
+            {
+                StartCoroutine(GameManager.ChangeTimeScale(DEFAULT_TIMESCALE, transitionTime));
+                Hide();
+            }
+        }
 
-    public override void Hide()
-    {
-        base.Hide();
-        Managers.CamerasManager.ToggleMainCameraMovement(true);
-        StartCoroutine(Managers.GameManager.ChangeTimeScale(1f, 0.5f));
+        protected override void Show()
+        {
+            base.Show();
+            _cameraManager.ToggleMainCameraMovement(false);
+            StartCoroutine(GameManager.ChangeTimeScale(slowedTimeScale, transitionTime));
+        }
+
+        public override void Hide()
+        {
+            base.Hide();
+            _cameraManager.ToggleMainCameraMovement(true);
+            StartCoroutine(GameManager.ChangeTimeScale(DEFAULT_TIMESCALE, transitionTime));
+        }
     }
 }

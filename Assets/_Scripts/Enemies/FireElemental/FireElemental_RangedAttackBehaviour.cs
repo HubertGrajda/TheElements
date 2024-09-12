@@ -19,7 +19,7 @@ public class FireElemental_RangedAttackBehaviour : BaseRangeAttackBehaviour
 
     private void CreateProjectile()
     {
-        _projectile = Managers.ObjectPoolingManager.SpawnFromPool(stats.projectile, projectileSpawnPoint.position, transform.rotation);
+        _projectile = ObjectPoolingManager.Instance.SpawnFromPool(stats.projectile, projectileSpawnPoint.position, transform.rotation);
         _projectile.transform.SetParent(projectileSpawnPoint);
         _rb = _projectile.Rigidbody;
         _rb.useGravity = false;

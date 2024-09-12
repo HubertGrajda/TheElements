@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using _Scripts.Managers;
 using UnityEngine;
@@ -14,14 +13,17 @@ public class Instruction3D : MonoBehaviour
     [SerializeField] private GameObject textContainer;
     [SerializeField] private TMP_Text instruction;
 
-    private int _currInstructionIndex;
     private Transform _playerTransform;
+    private InputAction _inputAction;
+    
+    private int _currInstructionIndex;
     private bool _isShown;
     
     private void Start()
     {
         instruction.text = listOfInstructions[0];
-        _playerTransform = Managers.PlayerManager.PlayerRef.transform; 
+        _playerTransform = PlayerManager.Instance.PlayerRef.transform;
+        _inputAction = InputManager.Instance.PlayerActions.Accept;
     }
     
     private void Update()
@@ -47,13 +49,13 @@ public class Instruction3D : MonoBehaviour
                 _isShown = true;
             }
 
-            Managers.InputManager.PlayerActions.Accept.started += NextInstruction;
+            _inputAction.started += NextInstruction;
         }
         else
         {
             if(!_isShown) return;
 
-            Managers.InputManager.PlayerActions.Accept.started -= NextInstruction; 
+            _inputAction.started -= NextInstruction; 
             textContainer.transform.DOScale(new Vector3(0, 0, 0), 2f);
             _isShown = false;
         }
@@ -77,6 +79,6 @@ public class Instruction3D : MonoBehaviour
 
     private void OnDestroy()
     {
-        Managers.InputManager.PlayerActions.Accept.started -= NextInstruction; 
+        _inputAction.started -= NextInstruction; 
     }
 }

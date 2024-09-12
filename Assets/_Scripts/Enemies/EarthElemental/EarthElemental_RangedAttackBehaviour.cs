@@ -14,7 +14,7 @@ public class EarthElemental_RangedAttackState : BaseRangeAttackBehaviour
 
     private void AddForceToProjectiles()
     {
-        var projectile = Managers.ObjectPoolingManager.SpawnFromPool(stats.projectile, projectileSpawnPoint.position, transform.localRotation);
+        var projectile = ObjectPoolingManager.Instance.SpawnFromPool(stats.projectile, projectileSpawnPoint.position, transform.localRotation);
         var direction = (target.position - transform.position).normalized;
 
         projectile.Rigidbody.AddForce(direction * stats.shootingForce, ForceMode.Impulse);

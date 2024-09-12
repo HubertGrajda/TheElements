@@ -13,6 +13,8 @@ public class MainCameraBehaviour : MonoBehaviour //TODO: Temp solution
 
     private void Start()
     {
-        Managers.CamerasManager.SetMainBehaviour(_virtualCamera);
+        CameraManager.Instance.SetMainBehaviour(_virtualCamera);
     }
+    
+    
 }

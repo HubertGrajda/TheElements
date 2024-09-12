@@ -13,6 +13,6 @@ public class CameraAimBehaviourController : MonoBehaviour
 
     private void Start()
     {
-        Managers.CamerasManager.SetAimBehaviour(_virtualCamera);
+        CameraManager.Instance.SetAimBehaviour(_virtualCamera);
     }
 }

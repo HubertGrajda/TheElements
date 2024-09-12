@@ -1,3 +1,4 @@
+using _Scripts.Managers;
 using UnityEngine;
 
 namespace _Scripts.Spells
@@ -23,7 +24,7 @@ namespace _Scripts.Spells
     
         private void OnEnable()
         {
-            if (!Managers.Managers.PlayerManager.PlayerRef.TryGetComponent(out PlayerExperienceSystem experienceSystem)) return;
+            if (!PlayerManager.Instance.PlayerRef.TryGetComponent(out PlayerExperienceSystem experienceSystem)) return;
             if (!experienceSystem.TryGetExperienceValue(SpellData.ElementType, out var experience)) return;
             _currSize = size + experience/ 200f;
         }
@@ -32,23 +33,23 @@ namespace _Scripts.Spells
         {
             if (!_vfxIsPlaying) return;
             
-            if (Physics.Raycast(vfx.transform.position, vfx.transform.forward, out var hit))
+            if (Physics.Raycast(Vfx.transform.position, Vfx.transform.forward, out var hit))
             {
-                vfx.SetVector3("SphereColliderPosition", hit.point);
+                Vfx.SetVector3("SphereColliderPosition", hit.point);
             }
         }
     
         private void FlameThrowerStart()
         {
             _vfxIsPlaying = true;
-            vfx.SetFloat("Size", _currSize);
-            vfx.Play();
+            Vfx.SetFloat("Size", _currSize);
+            Vfx.Play();
         }
     
         private void FlameThrowerStop()
         {
             _vfxIsPlaying = false;
-            vfx.Stop();
+            Vfx.Stop();
             StartCoroutine(DisableSpellAfterDelay());
         }
     
@@ -60,7 +61,7 @@ namespace _Scripts.Spells
     
         private void OnDrawGizmos()
         {
-            Gizmos.DrawSphere(vfx.GetVector3("SphereColliderPosition"), 0.4f);
+            Gizmos.DrawSphere(Vfx.GetVector3("SphereColliderPosition"), 0.4f);
         }
     }
 }

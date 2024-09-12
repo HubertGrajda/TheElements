@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using _Scripts.Managers;
 using _Scripts.Spells;
 using UnityEngine.InputSystem;
 
@@ -10,14 +9,17 @@ public abstract class BendingState : State
 
     public Spell SelectedSpell => spells[_currSpellIndex];
 
+    private PlayerInputs.PlayerActionsActions _playerActions;
+    
     protected BendingState(PlayerBendingStateMachine fsm) : base(fsm)
     {
+        _playerActions = InputManager.Instance.PlayerActions;
     }
 
     public override void EnterState()
     {
-        Managers.InputManager.PlayerActions.NextSpell.started += NextSpell;
-        Managers.InputManager.PlayerActions.PreviousSpell.started += PreviousSpell;
+        _playerActions.NextSpell.started += NextSpell;
+        _playerActions.PreviousSpell.started += PreviousSpell;
     }
 
     private void NextSpell(InputAction.CallbackContext context)
@@ -36,7 +38,7 @@ public abstract class BendingState : State
 
     public override void EndState()
     {
-        Managers.InputManager.PlayerActions.NextSpell.started -= NextSpell;
-        Managers.InputManager.PlayerActions.PreviousSpell.started -= PreviousSpell;
+        _playerActions.NextSpell.started -= NextSpell;
+        _playerActions.PreviousSpell.started -= PreviousSpell;
     }
 }

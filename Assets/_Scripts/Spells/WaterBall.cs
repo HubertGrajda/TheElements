@@ -14,7 +14,7 @@ namespace _Scripts.Spells
         private void SetMaterial()
         {
             var color = Detection.NearestWater(transform.position).GetComponent<MeshRenderer>().material.GetColor(WaterColor);  
-            vfx.SetVector4("waterColor", color);
+            Vfx.SetVector4("waterColor", color);
         }
     
         private IEnumerator MoveToTarget(Vector3 target)
@@ -36,7 +36,7 @@ namespace _Scripts.Spells
                 time += Time.deltaTime * speed;
                 yield return null;
             }
-            vfx.SendEvent("OnHit");
+            Vfx.SendEvent("OnHit");
             StartCoroutine(DisableSpellAfterDelay());
         }
     

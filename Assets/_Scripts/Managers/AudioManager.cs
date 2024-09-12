@@ -15,6 +15,7 @@ namespace _Scripts.Managers
         public const string SOUNDS_VOLUME_MIXER_TAG = "SoundsVolume";
 
         private AudioSource _soundsSource;
+        
         protected override void Awake()
         {
             base.Awake();
@@ -32,6 +33,11 @@ namespace _Scripts.Managers
 
             var audioSources = GetComponents<AudioSource>();
             _soundsSource = audioSources.FirstOrDefault(source => source.outputAudioMixerGroup.name == "Sounds");
+        }
+        
+        private void Start()
+        {
+            Instance.PlaySound("MainMenuMusic1");
         }
     
         public void PlaySound(string name)

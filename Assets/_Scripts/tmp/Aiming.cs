@@ -7,10 +7,13 @@ public class Aiming : MonoBehaviour
     [SerializeField] private GameObject crosshair;
     [SerializeField] private GameObject aimingCamera;
 
+    private InputAction _inputAction;
+    
     private void Start()
     {
-        Managers.InputManager.Inputs.PlayerActions.Aim.started += ToggleCrosshair;
-        Managers.InputManager.Inputs.PlayerActions.Aim.canceled += ToggleCrosshair;
+        _inputAction = InputManager.Instance.PlayerActions.Aim;
+        
+        AddListeners();
     }
 
     private void ToggleCrosshair(InputAction.CallbackContext context)
@@ -23,7 +26,18 @@ public class Aiming : MonoBehaviour
 
     private void OnDestroy()
     {
-        Managers.InputManager.Inputs.PlayerActions.Aim.started -= ToggleCrosshair;
-        Managers.InputManager.Inputs.PlayerActions.Aim.canceled -= ToggleCrosshair;
+        RemoveListeners();
+    }
+
+    private void AddListeners()
+    {
+        _inputAction.started += ToggleCrosshair;
+        _inputAction.canceled += ToggleCrosshair;
+    }
+
+    private void RemoveListeners()
+    {
+        _inputAction.started -= ToggleCrosshair;
+        _inputAction.canceled -= ToggleCrosshair;
     }
 }

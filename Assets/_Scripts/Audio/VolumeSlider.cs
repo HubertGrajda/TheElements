@@ -2,6 +2,7 @@ using _Scripts.Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Slider))]
 public class VolumeSlider : MonoBehaviour
 {
     [SerializeField] private string mixerVolumeTag;
@@ -11,6 +12,6 @@ public class VolumeSlider : MonoBehaviour
     private void Start()
     {
        _slider = GetComponent<Slider>();
-        _slider.value = Managers.AudioManager.GetCurrentVolume(mixerVolumeTag);
+        _slider.value = AudioManager.Instance.GetCurrentVolume(mixerVolumeTag);
     }
 }

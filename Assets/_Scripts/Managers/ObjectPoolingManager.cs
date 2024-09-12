@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 namespace _Scripts.Managers
 {
@@ -21,7 +22,7 @@ namespace _Scripts.Managers
                 Container = new GameObject($"{Tag} Pool");
                 Spawned = new List<IPoolable>();
             
-                Container.transform.SetParent(Managers.ObjectPoolingManager.transform);
+                Container.transform.SetParent(Instance.transform);
             }
         }
     
@@ -72,7 +73,7 @@ namespace _Scripts.Managers
         {
             var pool = GetOrCreatePool(type);
 
-            foreach (var poolable in pool.Spawned)
+            foreach (var poolable in pool.Spawned.ToList())
             {
                 var objectToPool = poolable as T;
             

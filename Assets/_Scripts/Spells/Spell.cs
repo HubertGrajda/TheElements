@@ -15,22 +15,21 @@ namespace _Scripts.Spells
         [SerializeField] protected float damagingFrequency;
         [SerializeField] protected int damage;
         [SerializeField] protected float speed;
-    
-        [SerializeField] private float disableDelay; // time to disable when DisableSpell() is called (pooler stuff)
+        [SerializeField] private float disableDelay;
 
-
-        protected VisualEffect vfx;
-        protected Collider spellCollider;
+        protected VisualEffect Vfx { get; private set; }
+        protected Collider SpellCollider { get; private set; }
+        
         private float _timer;
 
         protected virtual void Awake()
         {
-            spellCollider = GetComponent<Collider>();
-            vfx = GetComponent<VisualEffect>();
+            SpellCollider = GetComponent<Collider>();
+            Vfx = GetComponent<VisualEffect>();
         }
         protected virtual void Start()
         {
-            spellCollider.isTrigger = true;
+            SpellCollider.isTrigger = true;
         }
     
         protected virtual void DealDamage(IDamageable enemy)

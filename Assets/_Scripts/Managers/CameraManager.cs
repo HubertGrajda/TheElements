@@ -3,16 +3,8 @@ using UnityEngine;
 
 namespace _Scripts.Managers
 {
-    public class CamerasManager : Singleton<CamerasManager>
+    public class CameraManager : Singleton<CameraManager>
     {
-        public enum CameraType
-        {
-            MainCamera,
-            UICamera,
-            MainBehaviour,
-            EffectBehaviour,
-        }
-    
         [SerializeField] private Camera cameraMain;
         [SerializeField] private Camera cameraUI;
     

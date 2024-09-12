@@ -42,7 +42,7 @@ public class AIStateMachine : StateMachine
     {
         base.Start();
         
-        PlayerTransform = Managers.PlayerManager.PlayerRef.transform;
+        PlayerTransform = PlayerManager.Instance.PlayerRef.transform;
     }
     
     protected override void Update()

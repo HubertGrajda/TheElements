@@ -12,6 +12,6 @@ public class MainCamera : MonoBehaviour
 
     private void Start()
     {
-        Managers.CamerasManager.SetMainCamera(_cameraUI);
+        CameraManager.Instance.SetMainCamera(_cameraUI);
     }
 }
