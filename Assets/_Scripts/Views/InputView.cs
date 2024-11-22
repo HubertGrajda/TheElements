@@ -28,6 +28,8 @@ namespace UI
 
         private void RemoveListeners()
         {
+            if (inputAction == null) return;
+            
             inputAction.started -= ToggleByInput;
         
             if (holdRequired)

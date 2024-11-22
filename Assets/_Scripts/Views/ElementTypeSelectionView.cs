@@ -22,9 +22,9 @@ namespace UI
 
         protected override void AssignInputAction()
         {
-            inputAction = InputManager.Instance.Inputs.UIActions.ElementTypeSelectionView;
+            inputAction = InputsManager.Instance.Inputs.UI.ElementTypeSelectionView;
         }
-    
+     
         protected override void ToggleByInput(InputAction.CallbackContext context)
         {
             if (context.started)
@@ -34,7 +34,7 @@ namespace UI
 
             if (context.canceled)
             {
-                StartCoroutine(GameManager.ChangeTimeScale(DEFAULT_TIMESCALE, transitionTime));
+                GameManager.ChangeTimeScale(DEFAULT_TIMESCALE, transitionTime);
                 Hide();
             }
         }
@@ -43,14 +43,14 @@ namespace UI
         {
             base.Show();
             _cameraManager.ToggleMainCameraMovement(false);
-            StartCoroutine(GameManager.ChangeTimeScale(slowedTimeScale, transitionTime));
+            GameManager.ChangeTimeScale(slowedTimeScale, transitionTime);
         }
 
         public override void Hide()
         {
             base.Hide();
             _cameraManager.ToggleMainCameraMovement(true);
-            StartCoroutine(GameManager.ChangeTimeScale(DEFAULT_TIMESCALE, transitionTime));
+            GameManager.ChangeTimeScale(DEFAULT_TIMESCALE, transitionTime);
         }
     }
 }

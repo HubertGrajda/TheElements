@@ -1,19 +1,27 @@
 using System.Collections.Generic;
 using _Scripts.Spells;
 using UnityEngine.InputSystem;
+using _Scripts.Managers;
 
-public abstract class BendingState : State
+public class BendingState : State
 {
     protected readonly List<Spell> spells = new ();
     private int _currSpellIndex;
 
     public Spell SelectedSpell => spells[_currSpellIndex];
 
-    private PlayerInputs.PlayerActionsActions _playerActions;
+    private PlayerInputs.PlayerActions _playerActions;
     
-    protected BendingState(PlayerBendingStateMachine fsm) : base(fsm)
+    public BendingState(PlayerBendingStateMachine fsm, ElementType type) : base(fsm)
     {
-        _playerActions = InputManager.Instance.PlayerActions;
+        foreach (var spell in fsm.Spells)
+        {
+            if (spell.ElementType != type) continue;
+            
+            spells.Add(spell.SpellPrefab);
+        }
+        
+        _playerActions = InputsManager.Instance.PlayerActions;
     }
 
     public override void EnterState()
@@ -40,5 +48,12 @@ public abstract class BendingState : State
     {
         _playerActions.NextSpell.started -= NextSpell;
         _playerActions.PreviousSpell.started -= PreviousSpell;
+    }
+
+    protected override bool TryGetStateToSwitch(out State stateToSwitch)
+    {
+        stateToSwitch = default;
+        
+        return false;
     }
 }

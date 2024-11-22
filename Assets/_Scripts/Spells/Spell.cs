@@ -9,75 +9,65 @@ namespace _Scripts.Spells
     [RequireComponent(typeof(VisualEffect))]
     public abstract class Spell : MonoBehaviour, IPoolable
     {
-        [field: SerializeField] public SpellDataSO SpellData { get; private set; }
+        [field: SerializeField] public SpellConfig SpellData { get; private set; }
         
-        [SerializeField] protected bool dealDamageInTime;
-        [SerializeField] protected float damagingFrequency;
-        [SerializeField] protected int damage;
         [SerializeField] protected float speed;
-        [SerializeField] private float disableDelay;
 
         protected VisualEffect Vfx { get; private set; }
         protected Collider SpellCollider { get; private set; }
+        public virtual bool CanBeCasted => true;
         
-        private float _timer;
-
         protected virtual void Awake()
         {
             SpellCollider = GetComponent<Collider>();
             Vfx = GetComponent<VisualEffect>();
         }
+        
         protected virtual void Start()
         {
             SpellCollider.isTrigger = true;
         }
-    
-        protected virtual void DealDamage(IDamageable enemy)
-        {
-            enemy.Damaged(damage);
-        }
 
-        protected IEnumerator DisableSpellAfterDelay()
+        protected void Disable()
         {
-            yield return new WaitForSeconds(disableDelay );
+            if (!gameObject.activeInHierarchy) return;
+            
+            StartCoroutine(DisableWithLastParticle());
+        }
+        
+        private IEnumerator DisableWithLastParticle()
+        {
+            yield return new WaitWhile(() => Vfx.aliveParticleCount > 1);
             gameObject.SetActive(false);
-        }
-
-        protected virtual void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag(Constants.Tags.ENEMY_TAG) && !dealDamageInTime)
-            {
-                var enemy = other.GetComponent<IDamageable>();
-                DealDamage(enemy);
-            }
-        }
-        protected virtual void OnTriggerStay(Collider other)
-        {
-            if (other.CompareTag(Constants.Tags.ENEMY_TAG) && dealDamageInTime)
-            {
-                if (_timer <= 0)
-                {
-                    _timer = damagingFrequency;
-                    var enemy = other.GetComponent<IDamageable>();
-                    DealDamage(enemy);
-                }
-            }
-            _timer -= Time.deltaTime;
         }
 
         public virtual void CastSpell()
         {
+            gameObject.SetActive(true);
             AudioManager.Instance.PlaySound(SpellData.CastingBehaviour.CastingSound);
         }
 
-        public void OnSpawnFromPool()
+        protected virtual void OnDisable()
         {
-            throw new System.NotImplementedException(); // TODO:
+            StopAllCoroutines();
+            RemoveListeners();
         }
 
-        public void ReturnToPool()
+        protected virtual void OnEnable()
         {
-            throw new System.NotImplementedException(); // TODO:
+            AddListeners();
+        }
+
+        protected virtual void RemoveListeners()
+        {
+        }
+
+        protected virtual void AddListeners()
+        {
+        }
+
+        public virtual void OnGetFromPool()
+        {
         }
     }
 }

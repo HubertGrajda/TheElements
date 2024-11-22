@@ -23,7 +23,7 @@ public class Instruction3D : MonoBehaviour
     {
         instruction.text = listOfInstructions[0];
         _playerTransform = PlayerManager.Instance.PlayerRef.transform;
-        _inputAction = InputManager.Instance.PlayerActions.Accept;
+        _inputAction = InputsManager.Instance.PlayerActions.Accept;
     }
     
     private void Update()
@@ -79,6 +79,8 @@ public class Instruction3D : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (_inputAction == null) return;
+        
         _inputAction.started -= NextInstruction; 
     }
 }

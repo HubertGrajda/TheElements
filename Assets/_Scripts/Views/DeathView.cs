@@ -25,6 +25,8 @@ namespace UI
 
         private void RemoveListeners()
         {
+            if (_playerManager == null) return;
+            
             _playerManager.death -= LaunchDeathView;
         }
     

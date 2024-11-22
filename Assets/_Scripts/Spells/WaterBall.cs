@@ -1,60 +1,68 @@
 using System.Collections;
+using _Scripts.Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Scripts.Spells
 {
-    public class WaterBall: WaterSpell
+    public class WaterBall: Spell
     {
         [SerializeField] private AnimationCurve speedCurve;
         [SerializeField] private AnimationCurve varietyCurve;
         [SerializeField] private float varietyRange = 5;
-        private static readonly int WaterColor = Shader.PropertyToID("_WaterColor");
-
-        private void SetMaterial()
-        {
-            var color = Detection.NearestWater(transform.position).GetComponent<MeshRenderer>().material.GetColor(WaterColor);  
-            Vfx.SetVector4("waterColor", color);
-        }
-    
+        
+        private const string WATER_VFX_COLOR = "waterColor";
+        private const string ON_HIT_EVENT = "OnHit";
+        
         private IEnumerator MoveToTarget(Vector3 target)
         {
             var startPosition = transform.position;
             var time = 0f;
-            var variety = new Vector3(Random.Range(-varietyRange, varietyRange), Random.Range(-varietyRange, varietyRange), 0);
+
+            var varietyX = Random.Range(-varietyRange, varietyRange);
+            var varietyY = Random.Range(-varietyRange, varietyRange);
         
             while (time < 1)
             {
                 var varietyTime = varietyCurve.Evaluate(time);
-                transform.position = Vector3.Lerp(startPosition, target, speedCurve.Evaluate(time)) +
-                                     new Vector3(varietyTime * variety.x, 0, varietyTime * variety.y);
-            
-                var magnitude = (transform.position - target).magnitude;
-            
+                var evaluatedSpeed = speedCurve.Evaluate(time);
+                
+                var varietyOffset = new Vector3(varietyTime * varietyX, 0, varietyTime * varietyY);
+                var newPosition = Vector3.Lerp(startPosition, target, evaluatedSpeed) + varietyOffset;
+                var magnitude = (newPosition - target).magnitude;
+                
                 if (magnitude < 0f) break;
+                
+                transform.position = newPosition;
             
                 time += Time.deltaTime * speed;
                 yield return null;
             }
-            Vfx.SendEvent("OnHit");
-            StartCoroutine(DisableSpellAfterDelay());
+            
+            Vfx.SendEvent(ON_HIT_EVENT); 
+            Disable();
         }
     
         public override void CastSpell()
         {
             base.CastSpell();
+            
             var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            var ray = Camera.main.ScreenPointToRay(screenCenter);
+            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
+            
+            var target = Physics.Raycast(ray, out var hit) 
+                ? hit.point 
+                : ray.GetPoint(50f);
+            
+            SetMaterial();
+            StartCoroutine(MoveToTarget(target));
+        }
         
-            if (Physics.Raycast(ray, out var hit))
-            {
-                SetMaterial();
-                StartCoroutine(MoveToTarget(hit.point));
-            }
-            else
-            {
-                StartCoroutine(MoveToTarget(ray.GetPoint(50)));
-            }
+        private void SetMaterial()
+        {
+            var nearestWater = Detection.GetNearestWaterSource(transform.position);
+            var color = nearestWater.GetColor();  
+            
+            Vfx.SetVector4(WATER_VFX_COLOR, color);
         }
     }
 }

@@ -67,7 +67,7 @@ namespace _Scripts.Managers
 
         private IEnumerator BeforeLoad()
         {
-            SceneManager.sceneLoaded += AfterLoad; // TODO: Fixme
+            SceneManager.sceneLoaded += AfterLoad;
         
             levelLoader.SetTrigger(FadeIn);
         

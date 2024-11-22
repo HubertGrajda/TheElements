@@ -17,22 +17,21 @@ namespace Player
         private float _targetAngle;
         private float _angle;
 
+        private Vector2 _movementInput;
+        
+        private Transform _cameraTransform;
+        private CharacterController _characterController;
+        
         public IdleState IdleState { get; private set; }
         public JumpingState JumpingState { get; private set; }
         public WalkingState WalkingState { get; private set; }
         public RunningState RunningState { get; private set; }
         public CrouchingState CrouchingState { get; private set; }
 
-        ////// Inputs ///////
-        private Vector2 _movementInput;
-
-        public bool IsCrouchingInputActive { get; private set; }
-        public bool IsMovingInputActive { get; private set; }
-        public bool IsRunningInputActive { get; private set; }
-        public bool IsJumpingInputActive { get; private set; }
-
-        private Transform _cameraTransform;
-        private CharacterController _characterController;
+        public bool IsMovingInputActive => PlayerActions.Move.IsPressed();
+        public bool IsCrouchingInputActive => PlayerActions.Crouch.IsPressed();
+        public bool IsRunningInputActive => PlayerActions.Run.IsPressed();
+        public bool IsJumpingInputActive => PlayerActions.Jump.IsPressed();
     
         public Vector3 PlayerVelocity => _playerVelocity;
         public bool IsGrounded => IsPlayerGrounded();
@@ -53,37 +52,11 @@ namespace Player
 
         private void AddListeners()
         {
-            PlayerActions.Jump.started += OnJumpInput;
-            PlayerActions.Jump.canceled += OnJumpInput;
-        
-            PlayerActions.Run.started += OnRunInput;
-            PlayerActions.Run.canceled += OnRunInput;
-        
-            PlayerActions.Crouch.started += OnCrouchInput;
-            PlayerActions.Crouch.canceled += OnCrouchInput;
-        
-            PlayerActions.Move.performed += OnMoveInput;
-            PlayerActions.Move.started += OnMoveInput;
-            PlayerActions.Move.canceled += OnMoveInput;
-
             PlayerManager.death += OnDeath;
         }
 
         private void RemoveListeners()
         {
-            PlayerActions.Jump.started -= OnJumpInput;
-            PlayerActions.Jump.canceled -= OnJumpInput;
-        
-            PlayerActions.Run.started -= OnRunInput;
-            PlayerActions.Run.canceled -= OnRunInput;
-        
-            PlayerActions.Crouch.started -= OnCrouchInput;
-            PlayerActions.Crouch.canceled -= OnCrouchInput;
-        
-            PlayerActions.Move.performed -= OnMoveInput;
-            PlayerActions.Move.started -= OnMoveInput;
-            PlayerActions.Move.canceled -= OnMoveInput;
-        
             PlayerManager.death -= OnDeath;
         }
         protected override void Start()
@@ -167,27 +140,6 @@ namespace Player
         private void OnDeath()
         {
             _characterController.enabled = false;
-        }
-    
-        private void OnJumpInput(InputAction.CallbackContext context)
-        {
-            IsJumpingInputActive = context.ReadValueAsButton();
-        }
-
-        private void OnMoveInput(InputAction.CallbackContext context)
-        {
-            _movementInput = context.ReadValue<Vector2>();
-            IsMovingInputActive = _movementInput.x != 0f || _movementInput.y != 0f;
-        }
-
-        private void OnCrouchInput(InputAction.CallbackContext context)
-        {
-            IsCrouchingInputActive = context.ReadValueAsButton();
-        }
-    
-        private void OnRunInput(InputAction.CallbackContext context)
-        {
-            IsRunningInputActive = context.ReadValueAsButton();
         }
 
         private void OnDestroy()

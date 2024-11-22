@@ -1,47 +1,23 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class PlayerExperienceSystem : MonoBehaviour // TODO: Refactor
+public class PlayerExperienceSystem : MonoBehaviour
 {
-    [Serializable]
-    public class ElementTypeSlider
+    public Action<ElementType, float> OnExperienceChanged;
+
+    private readonly Dictionary<ElementType, float> _elementTypeToExperience = new();
+    
+    public void AddExperience(ElementType elementType, float value)
     {
-        [SerializeField] private Slider slider;
-        
-        [SerializeField] private ElementType elementType;
-        public ElementType ElementType => elementType;
-
-        public float Experience { get; private set; }
-
-        public void AddExp(float value)
+        if (!_elementTypeToExperience.TryAdd(elementType, value))
         {
-            Experience += value;
-            slider.value = Experience;
+            _elementTypeToExperience[elementType] += value;
         }
+
+        OnExperienceChanged?.Invoke(elementType, _elementTypeToExperience[elementType]);
     }
 
-    [SerializeField] private List<ElementTypeSlider> sliders;
-    
-    public void AddExperience(float value, ElementType elementType)
-    {
-        var elementTypeSlider = sliders.FirstOrDefault(x => x.ElementType == elementType);
-        if (elementTypeSlider == null) return;
-        
-        elementTypeSlider.AddExp(value);
-    }
-
-    public bool TryGetExperienceValue(ElementType elementType, out float experience)
-    {
-        experience = default;
-        
-        var elementTypeSlider = sliders.FirstOrDefault(x => x.ElementType == elementType);
-        if (elementTypeSlider == null) return false;
-        
-        experience = elementTypeSlider.Experience;
-        return true;
-    }
-    
+    public float GetExperienceValue(ElementType elementType) =>
+        _elementTypeToExperience.GetValueOrDefault(elementType, 0f);
 }

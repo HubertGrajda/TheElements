@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using _Scripts.Managers;
 
 [RequireComponent(typeof(Collider))]
-public class ElementalStone : MonoBehaviour, IInteractable
+public class ElementalStone : MonoBehaviour, IInputInteractable
 {
-    [SerializeField] private PowerUp expBall;
+    [SerializeField] private PowerUp expBall; //TODO: restrict to interface attribute
     [SerializeField] private Animator anim;
 
     private bool _alreadyUsed;
@@ -15,12 +16,13 @@ public class ElementalStone : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        _inputAction = InputManager.Instance.PlayerActions.Interact;
+        _inputAction = InputsManager.Instance.PlayerActions.Interact;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_alreadyUsed || !other.CompareTag(Constants.Tags.PLAYER_TAG)) return;
+        if (_alreadyUsed) return;
+        if (!other.CompareTag(Constants.Tags.PLAYER_TAG)) return;
         
         _inputAction.started += InteractionBehaviour;
         _player = other.gameObject;
@@ -29,7 +31,8 @@ public class ElementalStone : MonoBehaviour, IInteractable
 
     private void OnTriggerExit(Collider other)
     {
-        if (_alreadyUsed || !other.CompareTag(Constants.Tags.PLAYER_TAG)) return;
+        if (_alreadyUsed) return;
+        if (!other.CompareTag(Constants.Tags.PLAYER_TAG)) return;
         
         anim.SetBool(InRangeAnimParam, false);
     }
@@ -38,7 +41,7 @@ public class ElementalStone : MonoBehaviour, IInteractable
     {
         _inputAction.started -= InteractionBehaviour;
         _alreadyUsed = true;
-        expBall.CollectPowerUp(_player);
+        expBall.Collect();
         anim.SetBool(InRangeAnimParam, false);
     }
 }

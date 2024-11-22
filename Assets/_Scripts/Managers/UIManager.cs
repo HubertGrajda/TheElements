@@ -19,7 +19,7 @@ namespace _Scripts.Managers
 
         private void Start()
         {
-            InputManager.Instance.Inputs.UIActions.Enable();
+            InputsManager.Instance.Inputs.UI.Enable();
         }
 
         public void SetCurrentMenu(Menu newCurrentMenu)

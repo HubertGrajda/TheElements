@@ -16,7 +16,7 @@ namespace UI
 
         protected override void AssignInputAction()
         {
-            inputAction = InputManager.Instance.UIActions.PauseView;
+            inputAction = InputsManager.Instance.UIActions.PauseView;
         }
 
         protected override void Show()

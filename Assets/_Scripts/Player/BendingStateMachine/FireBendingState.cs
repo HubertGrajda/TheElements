@@ -1,18 +1,7 @@
 
 public class FireBendingState : BendingState
 {
-    public FireBendingState(PlayerBendingStateMachine fsm) : base(fsm)
+    public FireBendingState(PlayerBendingStateMachine fsm, ElementType type) : base(fsm, type)
     {
-        foreach (var spell in fsm.FireSpells)
-        {
-            spells.Add(spell);
-        }
-    }
-
-    protected override bool TryGetStateToSwitch(out State stateToSwitch)
-    {
-        stateToSwitch = default;
-        
-        return false;
     }
 }

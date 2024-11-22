@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
+using _Scripts;
 using UnityEngine;
 
 public static class Detection
 {
-    public static GameObject NearestWater(Vector3 objectPos)
+    public static WaterSource GetNearestWaterSource(Vector3 objectPos)
     {
         var minDistance = Mathf.Infinity;
         var waterSources = GameObject.FindGameObjectsWithTag(Constants.Tags.WATER_TAG);
@@ -12,14 +15,13 @@ public static class Detection
         {
             var distance = Vector3.Distance(objectPos, water.transform.position);
             
-            if (minDistance > distance)
-            {
-                minDistance = distance;
-                nearestWater = water;
-            }
+            if (minDistance <= distance) continue;
+            
+            minDistance = distance;
+            nearestWater = water;
         }
 
-        return nearestWater;
+        return !nearestWater.TryGetComponent(out WaterSource nearestWaterSource) ? null : nearestWaterSource;
     }
 
     public static Color32 AverageColorFromTexture(Texture2D texture)
@@ -76,5 +78,41 @@ public static class Detection
         }
         
         return closestGround.GetComponent<MeshRenderer>().material.color;
+    }
+}
+
+public abstract class Detector : ScriptableObject
+{
+    [SerializeField] private int detectionLimit;
+    protected int DetectionLimit => detectionLimit;
+}
+
+public class SphereDetector : Detector
+{
+    public bool TryGetDetected<TComponent>(Vector3 position, float range, string tag, out List<TComponent> detected)
+    {
+        detected = default;
+        var detectedColliders = new Collider[DetectionLimit];
+        var size = Physics.OverlapSphereNonAlloc(position, range, detectedColliders);
+
+        if (size == 0) return false;
+            
+        detectedColliders = detectedColliders.Where(x => x.CompareTag(tag)).ToArray();
+
+        if (detectedColliders.Length == 0) return false;
+
+        var detectedComponents = new List<TComponent>();
+            
+        foreach (var collider in detectedColliders)
+        {
+            if (!collider.TryGetComponent(out TComponent component)) continue;
+                
+            detectedComponents.Add(component);
+        }
+
+        if (detectedComponents.Count == 0) return false;
+            
+        detected = detectedComponents;
+        return true;
     }
 }

@@ -1,17 +1,18 @@
+using _Scripts.Managers;
 using UnityEngine;
 
-public class PowerUp : MonoBehaviour//, IInteractable       
+public class PowerUp : MonoBehaviour, ICollectable     
 {
     [SerializeField] private AudioClip collectingSound;
     [SerializeField] private ElementType powerUpType;
     [SerializeField] private int value;
 
-    public void CollectPowerUp(GameObject player)
+    public void Collect()
     {
-        var experienceSystem = player.GetComponent<PlayerExperienceSystem>();
         AudioSource.PlayClipAtPoint(collectingSound, transform.position);
-        experienceSystem.AddExperience(value, powerUpType);
+        
+        var experienceSystem = PlayerManager.Instance.ExperienceSystem;
+        experienceSystem.AddExperience(powerUpType, value);
         Destroy(gameObject);
     }
-
 }

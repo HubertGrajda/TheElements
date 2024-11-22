@@ -17,11 +17,11 @@ public class AIHealthSystem : BaseHealthSystem
         _anim = GetComponent<Animator>();
     }
     
-    public override void Damaged(int damage)
+    public override void TakeDamage(int damage)
     {
         _anim.SetTrigger(Constants.AnimationNames.DAMAGED);
         
-        base.Damaged(damage);
+        base.TakeDamage(damage);
     }
     
     public override void Death()

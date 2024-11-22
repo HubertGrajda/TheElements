@@ -19,7 +19,9 @@ namespace _Scripts.Managers
 
         private bool _isGamePaused;
         public bool IsGamePaused => _isGamePaused;
-    
+
+        private Coroutine _changeTimeScaleCoroutine;
+        
         public void QuitTheGame()
         {
             Debug.Log("Quit");
@@ -30,17 +32,27 @@ namespace _Scripts.Managers
         {
             _isGamePaused = true;
             Time.timeScale = 0;
-            InputManager.Instance.PlayerActions.Disable();
+            InputsManager.Instance.PlayerActions.Disable();
         }
     
         public void ResumeGame()
         {
             _isGamePaused = false;
             Time.timeScale = 1;
-            InputManager.Instance.PlayerActions.Enable();
+            InputsManager.Instance.PlayerActions.Enable();
         }
-    
-        public IEnumerator ChangeTimeScale(float targetTimeScale, float transitionTime)
+
+
+        public void ChangeTimeScale(float timeScale, float transitionTime)
+        {
+            if (_changeTimeScaleCoroutine != null)
+            {
+                StopCoroutine(_changeTimeScaleCoroutine);
+            }
+            
+            _changeTimeScaleCoroutine = StartCoroutine(ChangeTimeScaleOverTime(timeScale, transitionTime));
+        }
+        private IEnumerator ChangeTimeScaleOverTime(float targetTimeScale, float transitionTime)
         {
             var startingTimeScale = Time.timeScale;
             var timer = 0f;

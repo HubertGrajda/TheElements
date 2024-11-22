@@ -13,7 +13,7 @@ namespace UI
     
         public bool ShowCursor => showCursor;
 
-        private InputManager _inputManager;
+        private InputsManager _inputsManager;
         protected GameManager GameManager { get; private set; }
         protected UIManager UIManager { get; private set; }
     
@@ -23,7 +23,7 @@ namespace UI
         {
             UIManager = UIManager.Instance;
             GameManager = GameManager.Instance;
-            _inputManager = InputManager.Instance;
+            _inputsManager = InputsManager.Instance;
         }
 
         protected virtual void ToggleByInput(InputAction.CallbackContext context)
@@ -39,7 +39,7 @@ namespace UI
     
         protected virtual void Show()
         {
-            _inputManager.PlayerActions.Disable();
+            _inputsManager.PlayerActions.Disable();
             UIManager.CurrentView = this;
         
             if (pauseGame)
@@ -55,7 +55,7 @@ namespace UI
         public virtual void Hide()
         {
             UIManager.CurrentView = null;
-            _inputManager.PlayerActions.Enable();
+            _inputsManager.PlayerActions.Enable();
             GameManager.ResumeGame();
         
         

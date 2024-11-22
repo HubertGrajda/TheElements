@@ -24,7 +24,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputs"",
     ""maps"": [
         {
-            ""name"": ""PlayerActions"",
+            ""name"": ""Player"",
             ""id"": ""317faabc-1e76-4d46-be45-c487bf7e3653"",
             ""actions"": [
                 {
@@ -100,7 +100,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""WaterBending"",
+                    ""name"": ""FirstBendingSlot"",
                     ""type"": ""Button"",
                     ""id"": ""b3cbf0d5-f7d9-41f4-b851-9122ff09e032"",
                     ""expectedControlType"": ""Button"",
@@ -109,7 +109,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""EarthBending"",
+                    ""name"": ""SecondBendingSlot"",
                     ""type"": ""Button"",
                     ""id"": ""7ebd5871-37f4-4184-8d0a-2b201552e8ba"",
                     ""expectedControlType"": ""Button"",
@@ -118,7 +118,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""AirBending"",
+                    ""name"": ""ThirdBendingSlot"",
                     ""type"": ""Button"",
                     ""id"": ""89019fcd-f28c-41a2-9a9c-c4c164fd68c0"",
                     ""expectedControlType"": ""Button"",
@@ -127,7 +127,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""FireBending"",
+                    ""name"": ""FourthBendingSlot"",
                     ""type"": ""Button"",
                     ""id"": ""6a74c4a4-e483-4293-8081-222b2b3b4c7f"",
                     ""expectedControlType"": ""Button"",
@@ -152,6 +152,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""NumKeys"",
+                    ""type"": ""Button"",
+                    ""id"": ""7798e011-2616-4c18-b3b7-420d7c743f13"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -294,7 +303,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""FireBending"",
+                    ""action"": ""FourthBendingSlot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -305,7 +314,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""AirBending"",
+                    ""action"": ""ThirdBendingSlot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -316,7 +325,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""WaterBending"",
+                    ""action"": ""FirstBendingSlot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -327,7 +336,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""EarthBending"",
+                    ""action"": ""SecondBendingSlot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -352,11 +361,55 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""PreviousSpell"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76f0cabf-db06-4c53-af3b-3a9f753720c1"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale"",
+                    ""groups"": """",
+                    ""action"": ""NumKeys"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ebeabac2-42bd-45f6-9e1e-289e32bd67ad"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": """",
+                    ""action"": ""NumKeys"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6e8dda96-b66c-469a-ace4-54fa47f38c62"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": """",
+                    ""action"": ""NumKeys"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1f783d76-7a31-45db-a157-6814483682ee"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": """",
+                    ""action"": ""NumKeys"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
         {
-            ""name"": ""UIActions"",
+            ""name"": ""UI"",
             ""id"": ""0fef848d-d140-4bbb-8b63-35454ad5f473"",
             ""actions"": [
                 {
@@ -402,30 +455,104 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""66708597-87ff-4113-86c9-76a21fd218ff"",
+            ""actions"": [
+                {
+                    ""name"": ""IncreaseMovementSpeed"",
+                    ""type"": ""Button"",
+                    ""id"": ""876d0f9d-d9eb-472e-a106-32647bc4f950"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DecreaseMovementSpeed"",
+                    ""type"": ""Button"",
+                    ""id"": ""948e8777-b5bd-4a0f-9411-b4993f8bd95b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StandardMovementSpeed"",
+                    ""type"": ""Button"",
+                    ""id"": ""f56ae018-0947-4d29-960b-4d1da31f7f7e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""5eaf0bfa-2b9d-4337-b107-4c915568cea0"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""IncreaseMovementSpeed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a892829-8e34-495a-8eff-0cde0dfb0449"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DecreaseMovementSpeed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93c705aa-5f7b-44c4-b0a5-7754692f38eb"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StandardMovementSpeed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
 }");
-        // PlayerActions
-        m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
-        m_PlayerActions_Move = m_PlayerActions.FindAction("Move", throwIfNotFound: true);
-        m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
-        m_PlayerActions_Interact = m_PlayerActions.FindAction("Interact", throwIfNotFound: true);
-        m_PlayerActions_CastSpell = m_PlayerActions.FindAction("CastSpell", throwIfNotFound: true);
-        m_PlayerActions_Run = m_PlayerActions.FindAction("Run", throwIfNotFound: true);
-        m_PlayerActions_Crouch = m_PlayerActions.FindAction("Crouch", throwIfNotFound: true);
-        m_PlayerActions_Accept = m_PlayerActions.FindAction("Accept", throwIfNotFound: true);
-        m_PlayerActions_Aim = m_PlayerActions.FindAction("Aim", throwIfNotFound: true);
-        m_PlayerActions_WaterBending = m_PlayerActions.FindAction("WaterBending", throwIfNotFound: true);
-        m_PlayerActions_EarthBending = m_PlayerActions.FindAction("EarthBending", throwIfNotFound: true);
-        m_PlayerActions_AirBending = m_PlayerActions.FindAction("AirBending", throwIfNotFound: true);
-        m_PlayerActions_FireBending = m_PlayerActions.FindAction("FireBending", throwIfNotFound: true);
-        m_PlayerActions_NextSpell = m_PlayerActions.FindAction("NextSpell", throwIfNotFound: true);
-        m_PlayerActions_PreviousSpell = m_PlayerActions.FindAction("PreviousSpell", throwIfNotFound: true);
-        // UIActions
-        m_UIActions = asset.FindActionMap("UIActions", throwIfNotFound: true);
-        m_UIActions_PauseView = m_UIActions.FindAction("PauseView", throwIfNotFound: true);
-        m_UIActions_ElementTypeSelectionView = m_UIActions.FindAction("ElementTypeSelectionView", throwIfNotFound: true);
+        // Player
+        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_CastSpell = m_Player.FindAction("CastSpell", throwIfNotFound: true);
+        m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
+        m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
+        m_Player_Accept = m_Player.FindAction("Accept", throwIfNotFound: true);
+        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_FirstBendingSlot = m_Player.FindAction("FirstBendingSlot", throwIfNotFound: true);
+        m_Player_SecondBendingSlot = m_Player.FindAction("SecondBendingSlot", throwIfNotFound: true);
+        m_Player_ThirdBendingSlot = m_Player.FindAction("ThirdBendingSlot", throwIfNotFound: true);
+        m_Player_FourthBendingSlot = m_Player.FindAction("FourthBendingSlot", throwIfNotFound: true);
+        m_Player_NextSpell = m_Player.FindAction("NextSpell", throwIfNotFound: true);
+        m_Player_PreviousSpell = m_Player.FindAction("PreviousSpell", throwIfNotFound: true);
+        m_Player_NumKeys = m_Player.FindAction("NumKeys", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_PauseView = m_UI.FindAction("PauseView", throwIfNotFound: true);
+        m_UI_ElementTypeSelectionView = m_UI.FindAction("ElementTypeSelectionView", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_IncreaseMovementSpeed = m_Debug.FindAction("IncreaseMovementSpeed", throwIfNotFound: true);
+        m_Debug_DecreaseMovementSpeed = m_Debug.FindAction("DecreaseMovementSpeed", throwIfNotFound: true);
+        m_Debug_StandardMovementSpeed = m_Debug.FindAction("StandardMovementSpeed", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -484,50 +611,52 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // PlayerActions
-    private readonly InputActionMap m_PlayerActions;
-    private List<IPlayerActionsActions> m_PlayerActionsActionsCallbackInterfaces = new List<IPlayerActionsActions>();
-    private readonly InputAction m_PlayerActions_Move;
-    private readonly InputAction m_PlayerActions_Jump;
-    private readonly InputAction m_PlayerActions_Interact;
-    private readonly InputAction m_PlayerActions_CastSpell;
-    private readonly InputAction m_PlayerActions_Run;
-    private readonly InputAction m_PlayerActions_Crouch;
-    private readonly InputAction m_PlayerActions_Accept;
-    private readonly InputAction m_PlayerActions_Aim;
-    private readonly InputAction m_PlayerActions_WaterBending;
-    private readonly InputAction m_PlayerActions_EarthBending;
-    private readonly InputAction m_PlayerActions_AirBending;
-    private readonly InputAction m_PlayerActions_FireBending;
-    private readonly InputAction m_PlayerActions_NextSpell;
-    private readonly InputAction m_PlayerActions_PreviousSpell;
-    public struct PlayerActionsActions
+    // Player
+    private readonly InputActionMap m_Player;
+    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
+    private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_CastSpell;
+    private readonly InputAction m_Player_Run;
+    private readonly InputAction m_Player_Crouch;
+    private readonly InputAction m_Player_Accept;
+    private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_FirstBendingSlot;
+    private readonly InputAction m_Player_SecondBendingSlot;
+    private readonly InputAction m_Player_ThirdBendingSlot;
+    private readonly InputAction m_Player_FourthBendingSlot;
+    private readonly InputAction m_Player_NextSpell;
+    private readonly InputAction m_Player_PreviousSpell;
+    private readonly InputAction m_Player_NumKeys;
+    public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
-        public PlayerActionsActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_PlayerActions_Move;
-        public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
-        public InputAction @Interact => m_Wrapper.m_PlayerActions_Interact;
-        public InputAction @CastSpell => m_Wrapper.m_PlayerActions_CastSpell;
-        public InputAction @Run => m_Wrapper.m_PlayerActions_Run;
-        public InputAction @Crouch => m_Wrapper.m_PlayerActions_Crouch;
-        public InputAction @Accept => m_Wrapper.m_PlayerActions_Accept;
-        public InputAction @Aim => m_Wrapper.m_PlayerActions_Aim;
-        public InputAction @WaterBending => m_Wrapper.m_PlayerActions_WaterBending;
-        public InputAction @EarthBending => m_Wrapper.m_PlayerActions_EarthBending;
-        public InputAction @AirBending => m_Wrapper.m_PlayerActions_AirBending;
-        public InputAction @FireBending => m_Wrapper.m_PlayerActions_FireBending;
-        public InputAction @NextSpell => m_Wrapper.m_PlayerActions_NextSpell;
-        public InputAction @PreviousSpell => m_Wrapper.m_PlayerActions_PreviousSpell;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
+        public PlayerActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @CastSpell => m_Wrapper.m_Player_CastSpell;
+        public InputAction @Run => m_Wrapper.m_Player_Run;
+        public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
+        public InputAction @Accept => m_Wrapper.m_Player_Accept;
+        public InputAction @Aim => m_Wrapper.m_Player_Aim;
+        public InputAction @FirstBendingSlot => m_Wrapper.m_Player_FirstBendingSlot;
+        public InputAction @SecondBendingSlot => m_Wrapper.m_Player_SecondBendingSlot;
+        public InputAction @ThirdBendingSlot => m_Wrapper.m_Player_ThirdBendingSlot;
+        public InputAction @FourthBendingSlot => m_Wrapper.m_Player_FourthBendingSlot;
+        public InputAction @NextSpell => m_Wrapper.m_Player_NextSpell;
+        public InputAction @PreviousSpell => m_Wrapper.m_Player_PreviousSpell;
+        public InputAction @NumKeys => m_Wrapper.m_Player_NumKeys;
+        public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActionsActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActionsActions instance)
+        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
@@ -552,27 +681,30 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
-            @WaterBending.started += instance.OnWaterBending;
-            @WaterBending.performed += instance.OnWaterBending;
-            @WaterBending.canceled += instance.OnWaterBending;
-            @EarthBending.started += instance.OnEarthBending;
-            @EarthBending.performed += instance.OnEarthBending;
-            @EarthBending.canceled += instance.OnEarthBending;
-            @AirBending.started += instance.OnAirBending;
-            @AirBending.performed += instance.OnAirBending;
-            @AirBending.canceled += instance.OnAirBending;
-            @FireBending.started += instance.OnFireBending;
-            @FireBending.performed += instance.OnFireBending;
-            @FireBending.canceled += instance.OnFireBending;
+            @FirstBendingSlot.started += instance.OnFirstBendingSlot;
+            @FirstBendingSlot.performed += instance.OnFirstBendingSlot;
+            @FirstBendingSlot.canceled += instance.OnFirstBendingSlot;
+            @SecondBendingSlot.started += instance.OnSecondBendingSlot;
+            @SecondBendingSlot.performed += instance.OnSecondBendingSlot;
+            @SecondBendingSlot.canceled += instance.OnSecondBendingSlot;
+            @ThirdBendingSlot.started += instance.OnThirdBendingSlot;
+            @ThirdBendingSlot.performed += instance.OnThirdBendingSlot;
+            @ThirdBendingSlot.canceled += instance.OnThirdBendingSlot;
+            @FourthBendingSlot.started += instance.OnFourthBendingSlot;
+            @FourthBendingSlot.performed += instance.OnFourthBendingSlot;
+            @FourthBendingSlot.canceled += instance.OnFourthBendingSlot;
             @NextSpell.started += instance.OnNextSpell;
             @NextSpell.performed += instance.OnNextSpell;
             @NextSpell.canceled += instance.OnNextSpell;
             @PreviousSpell.started += instance.OnPreviousSpell;
             @PreviousSpell.performed += instance.OnPreviousSpell;
             @PreviousSpell.canceled += instance.OnPreviousSpell;
+            @NumKeys.started += instance.OnNumKeys;
+            @NumKeys.performed += instance.OnNumKeys;
+            @NumKeys.canceled += instance.OnNumKeys;
         }
 
-        private void UnregisterCallbacks(IPlayerActionsActions instance)
+        private void UnregisterCallbacks(IPlayerActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
@@ -598,62 +730,65 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
-            @WaterBending.started -= instance.OnWaterBending;
-            @WaterBending.performed -= instance.OnWaterBending;
-            @WaterBending.canceled -= instance.OnWaterBending;
-            @EarthBending.started -= instance.OnEarthBending;
-            @EarthBending.performed -= instance.OnEarthBending;
-            @EarthBending.canceled -= instance.OnEarthBending;
-            @AirBending.started -= instance.OnAirBending;
-            @AirBending.performed -= instance.OnAirBending;
-            @AirBending.canceled -= instance.OnAirBending;
-            @FireBending.started -= instance.OnFireBending;
-            @FireBending.performed -= instance.OnFireBending;
-            @FireBending.canceled -= instance.OnFireBending;
+            @FirstBendingSlot.started -= instance.OnFirstBendingSlot;
+            @FirstBendingSlot.performed -= instance.OnFirstBendingSlot;
+            @FirstBendingSlot.canceled -= instance.OnFirstBendingSlot;
+            @SecondBendingSlot.started -= instance.OnSecondBendingSlot;
+            @SecondBendingSlot.performed -= instance.OnSecondBendingSlot;
+            @SecondBendingSlot.canceled -= instance.OnSecondBendingSlot;
+            @ThirdBendingSlot.started -= instance.OnThirdBendingSlot;
+            @ThirdBendingSlot.performed -= instance.OnThirdBendingSlot;
+            @ThirdBendingSlot.canceled -= instance.OnThirdBendingSlot;
+            @FourthBendingSlot.started -= instance.OnFourthBendingSlot;
+            @FourthBendingSlot.performed -= instance.OnFourthBendingSlot;
+            @FourthBendingSlot.canceled -= instance.OnFourthBendingSlot;
             @NextSpell.started -= instance.OnNextSpell;
             @NextSpell.performed -= instance.OnNextSpell;
             @NextSpell.canceled -= instance.OnNextSpell;
             @PreviousSpell.started -= instance.OnPreviousSpell;
             @PreviousSpell.performed -= instance.OnPreviousSpell;
             @PreviousSpell.canceled -= instance.OnPreviousSpell;
+            @NumKeys.started -= instance.OnNumKeys;
+            @NumKeys.performed -= instance.OnNumKeys;
+            @NumKeys.canceled -= instance.OnNumKeys;
         }
 
-        public void RemoveCallbacks(IPlayerActionsActions instance)
+        public void RemoveCallbacks(IPlayerActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerActionsActions instance)
+        public void SetCallbacks(IPlayerActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerActionsActions @PlayerActions => new PlayerActionsActions(this);
+    public PlayerActions @Player => new PlayerActions(this);
 
-    // UIActions
-    private readonly InputActionMap m_UIActions;
-    private List<IUIActionsActions> m_UIActionsActionsCallbackInterfaces = new List<IUIActionsActions>();
-    private readonly InputAction m_UIActions_PauseView;
-    private readonly InputAction m_UIActions_ElementTypeSelectionView;
-    public struct UIActionsActions
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_PauseView;
+    private readonly InputAction m_UI_ElementTypeSelectionView;
+    public struct UIActions
     {
         private @PlayerInputs m_Wrapper;
-        public UIActionsActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @PauseView => m_Wrapper.m_UIActions_PauseView;
-        public InputAction @ElementTypeSelectionView => m_Wrapper.m_UIActions_ElementTypeSelectionView;
-        public InputActionMap Get() { return m_Wrapper.m_UIActions; }
+        public UIActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PauseView => m_Wrapper.m_UI_PauseView;
+        public InputAction @ElementTypeSelectionView => m_Wrapper.m_UI_ElementTypeSelectionView;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(UIActionsActions set) { return set.Get(); }
-        public void AddCallbacks(IUIActionsActions instance)
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
         {
-            if (instance == null || m_Wrapper.m_UIActionsActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_UIActionsActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
             @PauseView.started += instance.OnPauseView;
             @PauseView.performed += instance.OnPauseView;
             @PauseView.canceled += instance.OnPauseView;
@@ -662,7 +797,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @ElementTypeSelectionView.canceled += instance.OnElementTypeSelectionView;
         }
 
-        private void UnregisterCallbacks(IUIActionsActions instance)
+        private void UnregisterCallbacks(IUIActions instance)
         {
             @PauseView.started -= instance.OnPauseView;
             @PauseView.performed -= instance.OnPauseView;
@@ -672,22 +807,84 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @ElementTypeSelectionView.canceled -= instance.OnElementTypeSelectionView;
         }
 
-        public void RemoveCallbacks(IUIActionsActions instance)
+        public void RemoveCallbacks(IUIActions instance)
         {
-            if (m_Wrapper.m_UIActionsActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IUIActionsActions instance)
+        public void SetCallbacks(IUIActions instance)
         {
-            foreach (var item in m_Wrapper.m_UIActionsActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_UIActionsActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public UIActionsActions @UIActions => new UIActionsActions(this);
-    public interface IPlayerActionsActions
+    public UIActions @UI => new UIActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private List<IDebugActions> m_DebugActionsCallbackInterfaces = new List<IDebugActions>();
+    private readonly InputAction m_Debug_IncreaseMovementSpeed;
+    private readonly InputAction m_Debug_DecreaseMovementSpeed;
+    private readonly InputAction m_Debug_StandardMovementSpeed;
+    public struct DebugActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public DebugActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @IncreaseMovementSpeed => m_Wrapper.m_Debug_IncreaseMovementSpeed;
+        public InputAction @DecreaseMovementSpeed => m_Wrapper.m_Debug_DecreaseMovementSpeed;
+        public InputAction @StandardMovementSpeed => m_Wrapper.m_Debug_StandardMovementSpeed;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void AddCallbacks(IDebugActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DebugActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DebugActionsCallbackInterfaces.Add(instance);
+            @IncreaseMovementSpeed.started += instance.OnIncreaseMovementSpeed;
+            @IncreaseMovementSpeed.performed += instance.OnIncreaseMovementSpeed;
+            @IncreaseMovementSpeed.canceled += instance.OnIncreaseMovementSpeed;
+            @DecreaseMovementSpeed.started += instance.OnDecreaseMovementSpeed;
+            @DecreaseMovementSpeed.performed += instance.OnDecreaseMovementSpeed;
+            @DecreaseMovementSpeed.canceled += instance.OnDecreaseMovementSpeed;
+            @StandardMovementSpeed.started += instance.OnStandardMovementSpeed;
+            @StandardMovementSpeed.performed += instance.OnStandardMovementSpeed;
+            @StandardMovementSpeed.canceled += instance.OnStandardMovementSpeed;
+        }
+
+        private void UnregisterCallbacks(IDebugActions instance)
+        {
+            @IncreaseMovementSpeed.started -= instance.OnIncreaseMovementSpeed;
+            @IncreaseMovementSpeed.performed -= instance.OnIncreaseMovementSpeed;
+            @IncreaseMovementSpeed.canceled -= instance.OnIncreaseMovementSpeed;
+            @DecreaseMovementSpeed.started -= instance.OnDecreaseMovementSpeed;
+            @DecreaseMovementSpeed.performed -= instance.OnDecreaseMovementSpeed;
+            @DecreaseMovementSpeed.canceled -= instance.OnDecreaseMovementSpeed;
+            @StandardMovementSpeed.started -= instance.OnStandardMovementSpeed;
+            @StandardMovementSpeed.performed -= instance.OnStandardMovementSpeed;
+            @StandardMovementSpeed.canceled -= instance.OnStandardMovementSpeed;
+        }
+
+        public void RemoveCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDebugActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DebugActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DebugActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
+    public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
@@ -697,16 +894,23 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnAccept(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
-        void OnWaterBending(InputAction.CallbackContext context);
-        void OnEarthBending(InputAction.CallbackContext context);
-        void OnAirBending(InputAction.CallbackContext context);
-        void OnFireBending(InputAction.CallbackContext context);
+        void OnFirstBendingSlot(InputAction.CallbackContext context);
+        void OnSecondBendingSlot(InputAction.CallbackContext context);
+        void OnThirdBendingSlot(InputAction.CallbackContext context);
+        void OnFourthBendingSlot(InputAction.CallbackContext context);
         void OnNextSpell(InputAction.CallbackContext context);
         void OnPreviousSpell(InputAction.CallbackContext context);
+        void OnNumKeys(InputAction.CallbackContext context);
     }
-    public interface IUIActionsActions
+    public interface IUIActions
     {
         void OnPauseView(InputAction.CallbackContext context);
         void OnElementTypeSelectionView(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnIncreaseMovementSpeed(InputAction.CallbackContext context);
+        void OnDecreaseMovementSpeed(InputAction.CallbackContext context);
+        void OnStandardMovementSpeed(InputAction.CallbackContext context);
     }
 }

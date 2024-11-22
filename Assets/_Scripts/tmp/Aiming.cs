@@ -11,7 +11,7 @@ public class Aiming : MonoBehaviour
     
     private void Start()
     {
-        _inputAction = InputManager.Instance.PlayerActions.Aim;
+        _inputAction = InputsManager.Instance.PlayerActions.Aim;
         
         AddListeners();
     }
@@ -37,6 +37,8 @@ public class Aiming : MonoBehaviour
 
     private void RemoveListeners()
     {
+        if (_inputAction == null) return;
+        
         _inputAction.started -= ToggleCrosshair;
         _inputAction.canceled -= ToggleCrosshair;
     }

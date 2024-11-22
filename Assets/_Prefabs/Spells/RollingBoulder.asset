@@ -16,3 +16,4 @@ MonoBehaviour:
   <Cooldown>k__BackingField: 0
   <CastingBehaviour>k__BackingField: {fileID: 11400000, guid: 4276e7f95646c7447bc856084c1d3329, type: 2}
   <ElementType>k__BackingField: {fileID: 11400000, guid: c147ba83097847643a61c8dec81ea4a0, type: 2}
+  <SpellPrefab>k__BackingField: {fileID: 5043285342458447014, guid: cda2e0a41cec13e42b0947303cb0fb7c, type: 3}

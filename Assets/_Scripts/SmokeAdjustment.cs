@@ -1,13 +1,13 @@
 using System.Collections;
+using _Scripts;
 using _Scripts.Managers;
 using UnityEngine;
 using UnityEngine.VFX;
 
 [RequireComponent(typeof(VisualEffect))]
-public class SmokeAdjustment : MonoBehaviour
+public class SmokeAdjustment : MonoBehaviour, IColorProvider, IAirInteractable
 {
     [SerializeField] private VisualEffect vfx;
-    public VisualEffect Vfx => vfx;
     
     [SerializeField] private float rotationSpeed;
     [SerializeField] private bool canBeAffected;
@@ -16,26 +16,30 @@ public class SmokeAdjustment : MonoBehaviour
     [SerializeField] private float radius = 90;
     
     private Transform _playerTransform;
+    private Coroutine _changeRotationCoroutine;
     private float _currentRotationSpeed; 
     
+    private const string COLOR_PARAM = "Color";
     private const string ROTATION_SPEED_PROPERTY = "RotationSpeed";
     private const string PLAYER_POSITION_PROPERTY = "PlayerPosition";
     
-    private void Start()
+    private const float MAX_ROTATION_SPEED = 0.05f;
+
+    
+    private void Awake()
     {
         vfx = GetComponent<VisualEffect>();
-        _playerTransform = PlayerManager.Instance.PlayerRef.transform;
+    }
+
+    private void Start()
+    {
+        _playerTransform = PlayerManager.Instance.PlayerTransform;
         _currentRotationSpeed = rotationSpeed;
     }
 
-    public void ChangeRotationSpeed(float speed)
-    {
-        StartCoroutine(ChangeRotationSpeedInTime(speed));
-    }
-    
     private void Update()
     {
-        if(Vector3.Distance(_playerTransform.position, transform.position) > 20f) return;
+        if (Vector3.Distance(_playerTransform.position, transform.position) > 20f) return;
         
         if (canBeAffected)
         {
@@ -43,7 +47,30 @@ public class SmokeAdjustment : MonoBehaviour
         }
     }
 
-    private IEnumerator ChangeRotationSpeedInTime(float targetSpeed, float time = 2f)
+
+    public Color GetColor() => vfx.GetVector4(COLOR_PARAM);
+
+    public void OnInteractionStart()
+    {
+        ChangeRotationSpeed(MAX_ROTATION_SPEED);
+    }
+
+    public void OnInteractionEnd()
+    {
+        ChangeRotationSpeed(0f);
+    }
+    
+    private void ChangeRotationSpeed(float value, float time = 2f)
+    {
+        if (_changeRotationCoroutine != null)
+        {
+            StopCoroutine(_changeRotationCoroutine);
+        }
+
+        StartCoroutine(ChangeRotationSpeedOverTime(value, time));
+    }
+    
+    private IEnumerator ChangeRotationSpeedOverTime(float targetSpeed, float time)
     {
         var timer = 0f;
         var initialRotationSpeed = _currentRotationSpeed;

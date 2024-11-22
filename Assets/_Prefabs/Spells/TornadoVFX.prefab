@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4895493106629584783}
+  - component: {fileID: 9155462741850121719}
+  - component: {fileID: 6387012103045568568}
   - component: {fileID: 4895493106629584782}
   - component: {fileID: 4895493106629584785}
   - component: {fileID: 9049543905770741857}
-  - component: {fileID: 9155462741850121719}
   - component: {fileID: -9114744479630245117}
   - component: {fileID: -981971542445738560}
   m_Layer: 2
@@ -37,6 +38,44 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9155462741850121719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4895493106629584784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb3dbfa7228253743bb79b876e9a2fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <SpellData>k__BackingField: {fileID: 11400000, guid: 787cc661c56c2e94d94c498ccbfa2407, type: 2}
+  speed: 1
+  minSize: 60
+  maxSize: 150
+  growingDuration: 5
+  sizeForExperienceModifier: 0.5
+  dissolvingDuration: 2
+  basicColor: {r: 5.278032, g: 5.278032, b: 5.278032, a: 0}
+  colorTransitionDuration: 2
+  maxDistance: 30
+  maxDissolve: 0.6
+--- !u!114 &6387012103045568568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4895493106629584784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017b9ecf89414febaa859fc553403c1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerBehaviours:
+  - {fileID: 11400000, guid: 1e9fc1c1c8561284ca20634d2f0cff10, type: 2}
+  - {fileID: 11400000, guid: ef890592c57fe484cbe6ada9daa2c9c8, type: 2}
 --- !u!2083052967 &4895493106629584782
 VisualEffect:
   m_ObjectHideFlags: 0
@@ -147,32 +186,6 @@ CapsuleCollider:
   m_Height: 0.32
   m_Direction: 1
   m_Center: {x: 0, y: 0.14, z: 0}
---- !u!114 &9155462741850121719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4895493106629584784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb3dbfa7228253743bb79b876e9a2fce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <SpellData>k__BackingField: {fileID: 11400000, guid: 787cc661c56c2e94d94c498ccbfa2407, type: 2}
-  castingSound: Tornado
-  isLastingAnimation: 1
-  isChildOfSpawnPoint: 0
-  dealDamageInTime: 0
-  damagingFrequency: 0.5
-  damage: 1
-  speed: 1
-  disableDelay: 3
-  dissolve: 0
-  minSize: 60
-  maxSize: 150
-  growingSpeed: 0.01
-  basicColor: {r: 5.278032, g: 5.278032, b: 5.278032, a: 0}
 --- !u!54 &-9114744479630245117
 Rigidbody:
   m_ObjectHideFlags: 0

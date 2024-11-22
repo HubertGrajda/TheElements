@@ -2,7 +2,7 @@
     "name": "PlayerInputs",
     "maps": [
         {
-            "name": "PlayerActions",
+            "name": "Player",
             "id": "317faabc-1e76-4d46-be45-c487bf7e3653",
             "actions": [
                 {
@@ -78,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "WaterBending",
+                    "name": "FirstBendingSlot",
                     "type": "Button",
                     "id": "b3cbf0d5-f7d9-41f4-b851-9122ff09e032",
                     "expectedControlType": "Button",
@@ -87,7 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "EarthBending",
+                    "name": "SecondBendingSlot",
                     "type": "Button",
                     "id": "7ebd5871-37f4-4184-8d0a-2b201552e8ba",
                     "expectedControlType": "Button",
@@ -96,7 +96,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "AirBending",
+                    "name": "ThirdBendingSlot",
                     "type": "Button",
                     "id": "89019fcd-f28c-41a2-9a9c-c4c164fd68c0",
                     "expectedControlType": "Button",
@@ -105,7 +105,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "FireBending",
+                    "name": "FourthBendingSlot",
                     "type": "Button",
                     "id": "6a74c4a4-e483-4293-8081-222b2b3b4c7f",
                     "expectedControlType": "Button",
@@ -130,6 +130,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "NumKeys",
+                    "type": "Button",
+                    "id": "7798e011-2616-4c18-b3b7-420d7c743f13",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -272,7 +281,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "FireBending",
+                    "action": "FourthBendingSlot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -283,7 +292,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "AirBending",
+                    "action": "ThirdBendingSlot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -294,7 +303,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "WaterBending",
+                    "action": "FirstBendingSlot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -305,7 +314,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "EarthBending",
+                    "action": "SecondBendingSlot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -330,11 +339,55 @@
                     "action": "PreviousSpell",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76f0cabf-db06-4c53-af3b-3a9f753720c1",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "Scale",
+                    "groups": "",
+                    "action": "NumKeys",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ebeabac2-42bd-45f6-9e1e-289e32bd67ad",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "Scale(factor=2)",
+                    "groups": "",
+                    "action": "NumKeys",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6e8dda96-b66c-469a-ace4-54fa47f38c62",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "Scale(factor=3)",
+                    "groups": "",
+                    "action": "NumKeys",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1f783d76-7a31-45db-a157-6814483682ee",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "Scale(factor=4)",
+                    "groups": "",
+                    "action": "NumKeys",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "UIActions",
+            "name": "UI",
             "id": "0fef848d-d140-4bbb-8b63-35454ad5f473",
             "actions": [
                 {
@@ -376,6 +429,74 @@
                     "processors": "",
                     "groups": "",
                     "action": "ElementTypeSelectionView",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Debug",
+            "id": "66708597-87ff-4113-86c9-76a21fd218ff",
+            "actions": [
+                {
+                    "name": "IncreaseMovementSpeed",
+                    "type": "Button",
+                    "id": "876d0f9d-d9eb-472e-a106-32647bc4f950",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DecreaseMovementSpeed",
+                    "type": "Button",
+                    "id": "948e8777-b5bd-4a0f-9411-b4993f8bd95b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StandardMovementSpeed",
+                    "type": "Button",
+                    "id": "f56ae018-0947-4d29-960b-4d1da31f7f7e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5eaf0bfa-2b9d-4337-b107-4c915568cea0",
+                    "path": "<Keyboard>/7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "IncreaseMovementSpeed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9a892829-8e34-495a-8eff-0cde0dfb0449",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DecreaseMovementSpeed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "93c705aa-5f7b-44c4-b0a5-7754692f38eb",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandardMovementSpeed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -10,6 +10,7 @@ public abstract class BaseHealthSystem : MonoBehaviour, IDamageable
 
     protected bool isDead;
     protected int currentHealth;
+    
     protected virtual void Start()
     {
         currentHealth = stats.maxHealth;
@@ -17,9 +18,9 @@ public abstract class BaseHealthSystem : MonoBehaviour, IDamageable
         healthbar.value = currentHealth;
     }
 
-    public virtual void Damaged(int damage)
+    public virtual void TakeDamage(int damage)
     {
-        if(isDead) return;
+        if (isDead) return;
         
         currentHealth -= damage;
         StartCoroutine(SetHealthBar());
@@ -32,14 +33,14 @@ public abstract class BaseHealthSystem : MonoBehaviour, IDamageable
 
     public virtual void Death()
     {
-        if(isDead) return;
+        if (isDead) return;
         
         isDead = true;
         healthbar.gameObject.SetActive(false);
         Destroy(gameObject, destructionDelay);
     }
     
-    protected virtual IEnumerator SetHealthBar()
+    private IEnumerator SetHealthBar()
     {
         while(healthbar.value > currentHealth)
         {

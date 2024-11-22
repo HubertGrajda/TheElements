@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using _Scripts.Managers;
 using _Scripts.Spells;
 using UnityEngine;
@@ -9,36 +10,25 @@ public class PlayerBendingStateMachine : PlayerStateMachine
 {
     [SerializeField] private Transform spawnPoint;
 
-    [SerializeField] private List<WaterSpell> waterSpells;
-    [SerializeField] private List<FireSpell> fireSpells;
-    [SerializeField] private List<AirSpell> airSpells;
-    [SerializeField] private List<EarthSpell> earthSpells;
-    public List<WaterSpell> WaterSpells => waterSpells;
-    public List<FireSpell> FireSpells => fireSpells;
-    public List<AirSpell> AirSpells => airSpells;
-    public List<EarthSpell> EarthSpells => earthSpells;
+    [SerializeField] private List<SpellConfig> spells;
+    [SerializeField] private List<ElementType> bendingStyles;
+    
+    public List<SpellConfig> Spells => spells;
+    private BendingState CurrentBendingState => CurrentState as BendingState;
 
     private Spell _spellToCast;
-
-    private WaterBendingState _waterBendingState;
-    private FireBendingState _fireBendingState;
-    private AirBendingState _airBendingState;
-    private EarthBendingState _earthBendingState;
-
-    private BendingState CurrentBendingState => CurrentState as BendingState;
-    
     private ObjectPoolingManager _objectPoolingManager;
-    
     private bool _onCooldown;
+    private readonly Dictionary<ElementType, BendingState> _elementToBendingState = new();
     
     protected override void InitStates(out State entryState)
     {
-        _waterBendingState = new WaterBendingState(this);
-        _fireBendingState = new FireBendingState(this);
-        _airBendingState = new AirBendingState(this);
-        _earthBendingState = new EarthBendingState(this);
+        foreach (var elementType in bendingStyles)
+        {
+            _elementToBendingState.Add(elementType, new BendingState(this, elementType));
+        }
 
-        entryState = _waterBendingState;
+        entryState = _elementToBendingState.First().Value;
     }
 
     protected override void Start()
@@ -52,10 +42,7 @@ public class PlayerBendingStateMachine : PlayerStateMachine
 
     private void AddListeners()
     {
-        PlayerActions.WaterBending.started += OnWaterBendingStarted;
-        PlayerActions.EarthBending.started += OnEarthBendingStarted;
-        PlayerActions.AirBending.started += OnAirBendingStarted;
-        PlayerActions.FireBending.started += OnFireBendingStarted;
+        PlayerActions.NumKeys.started += OnNumKeyStarted;
         
         PlayerActions.CastSpell.started += CastSpell;
         PlayerActions.CastSpell.canceled += CancelSpellCasting;
@@ -63,10 +50,7 @@ public class PlayerBendingStateMachine : PlayerStateMachine
 
     private void RemoveListeners()
     {
-        PlayerActions.WaterBending.started -= OnWaterBendingStarted;
-        PlayerActions.EarthBending.started -= OnEarthBendingStarted;
-        PlayerActions.AirBending.started -= OnAirBendingStarted;
-        PlayerActions.FireBending.started -= OnFireBendingStarted;
+        PlayerActions.NumKeys.started -= OnNumKeyStarted;
         
         PlayerActions.CastSpell.started -= CastSpell; 
         PlayerActions.CastSpell.canceled -= CancelSpellCasting;
@@ -75,12 +59,17 @@ public class PlayerBendingStateMachine : PlayerStateMachine
     
     private void FireSpell() // called through animation event
     {
-        _spellToCast = _objectPoolingManager.SpawnFromPool(CurrentBendingState.SelectedSpell, spawnPoint.transform.position, transform.rotation);
+        _spellToCast = _objectPoolingManager.GetFromPool(CurrentBendingState.SelectedSpell);
+
+        if (!_spellToCast.CanBeCasted) return;
         
         if (_spellToCast.SpellData.IsChildOfSpawnPoint)
         {
             _spellToCast.transform.parent = spawnPoint.transform;
         }
+        
+        _spellToCast.transform.position = spawnPoint.position;
+        _spellToCast.transform.rotation = transform.rotation;
         
         _spellToCast.CastSpell();
     }
@@ -101,7 +90,7 @@ public class PlayerBendingStateMachine : PlayerStateMachine
     
     private void CastSpell(InputAction.CallbackContext _)
     {
-        if(_onCooldown) return;
+        if (_onCooldown) return;
         
         _spellToCast = _objectPoolingManager.GetFromPool(CurrentBendingState.SelectedSpell);
         StartCoroutine(Cooldown(_spellToCast.SpellData.Cooldown));
@@ -114,14 +103,23 @@ public class PlayerBendingStateMachine : PlayerStateMachine
         PlayerManager.spellCastingCanceled.Invoke(_spellToCast);
     }
 
-    private void OnWaterBendingStarted(InputAction.CallbackContext _) => ChangeState(_waterBendingState);
+    private void OnNumKeyStarted(InputAction.CallbackContext context)
+    {
+        var value = (int)context.ReadValue<float>();
+        OnBendingSlotStarted(value);
+    }
     
-    private void OnEarthBendingStarted(InputAction.CallbackContext _) => ChangeState(_earthBendingState);
+    private void OnBendingSlotStarted(int slotNumber)
+    {
+        var slotIndex = slotNumber - 1;
+        
+        if (slotIndex < 0) return;
+        if (bendingStyles.Count <= slotIndex) return;
+        if (!_elementToBendingState.TryGetValue(bendingStyles[slotIndex], out var bendingState)) return;
+        
+        ChangeState(bendingState);
+    }
     
-    private void OnAirBendingStarted(InputAction.CallbackContext _) => ChangeState(_airBendingState);
-    
-    private void OnFireBendingStarted(InputAction.CallbackContext _) => ChangeState(_fireBendingState);
-
     private void OnDestroy()
     {
         RemoveListeners();

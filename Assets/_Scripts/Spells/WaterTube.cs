@@ -1,9 +1,10 @@
 using System.Collections;
+using _Scripts.Managers;
 using UnityEngine;
 
 namespace _Scripts.Spells
 {
-    public class WaterTube : WaterSpell
+    public class WaterTube : Spell
     {
         [SerializeField] private AnimationCurve speedCurve;
         [SerializeField] private float endSpeed;
@@ -34,18 +35,21 @@ namespace _Scripts.Spells
             Vfx.SetVector3(MIDDLE_POINT_2_PARAM, _startPoint);
             Vfx.SetVector3(END_POINT_PARAM, _startPoint);
 
+            var endPointPos = startPosition;
+            var middlePoint1Pos = startPosition;
+            var middlePoint2Pos = startPosition;
+            
             float time = 0;
 
             while (time < 1)
             {
-                Vfx.SetVector3(END_POINT_PARAM,
-                    Vector3.Slerp(startPosition, _middlePoint1, speedCurve.Evaluate(time)));
-            
-                Vfx.SetVector3(MIDDLE_POINT_2_PARAM,
-                    Vector3.Lerp(Vfx.GetVector3(MIDDLE_POINT_2_PARAM), Vfx.GetVector3(END_POINT_PARAM), speedCurve.Evaluate(time/2)));
-            
-                Vfx.SetVector3(MIDDLE_POINT_1_PARAM,
-                    Vector3.Lerp(Vfx.GetVector3(MIDDLE_POINT_1_PARAM), Vfx.GetVector3(MIDDLE_POINT_2_PARAM), speedCurve.Evaluate(time/3)));
+                endPointPos = Vector3.Slerp(startPosition, _middlePoint1, speedCurve.Evaluate(time));
+                middlePoint2Pos = Vector3.Lerp(middlePoint2Pos, endPointPos, speedCurve.Evaluate(time/2));
+                middlePoint1Pos = Vector3.Lerp(middlePoint1Pos, middlePoint2Pos, speedCurve.Evaluate(time/3));
+                
+                Vfx.SetVector3(END_POINT_PARAM, endPointPos);
+                Vfx.SetVector3(MIDDLE_POINT_2_PARAM, middlePoint2Pos);
+                Vfx.SetVector3(MIDDLE_POINT_1_PARAM, middlePoint1Pos);
             
                 time += Time.deltaTime * speed;
                 yield return null;
@@ -54,17 +58,16 @@ namespace _Scripts.Spells
             while (time < 1)
             {
                 var speedCurveEvaluated = speedCurve.Evaluate(time);
-                Vfx.SetVector3(END_POINT_PARAM,
-                    Vector3.Slerp(startPosition, _middlePoint2 + variety, speedCurveEvaluated));
-            
-                Vfx.SetVector3(MIDDLE_POINT_2_PARAM,
-                    Vector3.Lerp(Vfx.GetVector3(MIDDLE_POINT_2_PARAM), Vfx.GetVector3(END_POINT_PARAM), speedCurveEvaluated));
-            
-                Vfx.SetVector3(MIDDLE_POINT_1_PARAM,
-                    Vector3.Lerp(Vfx.GetVector3(MIDDLE_POINT_1_PARAM), Vfx.GetVector3(MIDDLE_POINT_2_PARAM), speedCurveEvaluated));
-            
-                Vfx.SetVector3(START_POINT_PARAM,
-                    Vector3.Lerp(Vfx.GetVector3(START_POINT_PARAM), Vfx.GetVector3(MIDDLE_POINT_1_PARAM), speedCurveEvaluated));
+
+                endPointPos = Vector3.Slerp(startPosition, _middlePoint2 + variety, speedCurveEvaluated);
+                middlePoint2Pos = Vector3.Lerp(middlePoint2Pos, endPointPos, speedCurveEvaluated);
+                middlePoint1Pos = Vector3.Lerp(middlePoint1Pos, middlePoint2Pos, speedCurveEvaluated);
+                startPosition = Vector3.Lerp(startPosition, middlePoint1Pos, speedCurveEvaluated);
+                
+                Vfx.SetVector3(END_POINT_PARAM, endPointPos);
+                Vfx.SetVector3(MIDDLE_POINT_2_PARAM, middlePoint2Pos);
+                Vfx.SetVector3(MIDDLE_POINT_1_PARAM, middlePoint1Pos);
+                Vfx.SetVector3(START_POINT_PARAM, startPosition);
             
                 time += Time.deltaTime * speed;
                 yield return null;
@@ -74,39 +77,40 @@ namespace _Scripts.Spells
             while (time < 1 )
             {
                 var speedCurveEvaluated = speedCurve.Evaluate(time);
-                Vfx.SetVector3(END_POINT_PARAM,
-                    Vector3.Lerp(Vfx.GetVector3(END_POINT_PARAM), _endPoint, speedCurveEvaluated));
-            
-                Vfx.SetVector3(MIDDLE_POINT_2_PARAM,
-                    Vector3.Lerp(Vfx.GetVector3(MIDDLE_POINT_2_PARAM), Vfx.GetVector3(END_POINT_PARAM), speedCurveEvaluated));
-            
-                Vfx.SetVector3(MIDDLE_POINT_1_PARAM,
-                    Vector3.Lerp(Vfx.GetVector3(MIDDLE_POINT_1_PARAM), Vfx.GetVector3(MIDDLE_POINT_2_PARAM), speedCurveEvaluated));
-            
-                Vfx.SetVector3(START_POINT_PARAM,
-                    Vector3.Lerp(Vfx.GetVector3(START_POINT_PARAM), Vfx.GetVector3(MIDDLE_POINT_1_PARAM), speedCurveEvaluated));
+
+                endPointPos = Vector3.Lerp(endPointPos, _endPoint, speedCurveEvaluated);
+                middlePoint2Pos = Vector3.Lerp(middlePoint2Pos, endPointPos, speedCurveEvaluated);
+                middlePoint1Pos = Vector3.Lerp(middlePoint1Pos, middlePoint2Pos, speedCurveEvaluated);
+                startPosition = Vector3.Lerp(startPosition, middlePoint1Pos, speedCurveEvaluated);
+
+                Vfx.SetVector3(END_POINT_PARAM, endPointPos);
+                Vfx.SetVector3(MIDDLE_POINT_2_PARAM, middlePoint2Pos);
+                Vfx.SetVector3(MIDDLE_POINT_1_PARAM, middlePoint1Pos);
+                Vfx.SetVector3(START_POINT_PARAM, startPosition);
 
                 time += Time.deltaTime * endSpeed ;
                 yield return null;
             }
-            StartCoroutine(DisableSpellAfterDelay());
+            Disable();
         }
-        private void OnCollisionEnter(Collision collision)
+        private void OnCollisionEnter(Collision _)
         {
-            StartCoroutine(DisableSpellAfterDelay());
+            Disable();
         }
 
         public override void CastSpell()
         {
+            base.CastSpell();
             var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            var ray = Camera.main.ScreenPointToRay(screenCenter);
+            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
+            var nearestWater = Detection.GetNearestWaterSource(_endPoint);
 
             _endPoint = Physics.Raycast(ray, out var hit) 
                 ? hit.point
                 : ray.GetPoint(50);
 
-            _startPoint = Detection.NearestWater(_endPoint).transform.position;
-            Vfx.SetVector4("Color", Detection.NearestWater(_endPoint).GetComponent<MeshRenderer>().material.GetColor("_WaterColor"));
+            _startPoint = nearestWater.transform.position;
+            Vfx.SetVector4("Color", nearestWater.GetColor());
             StartCoroutine(MoveToTarget(_endPoint));
         }
     }

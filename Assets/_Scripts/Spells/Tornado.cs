@@ -1,161 +1,175 @@
-using System.Collections.Generic;
+using System.Collections;
 using _Scripts.Managers;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 namespace _Scripts.Spells
 {
-    public class Tornado : AirSpell
+    public class Tornado : Spell
     {
-        [SerializeField] private float dissolve;
         [SerializeField] private float minSize = 60f;
         [SerializeField] private float maxSize = 150f;
-        [SerializeField] private float growingSpeed = 0.01f;
-
+        [SerializeField] private float growingDuration = 5f;
+        [SerializeField] private float sizeForExperienceModifier = 0.5f;
+        
+        [SerializeField] private float dissolvingDuration = 2f;
+        
         [ColorUsage(true, true)]
         [SerializeField] private Color basicColor;
+        [SerializeField] private float colorTransitionDuration = 2f;
 
-        private float _groundPosY;
-        private float _currSize;
-        private bool _colorIsChanged;
+        [SerializeField] private float maxDistance = 30f; 
+        [SerializeField] private float maxDissolve = 0.6f;
+
         private bool _destructed;
+        
+        private float _groundPosY;
+        private float _currMaxSize;
+        private float _currSize;
+        
+        private const float MIN_DISSOLVE = 0f;
+        private const float MAX_SNAP_DISTANCE = 50f;
 
         private const string COLOR_PARAM = "Color";
         private const string DISSOLVE_PARAM = "Dissolve";
         private const string SIZE_PARAM = "Size";
-        private const string WATER_COLOR_SHADER_PARAM = "_WaterColor";
+        private const string STOP_EVENT_NAME = "OnStop";
         
-        private readonly List<GameObject> _influencedObjects = new();
-            
+        private Coroutine _changeColorCoroutine;
+        private Coroutine _dissolveCoroutine;
+        public override bool CanBeCasted => Actions.CastSpell.IsPressed();
+
+        private PlayerInputs.PlayerActions Actions => InputsManager.Instance.PlayerActions;
+        private PlayerExperienceSystem _experienceSystem;
+        
+        protected override void Awake()
+        {
+            base.Awake();
+            _experienceSystem = PlayerManager.Instance.ExperienceSystem;
+        }
+        
         private void Update()
         {
-        
-            if(!Input.GetKey(KeyCode.Mouse0))
-            {
-                _destructed = true;
-                DestroyAfterDissolving();
-            }
-
-            if(!_colorIsChanged)
-            {
-                Vfx.SetVector4(COLOR_PARAM, Vector4.Lerp(Vfx.GetVector4(COLOR_PARAM), basicColor, 0.01f));
-            }    
-        
-            if (!_destructed)
-            {
-                Movement();
-                _groundPosY = SnapToGround();
-            }
+            if (_destructed) return;
+            
+            Movement();
+            SnapToGround();
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
+            
             _currSize = minSize;
             _destructed = false;
             SpellCollider.enabled = true;
-
-            if (!PlayerManager.Instance.PlayerRef.TryGetComponent(out PlayerExperienceSystem experienceSystem)) return;
-            if (!experienceSystem.TryGetExperienceValue(SpellData.ElementType, out var experience)) return;
-            // TODO: refactor exp system
             
-            _currSize += experience;
-            maxSize += 2 * experience;
+            var experience = _experienceSystem.GetExperienceValue(SpellData.ElementType);
+            var additionalMaxSize = experience * sizeForExperienceModifier;
+            _currMaxSize = maxSize + additionalMaxSize;
+            
+            Vfx.SetFloat(DISSOLVE_PARAM, MIN_DISSOLVE);
             Vfx.SetFloat(SIZE_PARAM, _currSize);
-            Vfx.SetFloat(DISSOLVE_PARAM, dissolve);
             Vfx.SetVector4(COLOR_PARAM, basicColor);
+            
+            AddListeners();
         }
-        private void FixedUpdate()
+
+        protected override void AddListeners()
         {
-            if (dissolve < 0.55f && _destructed == false)
-            {
-                dissolve += 0.005f;
-                Vfx.SetFloat(DISSOLVE_PARAM, dissolve);
-            }
+            Actions.CastSpell.canceled += OnCastSpellInputCanceled;
+        }
+        
+        protected override void RemoveListeners()
+        {
+            Actions.CastSpell.canceled -= OnCastSpellInputCanceled;
+        }
+        
+        private void OnCastSpellInputCanceled(InputAction.CallbackContext _)
+        {
+            _destructed = true;
 
-            if (_destructed && dissolve > 0)
-            {
-                dissolve -= 0.005f;
-                Vfx.SetFloat(DISSOLVE_PARAM, dissolve);
-            }
+            Vfx.SendEvent(STOP_EVENT_NAME);
+            DissolveToValue(MIN_DISSOLVE);
+            Disable();
+        }
 
-            if (_currSize < maxSize && _destructed == false)
+        private void DissolveToValue(float desiredValue)
+        {
+            if (_dissolveCoroutine != null)
             {
-                _currSize += growingSpeed;
-                Vfx.SetFloat(SIZE_PARAM, _currSize);
+                StopCoroutine(_dissolveCoroutine);
             }
+            
+            _dissolveCoroutine = StartCoroutine(ChangeFloatParamOverTime(
+                DISSOLVE_PARAM,dissolvingDuration, desiredValue));
+        }
+
+        private IEnumerator ChangeFloatParamOverTime(string param, float time, float desiredValue)
+        {
+            var timer = 0f;
+            var initialValue = Vfx.GetFloat(param);
+            
+            while (timer < time)
+            {
+                var value = Mathf.Lerp(initialValue, desiredValue, timer / time);
+                Vfx.SetFloat(param, value);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            
+            Vfx.SetFloat(param, desiredValue);
+        }
+        
+        private IEnumerator ChangeColorOverTime(float time, Color desiredColor)
+        {
+            var timer = 0f;
+            var initialValue = Vfx.GetVector4(COLOR_PARAM);
+            
+            while (timer < time)
+            {
+                var value = Vector4.Lerp(initialValue, desiredColor, timer / time);
+                Vfx.SetVector4(COLOR_PARAM, value);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            
+            Vfx.SetVector4(COLOR_PARAM, desiredColor);
+            _changeColorCoroutine = null;
         }
 
         private void Movement()
         {
             var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
             var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
+
+            if (!Physics.Raycast(ray, out var hit)) return;
+            
+            var direction = (hit.point - transform.position).normalized;
+            direction.y = 0;
+            transform.position += direction * (speed * Time.deltaTime);
+        }
+
+        protected void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out IColorProvider colorProvider))
+            {
+                var desiredColor = colorProvider.GetColor();
+                _changeColorCoroutine = StartCoroutine(ChangeColorOverTime(colorTransitionDuration, desiredColor));
+            }
+        }
         
-            if (Physics.Raycast(ray, out var hit))
-            {
-                var direction = (hit.point - transform.position).normalized;
-                direction.y = 0;
-                transform.position += direction * (speed * Time.deltaTime);
-            }
-        }
-
-        private void DestroyAfterDissolving()
+        protected void OnTriggerExit(Collider other)
         {
-            Vfx.SendEvent("OnStop");
-            _destructed = true;
-            StartCoroutine(DisableSpellAfterDelay());
-        }
-
-        protected override void OnTriggerEnter(Collider other)
-        {
-            if(other.CompareTag(Constants.Tags.WATER_TAG))
+            if (other.TryGetComponent(out IColorProvider _))
             {
-                _colorIsChanged = true;
-            }
-            else if( other.CompareTag(Constants.Tags.SMOKE_TAG))
-            {
-                var smoke = other.GetComponent<SmokeAdjustment>();
-                smoke.ChangeRotationSpeed(0.05f);
-                _influencedObjects.Add(smoke.gameObject);
-            }
-        }
-        protected override void OnTriggerStay(Collider other)
-        {
-            if (other.CompareTag(Constants.Tags.WATER_TAG))
-            {
-                _colorIsChanged = true;
-                Vfx.SetVector4(COLOR_PARAM, Vector4.Lerp(Vfx.GetVector4(COLOR_PARAM), other.GetComponent<MeshRenderer>().material.GetColor(WATER_COLOR_SHADER_PARAM), 0.01f));
-            
-            }
-            else if( other.CompareTag(Constants.Tags.SMOKE_TAG))
-            {
-                var smoke = other.GetComponent<SmokeAdjustment>();
-                other.transform.position = Vector3.Lerp(other.transform.position, transform.position, 0.1f);
-                _colorIsChanged = true;
-                Vfx.SetVector4(COLOR_PARAM, Vector4.Lerp(Vfx.GetVector4(COLOR_PARAM), smoke.Vfx.GetVector4(COLOR_PARAM), 0.01f));
-            }
-            
-            base.OnTriggerStay(other);
-        }
-        private void OnTriggerExit(Collider other)
-        {
-            _colorIsChanged = false;
-            if (other.CompareTag(Constants.Tags.SMOKE_TAG))
-            {
-                var smoke = other.GetComponent<SmokeAdjustment>();
-                smoke.ChangeRotationSpeed(0);
-            }
-        }
-
-        private void OnDisable()
-        {
-            foreach (var influencedObject in _influencedObjects)
-            {
-                if (influencedObject.TryGetComponent(out SmokeAdjustment smokeAdjustment))
+                if (_changeColorCoroutine != null)
                 {
-                    smokeAdjustment.StopAllCoroutines();
-                    smokeAdjustment.ChangeRotationSpeed(0);
+                    StopCoroutine(_changeColorCoroutine);
                 }
+                
+                _changeColorCoroutine = StartCoroutine(ChangeColorOverTime(colorTransitionDuration, basicColor));
             }
-            
-            _influencedObjects.Clear();
         }
 
         public override void CastSpell()
@@ -163,23 +177,30 @@ namespace _Scripts.Spells
             base.CastSpell();
             var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
             var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
-        
-            transform.position = Physics.Raycast(ray, out var hit) 
+            
+            transform.position = Physics.Raycast(ray, out var hit, maxDistance) 
                 ? new Vector3(hit.point.x, _groundPosY, hit.point.z)
-                : new Vector3(ray.GetPoint(5).x , _groundPosY, ray.GetPoint(5).z);
+                : new Vector3(ray.GetPoint(maxDistance).x , _groundPosY, ray.GetPoint(maxDistance).z);
+            
+            DissolveToValue(maxDissolve);
+            StartCoroutine(ChangeFloatParamOverTime(SIZE_PARAM,growingDuration, _currMaxSize));
         }
 
-        private float SnapToGround()
+        private void SnapToGround()
         {
             var position = transform.position;
-            var distance = new Vector3(position.x, position.y + 3, position.z);
 
-            if (!Physics.Raycast(distance, transform.TransformDirection(-Vector3.up), out var hit,
-                    LayerMask.NameToLayer(Constants.Tags.GROUND_TAG))) return transform.position.y;
+            const float yOffset = 3f;
+            var origin = new Vector3(position.x, position.y + yOffset, position.z);
+
+            if (!Physics.Raycast(origin, transform.TransformDirection(-Vector3.up), out var hit, MAX_SNAP_DISTANCE))
+            {
+                _groundPosY = transform.position.y;
+                return;
+            }
             
             transform.position = Vector3.Lerp(transform.position, new Vector3(position.x, hit.point.y, position.z), 0.05f);
-            return hit.point.y;
-
+            _groundPosY = hit.point.y;
         }
     }
 }

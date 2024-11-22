@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private void Start()
+    private void OnEnable()
     {
-        PlayerManager.Instance.SetUpPlayerRef(gameObject);
+        PlayerManager.Instance.SetUpPlayerRef(this);
     }
 }

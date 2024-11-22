@@ -1,18 +1,7 @@
 
 public class AirBendingState : BendingState
 {
-    public AirBendingState(PlayerBendingStateMachine fsm) : base(fsm)
+    public AirBendingState(PlayerBendingStateMachine fsm, ElementType type) : base(fsm, type)
     {
-        foreach (var spell in fsm.AirSpells)
-        {
-            spells.Add(spell);
-        }
-    }
-
-    protected override bool TryGetStateToSwitch(out State stateToSwitch)
-    {
-        stateToSwitch = default;
-        
-        return false;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace _Scripts.Spells
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class RollingBoulder : EarthSpell
+    public class RollingBoulder : Spell
     {
         [SerializeField] private float detectingDistance = 3f;
         [SerializeField] private float distanceBetweenGround = 0.3f;
@@ -16,14 +16,18 @@ namespace _Scripts.Spells
         [SerializeField] private float slowingDownTime = 3f;
         [SerializeField] private float delayToSlowDown = 10f;
         
-        private float _currentSpeed;
-        private bool _stopped;
-
         private Rigidbody _rb;
         private Texture2D _currTex;
+
+        private bool _stopped;
+        private float _currentSpeed;
         private Color _currColor = Color.black;
 
-
+        private const string COLOR_PARAM = "Color1";
+        private const string COLLIDER_POSITION_PARAM = "ColliderPosition";
+        private const string NO_GROUND_EVENT = "NoGround";
+        private const string ON_PLAY_EVENT = "OnPlay";
+        
         protected override void Awake()
         {
             base.Awake();
@@ -47,18 +51,24 @@ namespace _Scripts.Spells
 
         private void SnapToGround()
         {
-            var rayStartPoint = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            var posX = transform.position.x;
+            var posY = transform.position.y;
+            var posZ = transform.position.z;
+            var rayStartPoint = new Vector3(posX, posY + 1, posZ);
+            
             if (Physics.Raycast(rayStartPoint, transform.TransformDirection(-Vector3.up), out var hit, detectingDistance))
             {
-                var targetPosition = new Vector3(transform.position.x, hit.point.y + distanceBetweenGround, transform.position.z);
+                var targetPosition = new Vector3(posX, hit.point.y + distanceBetweenGround, posZ);
+                var offset = new Vector3(0, -0.5f, 0);
                 
                 transform.position = targetPosition;
-                Vfx.SetVector3("ColliderPosition", hit.point + new Vector3(0, -0.5f, 0));
+                Vfx.SetVector3(COLLIDER_POSITION_PARAM, hit.point + offset);
             }
             else
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y - fallingSpeed * Time.deltaTime, transform.position.z);
-                Vfx.SendEvent("NoGround");
+                var newPosY = posY - fallingSpeed * Time.deltaTime;
+                transform.position = new Vector3(posX, newPosY, posZ);
+                Vfx.SendEvent(NO_GROUND_EVENT);
             }
         }
         
@@ -67,13 +77,14 @@ namespace _Scripts.Spells
             base.CastSpell();
             AddVelocity(transform.forward);
             StartCoroutine(SlowDownAfterDelay(delayToSlowDown));
-            Vfx.SendEvent("OnPlay");
+            Vfx.SendEvent(ON_PLAY_EVENT);
         }
         
         private IEnumerator SlowDownAfterDelay(float delay)
         {
             var timer = 0f;
             var velocity = _rb.velocity;
+            
             yield return new WaitForSeconds(delay);
             
             while (timer < slowingDownTime)
@@ -86,7 +97,7 @@ namespace _Scripts.Spells
 
             _rb.velocity = Vector3.zero;
             _stopped = true;
-            StartCoroutine(DisableSpellAfterDelay());
+            Disable();
         }
         
         private void ChangeColorToGroundTexture()
@@ -95,55 +106,63 @@ namespace _Scripts.Spells
             
             if (!Physics.Raycast(rayStartPoint, transform.TransformDirection(-Vector3.up), out var hit)) return;
             
-            if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Ground")) return;
-
-            var color = _currColor;
-            var meshRenderer = hit.collider.GetComponent<MeshRenderer>();
-            var tex = meshRenderer.material.mainTexture as Texture2D;
+            if (hit.collider.gameObject.layer != LayerMask.NameToLayer(Constants.Tags.GROUND_TAG)) return;
 
             if (hit.collider.TryGetComponent(out Terrain terrain))
             {
-                var terrainPosition = hit.point - terrain.transform.position;
-                var splatMapPosition = new Vector3(
-                    terrainPosition.x / terrain.terrainData.size.x, 
-                    0,
-                    terrainPosition.z / terrain.terrainData.size.z);
-                
-                var x = Mathf.FloorToInt(splatMapPosition.x * terrain.terrainData.alphamapWidth);
-                var z = Mathf.FloorToInt(splatMapPosition.z * terrain.terrainData.alphamapHeight);
-                var alphaMap = terrain.terrainData.GetAlphamaps(x, z, 1, 1);
-
-                var primaryTex = 0;
-                for (var i = 1; i < alphaMap.Length; i++)
-                {
-                    if (!(alphaMap[0, 0, i] > alphaMap[0, 0, primaryTex])) continue;
-
-                    primaryTex = i;
-                }
-
-                tex = terrain.terrainData.terrainLayers[primaryTex].diffuseTexture;
-                
-                if (_currTex != tex)
-                {
-                    color = Detection.MainColorFromTexture(
-                        terrain.terrainData.terrainLayers[primaryTex].diffuseTexture, 100);
-                    _currTex = tex;
-                }
+                SetVisualsFromTerrain(hit.point, terrain);
+                return;
             }
-            else if (tex == null)
-            {
-                color = meshRenderer.material.color;
-            }
-            else if (tex != _currTex)
-            {
-                color = Detection.MainColorFromTexture(tex, 50);
-                _currTex = tex;
-            }
-
-            if (_currColor == color) return;
             
-            _currColor = color;
-            Vfx.SetVector4("Color1", color);
+            if (!hit.collider.TryGetComponent(out MeshRenderer meshRenderer)) return;
+
+            if (meshRenderer.material.mainTexture is Texture2D tex)
+            {
+                SetVisualsFromTexture2D(tex);
+                return;
+            }
+
+            _currTex = null;
+            _currColor = meshRenderer.material.color;
+            
+            Vfx.SetVector4(COLOR_PARAM, _currColor);
+        }
+
+        private void SetVisualsFromTerrain(Vector3 point, Terrain terrain)
+        {
+            var terrainData = terrain.terrainData;
+            var terrainPosition = point - terrain.transform.position;
+                
+            var splatMapPositionX = terrainPosition.x / terrainData.size.x;
+            var splatMapPositionZ = terrainPosition.z / terrainData.size.z;
+                
+            var x = Mathf.FloorToInt(splatMapPositionX * terrainData.alphamapWidth);
+            var z = Mathf.FloorToInt(splatMapPositionZ * terrainData.alphamapHeight);
+                
+            var alphaMap = terrain.terrainData.GetAlphamaps(x, z, 1, 1);
+
+            var primaryTex = 0;
+                
+            for (var i = 1; i < alphaMap.Length; i++)
+            {
+                if (alphaMap[0, 0, i] <= alphaMap[0, 0, primaryTex]) continue;
+
+                primaryTex = i;
+            }
+
+            var texture = terrainData.terrainLayers[primaryTex].diffuseTexture;
+
+            SetVisualsFromTexture2D(texture);
+        }
+
+        private void SetVisualsFromTexture2D(Texture2D texture)
+        {
+            if (texture == _currTex) return;
+            
+            _currColor = Detection.MainColorFromTexture(texture, 50);
+            _currTex = texture;
+            
+            Vfx.SetVector4(COLOR_PARAM, _currColor);
         }
     }
 }

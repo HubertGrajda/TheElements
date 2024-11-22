@@ -14,8 +14,7 @@ namespace _Scripts.Managers
         public Camera CameraUI => cameraUI;
         public Camera CameraMain => cameraMain;
 
-        public CinemachineFreeLook AimingFreeLook => aimingFreeLook;
-        public CinemachineFreeLook MainFreeLook => mainFreeLook;
+        private CinemachineFreeLook MainFreeLook => mainFreeLook;
 
         private float _xAxisSpeed;
         private float _yAxisSpeed;
@@ -29,7 +28,7 @@ namespace _Scripts.Managers
 
         public void ToggleMainCameraMovement(bool enable)
         {
-            if(MainFreeLook == null) return;
+            if (MainFreeLook == null) return;
         
             if (!enable)
             {

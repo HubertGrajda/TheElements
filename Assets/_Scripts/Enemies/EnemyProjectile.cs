@@ -19,15 +19,11 @@ public class EnemyProjectile : MonoBehaviour, IPoolable
     {
         if (collision.collider.CompareTag(Constants.Tags.PLAYER_TAG))
         {
-            collision.collider.GetComponent<PlayerHealthSystem>().Damaged(10); // TODO:
+            collision.collider.GetComponent<PlayerHealthSystem>().TakeDamage(10); // TODO:
         }
     }
 
-    public virtual void OnSpawnFromPool()
-    {
-    }
-
-    public virtual void ReturnToPool()
+    public void OnGetFromPool()
     {
     }
 }

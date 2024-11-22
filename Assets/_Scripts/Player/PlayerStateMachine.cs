@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerEvents))]
 public abstract class PlayerStateMachine : StateMachine
 {
-    protected PlayerInputs.PlayerActionsActions PlayerActions { get; private set; }
+    protected PlayerInputs.PlayerActions PlayerActions { get; private set; }
     
     public Animator Anim { get; private set; }
 
@@ -17,7 +17,7 @@ public abstract class PlayerStateMachine : StateMachine
     {
         Anim = GetComponent<Animator>();
         PlayerEvents = GetComponent<PlayerEvents>();
-        PlayerActions = InputManager.Instance.PlayerActions;
+        PlayerActions = InputsManager.Instance.PlayerActions;
         PlayerManager = PlayerManager.Instance;
     }
     

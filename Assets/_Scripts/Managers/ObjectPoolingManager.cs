@@ -64,7 +64,6 @@ namespace _Scripts.Managers
             addedObject.gameObject.SetActive(true);
             addedObject.transform.position = position;
             addedObject.transform.rotation = rotation;
-            type.OnSpawnFromPool();
             
             return addedObject;
         }
@@ -72,7 +71,8 @@ namespace _Scripts.Managers
         public T GetFromPool<T>(T type) where T : MonoBehaviour, IPoolable
         {
             var pool = GetOrCreatePool(type);
-
+            T pooled;
+            
             foreach (var poolable in pool.Spawned.ToList())
             {
                 var objectToPool = poolable as T;
@@ -85,10 +85,14 @@ namespace _Scripts.Managers
 
                 if (objectToPool.gameObject.activeInHierarchy) continue;
 
-                return objectToPool;
+                pooled = objectToPool;
+                pooled.OnGetFromPool();
+                return pooled;
             }
-
-            return AddToPool(type);
+            
+            pooled = AddToPool(type);
+            pooled.OnGetFromPool();
+            return pooled;
         }
 
         private Pool<IPoolable> GetOrCreatePool<T>(T type) where T : MonoBehaviour, IPoolable
