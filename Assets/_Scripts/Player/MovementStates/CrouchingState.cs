@@ -13,7 +13,7 @@ public class CrouchingState : State
     
     public override void EnterState()
     {
-        _fsm.Anim.SetBool(Constants.AnimationNames.CROUCH, true);
+        _fsm.Animator.SetBool(Constants.AnimationNames.CROUCH, true);
     }
 
     public override void UpdateState()
@@ -23,7 +23,7 @@ public class CrouchingState : State
         if (_fsm.IsMovingInputActive)
         {
             _fsm.SetCurrentSpeed(_stats.crouchSpeed);
-            _fsm.Anim.SetFloat(Constants.AnimationNames.MOVEMENT_SPEED, _stats.crouchSpeed, 0.1f, Time.deltaTime);
+            _fsm.Animator.SetFloat(Constants.AnimationNames.MOVEMENT_SPEED, _stats.crouchSpeed, 0.1f, Time.deltaTime);
         }
         else
         {
@@ -33,7 +33,7 @@ public class CrouchingState : State
 
     public override void EndState()
     {
-        _fsm.Anim.SetBool(Constants.AnimationNames.CROUCH, false);
+        _fsm.Animator.SetBool(Constants.AnimationNames.CROUCH, false);
     }
     
     protected override bool TryGetStateToSwitch(out State stateToSwitch)

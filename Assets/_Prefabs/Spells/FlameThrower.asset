@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FlameThrower
   m_EditorClassIdentifier: 
   <IsChildOfSpawnPoint>k__BackingField: 1
-  <Cooldown>k__BackingField: 0
   <CastingBehaviour>k__BackingField: {fileID: 11400000, guid: b87c1f3d4345a6d458f4659ae8b6544d, type: 2}
+  <SpellLimiterConfig>k__BackingField: {fileID: 11400000, guid: 4656e32b78bf5a44e8c57c9045d67d5b, type: 2}
+  <SpellUIConfig>k__BackingField: {fileID: 11400000, guid: 1a8adc2d19c8f2548ae74345d8463ba3, type: 2}
   <ElementType>k__BackingField: {fileID: 11400000, guid: 227829f502ce33b45adaa89026c5f4d5, type: 2}
   <SpellPrefab>k__BackingField: {fileID: 3622767759358115829, guid: a88957319070b044d8dd5959b78f9aaa, type: 3}

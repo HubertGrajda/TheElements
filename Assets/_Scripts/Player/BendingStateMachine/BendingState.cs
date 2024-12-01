@@ -5,10 +5,10 @@ using _Scripts.Managers;
 
 public class BendingState : State
 {
-    protected readonly List<Spell> spells = new ();
+    private readonly List<Spell> _spells = new();
     private int _currSpellIndex;
 
-    public Spell SelectedSpell => spells[_currSpellIndex];
+    public Spell SelectedSpell => _spells[_currSpellIndex];
 
     private PlayerInputs.PlayerActions _playerActions;
     
@@ -18,9 +18,10 @@ public class BendingState : State
         {
             if (spell.ElementType != type) continue;
             
-            spells.Add(spell.SpellPrefab);
+            _spells.Add(spell.SpellPrefab);
         }
         
+        SpellsManager.Instance.OnSelectedSpellChanged?.Invoke(SelectedSpell);
         _playerActions = InputsManager.Instance.PlayerActions;
     }
 
@@ -32,9 +33,10 @@ public class BendingState : State
 
     private void NextSpell(InputAction.CallbackContext context)
     {
-        if (_currSpellIndex >= spells.Count - 1) return;
+        if (_currSpellIndex >= _spells.Count - 1) return;
         
         _currSpellIndex++;
+        SpellsManager.Instance.OnSelectedSpellChanged(SelectedSpell);
     }
 
     private void PreviousSpell(InputAction.CallbackContext context)
@@ -42,6 +44,7 @@ public class BendingState : State
         if (_currSpellIndex <= 0) return;
         
         _currSpellIndex--;
+        SpellsManager.Instance.OnSelectedSpellChanged(SelectedSpell);
     }
 
     public override void EndState()

@@ -72,9 +72,9 @@ namespace _Scripts.Spells
             }
         }
         
-        public override void CastSpell()
+        public override void Launch()
         {
-            base.CastSpell();
+            base.Launch();
             AddVelocity(transform.forward);
             StartCoroutine(SlowDownAfterDelay(delayToSlowDown));
             Vfx.SendEvent(ON_PLAY_EVENT);

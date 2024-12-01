@@ -31,7 +31,7 @@ public class JumpingState : State
         _availableJumps = _stats.maxJumps;
         AddListeners();
         CurrentJumpingSubState = JumpingSubState.LaunchingGrounded;
-        _fsm.Anim.SetInteger(Constants.AnimationNames.JUMP, 1);
+        _fsm.Animator.SetInteger(Constants.AnimationNames.JUMP, 1);
         
     }
 
@@ -113,7 +113,7 @@ public class JumpingState : State
 
     private void OnSubStateChanged(JumpingSubState subState)
     {
-        _fsm.Anim.SetInteger(Constants.AnimationNames.JUMP, (int) subState);
+        _fsm.Animator.SetInteger(Constants.AnimationNames.JUMP, (int) subState);
         
         switch (subState)
         {

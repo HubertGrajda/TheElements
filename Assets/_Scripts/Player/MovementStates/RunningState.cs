@@ -21,7 +21,7 @@ public class RunningState : State
     {
         base.UpdateState();
         
-        _fsm.Anim.SetFloat(Constants.AnimationNames.MOVEMENT_SPEED, 1f, 0.1f, Time.deltaTime);
+        _fsm.Animator.SetFloat(Constants.AnimationNames.MOVEMENT_SPEED, 1f, 0.1f, Time.deltaTime);
     }
 
     public override void EndState()

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1dc41266f04d3faf5294e28916c09a, type: 3}
   m_Name: LongAirCasting
   m_EditorClassIdentifier: 
-  <CastingAnimationName>k__BackingField: AirAttack
-  <CastingSound>k__BackingField: 
+  castingAnimationName: AirAttack
+  <CastingSound>k__BackingField: {fileID: 0}

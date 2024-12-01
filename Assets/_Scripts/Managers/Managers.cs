@@ -17,7 +17,7 @@ namespace _Scripts.Managers
     
         private void InitializeManagers()
         {
-            if(ManagersInitialized || objectsToLoad == null) return;
+            if (ManagersInitialized || objectsToLoad == null) return;
 
             if (objectsToLoad == null)
             {

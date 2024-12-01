@@ -26,7 +26,7 @@ namespace _Scripts.Managers
         {
             var previousMenu = CurrentMenu == null ? null : CurrentMenu;
 
-            if(previousMenu != null)
+            if (previousMenu != null)
             {
                 if (!_previousMenus.Contains(newCurrentMenu))
                 {
@@ -55,7 +55,7 @@ namespace _Scripts.Managers
     
         public void HideCurrentView()
         {
-            if(CurrentView == null) return;
+            if (CurrentView == null) return;
         
             CurrentView.Hide();
         }

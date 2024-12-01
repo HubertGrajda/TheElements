@@ -25,11 +25,35 @@ namespace _Scripts.Spells
             _middlePoint1 = Vector3.Lerp(_startPoint, _endPoint, 0.2f) + new Vector3(0,3f,0); ;
             _middlePoint2 = Vector3.Lerp(_startPoint, _endPoint, 0.7f) + new Vector3(0,1.5f, 0);
         }
-    
+
+        public override void PrepareToLaunch()
+        {
+            base.PrepareToLaunch();
+            
+            var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
+            var nearestWater = Detection.GetNearestWaterSource(_endPoint);
+
+            _endPoint = Physics.Raycast(ray, out var hit) 
+                ? hit.point
+                : ray.GetPoint(50);
+
+            _startPoint = nearestWater.transform.position;
+            Vfx.SetVector4("Color", nearestWater.GetColor());
+        }
+
+        public override void Launch()
+        {
+            base.Launch();
+            
+            StartCoroutine(MoveToTarget(_endPoint));
+        }
+        
         private IEnumerator MoveToTarget(Vector3 target)
         {
             var variety = new Vector3(Random.Range(-3, 3f), Random.Range(2, 3f), Random.Range(-3, 3f));
             var startPosition = _startPoint;
+            
             Vfx.SetVector3(START_POINT_PARAM, _startPoint);
             Vfx.SetVector3(MIDDLE_POINT_1_PARAM, _startPoint);
             Vfx.SetVector3(MIDDLE_POINT_2_PARAM, _startPoint);
@@ -93,25 +117,10 @@ namespace _Scripts.Spells
             }
             Disable();
         }
+        
         private void OnCollisionEnter(Collision _)
         {
             Disable();
-        }
-
-        public override void CastSpell()
-        {
-            base.CastSpell();
-            var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
-            var nearestWater = Detection.GetNearestWaterSource(_endPoint);
-
-            _endPoint = Physics.Raycast(ray, out var hit) 
-                ? hit.point
-                : ray.GetPoint(50);
-
-            _startPoint = nearestWater.transform.position;
-            Vfx.SetVector4("Color", nearestWater.GetColor());
-            StartCoroutine(MoveToTarget(_endPoint));
         }
     }
 }

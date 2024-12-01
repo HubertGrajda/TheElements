@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RangeAttackAnimationBehavior : StateMachineBehaviour
 {
-    private AIState_RangedAttack _rangeAttackState;
+    private RangedAttackAIState _rangeAttackState;
     
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

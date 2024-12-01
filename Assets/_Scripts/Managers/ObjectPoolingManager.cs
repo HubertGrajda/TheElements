@@ -86,12 +86,10 @@ namespace _Scripts.Managers
                 if (objectToPool.gameObject.activeInHierarchy) continue;
 
                 pooled = objectToPool;
-                pooled.OnGetFromPool();
                 return pooled;
             }
             
             pooled = AddToPool(type);
-            pooled.OnGetFromPool();
             return pooled;
         }
 

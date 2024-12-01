@@ -7,13 +7,6 @@ namespace UI
     {
         [SerializeField] private Menu defaultMenu;
 
-        protected override void Start()
-        {
-            base.Start();
-        
-            GameManager.ChangeState(GameManager.GameState.DuringGameplay); // TODO
-        }
-
         protected override void AssignInputAction()
         {
             inputAction = InputsManager.Instance.UIActions.PauseView;

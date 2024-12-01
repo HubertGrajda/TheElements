@@ -20,7 +20,7 @@ public class WalkingState : State
     {
         base.UpdateState();
         
-        _fsm.Anim.SetFloat(Constants.AnimationNames.MOVEMENT_SPEED, 0.5f, 0.1f, Time.deltaTime);
+        _fsm.Animator.SetFloat(Constants.AnimationNames.MOVEMENT_SPEED, 0.5f, 0.1f, Time.deltaTime);
     }
 
     protected override bool TryGetStateToSwitch(out State stateToSwitch)

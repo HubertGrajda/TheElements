@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4891577304421138262}
   - component: {fileID: 4142062147307811290}
+  - component: {fileID: 1440089518481413711}
   m_Layer: 5
   m_Name: DeathMenu
   m_TagString: Untagged
@@ -39,6 +40,20 @@ RectTransform:
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4142062147307811290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960211820949670792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39429520d4b1c5b4bbb53c8d74bef034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restartBtn: {fileID: 4689033348091921808}
+  mainMenuBtn: {fileID: 756681468880483223}
+--- !u!114 &1440089518481413711
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -474,7 +489,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8093297677082005155
 RectTransform:
   m_ObjectHideFlags: 0
@@ -881,9 +896,10 @@ GameObject:
   - component: {fileID: 3845563262603654482}
   - component: {fileID: 2565460158290255701}
   - component: {fileID: 2931703525348606576}
-  - component: {fileID: 8092973148429769698}
   - component: {fileID: 8010031228630205197}
-  - component: {fileID: 6218339050603977227}
+  - component: {fileID: 5659788408295846642}
+  - component: {fileID: 8468236827191448307}
+  - component: {fileID: 316884466547126690}
   m_Layer: 5
   m_Name: DeathView
   m_TagString: Untagged
@@ -955,7 +971,24 @@ MonoBehaviour:
   containerUI: {fileID: 4504236238775813644}
   showCursor: 1
   pauseGame: 0
---- !u!223 &8092973148429769698
+--- !u!114 &8010031228630205197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975088723521242059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!223 &5659788408295846642
 Canvas:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -978,7 +1011,7 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &8010031228630205197
+--- !u!114 &8468236827191448307
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -995,7 +1028,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6218339050603977227
+--- !u!114 &316884466547126690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

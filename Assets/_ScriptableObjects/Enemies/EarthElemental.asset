@@ -13,19 +13,11 @@ MonoBehaviour:
   m_Name: EarthElemental
   m_EditorClassIdentifier: 
   maxHealth: 50
-  waterResistance: 0
-  fireResistance: 0
-  earthResistance: 0
-  airResistance: 0
-  defence: 0
-  unitName: Earth Golem
-  unitDescription: Throws the stones and punches if u come too close
-  unitType: 2
-  movementSpeed: 1.35
-  meleeAttackRange: 2
-  rangedAttackRange: 6
-  followingTargetRange: 10
-  shootingFrequency: 0.52
-  shootingForce: 6.17
-  shootingSeriesCount: 3
-  projectile: {fileID: 8728013711873449644, guid: 42d3e636402797a4a873b4f8b998f690, type: 3}
+  <MovementSpeed>k__BackingField: 1.4
+  <MeleeAttackRange>k__BackingField: 2
+  <RangedAttackRange>k__BackingField: 6
+  <FollowingTargetRange>k__BackingField: 10
+  <ShootingFrequency>k__BackingField: 0.5
+  <ShootingForce>k__BackingField: 6
+  <Projectile>k__BackingField: {fileID: 8728013711873449644, guid: 42d3e636402797a4a873b4f8b998f690, type: 3}
+  <MeleeAttackCooldown>k__BackingField: 0

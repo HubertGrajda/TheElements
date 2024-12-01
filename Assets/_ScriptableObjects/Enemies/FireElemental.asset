@@ -13,19 +13,11 @@ MonoBehaviour:
   m_Name: FireElemental
   m_EditorClassIdentifier: 
   maxHealth: 3
-  waterResistance: 0
-  fireResistance: 100
-  earthResistance: 0
-  airResistance: 0
-  defence: 0
-  unitName: Lava guy
-  unitDescription: 
-  unitType: 1
-  movementSpeed: 1
-  meleeAttackRange: 3.62
-  rangedAttackRange: 8
-  followingTargetRange: 13.03
-  shootingFrequency: 3
-  shootingForce: 7
-  shootingSeriesCount: 1
-  projectile: {fileID: 7452301236222581763, guid: ddfaac1cccdec734d897844455fc8126, type: 3}
+  <MovementSpeed>k__BackingField: 1
+  <MeleeAttackRange>k__BackingField: 3.6
+  <RangedAttackRange>k__BackingField: 8
+  <FollowingTargetRange>k__BackingField: 13
+  <ShootingFrequency>k__BackingField: 3
+  <ShootingForce>k__BackingField: 7
+  <Projectile>k__BackingField: {fileID: 7452301236222581763, guid: ddfaac1cccdec734d897844455fc8126, type: 3}
+  <MeleeAttackCooldown>k__BackingField: 0

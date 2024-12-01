@@ -5,8 +5,9 @@ public class EnemyProjectile : MonoBehaviour, IPoolable
 {
     [SerializeField] protected VisualEffect vfx;
     [SerializeField] protected GameObject model;
+    [SerializeField] protected int damage;
     [field: SerializeField] public Rigidbody Rigidbody { get; private set; }
-
+    
     private void OnEnable()
     {
         if (vfx != null)
@@ -17,13 +18,10 @@ public class EnemyProjectile : MonoBehaviour, IPoolable
     
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag(Constants.Tags.PLAYER_TAG))
+        if (collision.collider.CompareTag(Constants.Tags.PLAYER_TAG) &&
+            collision.collider.TryGetComponent(out PlayerHealthSystem playerHealthSystem))
         {
-            collision.collider.GetComponent<PlayerHealthSystem>().TakeDamage(10); // TODO:
+            playerHealthSystem.TakeDamage(damage); 
         }
-    }
-
-    public void OnGetFromPool()
-    {
     }
 }

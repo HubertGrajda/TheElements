@@ -14,7 +14,6 @@ public class PlayerMovementStats_SO : ScriptableObject
     public float floatingSpeed = 0.5f;
 
     public float turnSmoothTime = 0.1f;
-    public float turnSmoothVelocity = 0.5f;
 
     [Header("Falling Settings")]
     public float groundedGravity = -4f;

@@ -1,11 +1,10 @@
 using System.Collections;
 using _Scripts.Managers;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace _Scripts.Spells
 {
-    public class Tornado : Spell
+    public class Tornado : LongSpell
     {
         [SerializeField] private float minSize = 60f;
         [SerializeField] private float maxSize = 150f;
@@ -21,8 +20,6 @@ namespace _Scripts.Spells
         [SerializeField] private float maxDistance = 30f; 
         [SerializeField] private float maxDissolve = 0.6f;
 
-        private bool _destructed;
-        
         private float _groundPosY;
         private float _currMaxSize;
         private float _currSize;
@@ -37,9 +34,7 @@ namespace _Scripts.Spells
         
         private Coroutine _changeColorCoroutine;
         private Coroutine _dissolveCoroutine;
-        public override bool CanBeCasted => Actions.CastSpell.IsPressed();
-
-        private PlayerInputs.PlayerActions Actions => InputsManager.Instance.PlayerActions;
+        
         private PlayerExperienceSystem _experienceSystem;
         
         protected override void Awake()
@@ -47,21 +42,20 @@ namespace _Scripts.Spells
             base.Awake();
             _experienceSystem = PlayerManager.Instance.ExperienceSystem;
         }
-        
-        private void Update()
+
+        protected override void Perform()
         {
-            if (_destructed) return;
+            base.Perform();
             
             Movement();
             SnapToGround();
         }
 
-        protected override void OnEnable()
+        public override void PrepareToLaunch()
         {
-            base.OnEnable();
+            base.PrepareToLaunch();
             
             _currSize = minSize;
-            _destructed = false;
             SpellCollider.enabled = true;
             
             var experience = _experienceSystem.GetExperienceValue(SpellData.ElementType);
@@ -72,22 +66,27 @@ namespace _Scripts.Spells
             Vfx.SetFloat(SIZE_PARAM, _currSize);
             Vfx.SetVector4(COLOR_PARAM, basicColor);
             
-            AddListeners();
+            var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
+            
+            transform.position = Physics.Raycast(ray, out var hit, maxDistance) 
+                ? new Vector3(hit.point.x, _groundPosY, hit.point.z)
+                : new Vector3(ray.GetPoint(maxDistance).x , _groundPosY, ray.GetPoint(maxDistance).z);
         }
 
-        protected override void AddListeners()
+        public override void Launch()
         {
-            Actions.CastSpell.canceled += OnCastSpellInputCanceled;
+            base.Launch();
+            
+            DissolveToValue(maxDissolve);
+            StartCoroutine(ChangeFloatParamOverTime(SIZE_PARAM,growingDuration, _currMaxSize));
         }
-        
-        protected override void RemoveListeners()
+
+        public override void Cancel()
         {
-            Actions.CastSpell.canceled -= OnCastSpellInputCanceled;
-        }
-        
-        private void OnCastSpellInputCanceled(InputAction.CallbackContext _)
-        {
-            _destructed = true;
+            if (Cancelled) return;
+            
+            base.Cancel();
 
             Vfx.SendEvent(STOP_EVENT_NAME);
             DissolveToValue(MIN_DISSOLVE);
@@ -170,20 +169,6 @@ namespace _Scripts.Spells
                 
                 _changeColorCoroutine = StartCoroutine(ChangeColorOverTime(colorTransitionDuration, basicColor));
             }
-        }
-
-        public override void CastSpell()
-        {
-            base.CastSpell();
-            var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
-            
-            transform.position = Physics.Raycast(ray, out var hit, maxDistance) 
-                ? new Vector3(hit.point.x, _groundPosY, hit.point.z)
-                : new Vector3(ray.GetPoint(maxDistance).x , _groundPosY, ray.GetPoint(maxDistance).z);
-            
-            DissolveToValue(maxDissolve);
-            StartCoroutine(ChangeFloatParamOverTime(SIZE_PARAM,growingDuration, _currMaxSize));
         }
 
         private void SnapToGround()

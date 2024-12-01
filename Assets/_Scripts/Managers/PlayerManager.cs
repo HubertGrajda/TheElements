@@ -23,9 +23,7 @@ namespace _Scripts.Managers
         }
 
         public UnityAction death;
-        public UnityAction<Spell> spellCastingStarted;
         public UnityAction<Spell> spellCastingCanceled;
-
 
         private PlayerExperienceSystem _experienceSystem;
         public PlayerExperienceSystem ExperienceSystem => _experienceSystem;

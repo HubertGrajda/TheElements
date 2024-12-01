@@ -6,16 +6,19 @@ public abstract class BaseRangeAttackBehaviour : MonoBehaviour
 {
     [SerializeField] protected Transform projectileSpawnPoint;
     
-    protected Transform target;
-    protected AIBaseStats_SO stats;
-    
+    protected Transform Target { get; private set; }
+    protected AIStatsConfig Stats { get; private set; }
+
     protected void Start()
     {
-        target = PlayerManager.Instance.PlayerRef.transform;
-        stats = GetComponent<AIStateMachine>().stats;
+        Target = PlayerManager.Instance.PlayerRef.transform;
+        Stats = GetComponent<AIStateMachine>().Stats;
     }
 
     public abstract void OnLaunchRangeAttack();
-    public abstract void OnCastRangeAttack();
+
+    public virtual void OnCastRangeAttack()
+    {
+    }
     
 }

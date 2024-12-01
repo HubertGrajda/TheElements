@@ -9,8 +9,14 @@ public class GraphicMenu : MonoBehaviour
     private Resolution[] _resolutions;
     
     private void Start()
-    {
+    { 
         _resolutions = Screen.resolutions;
+        
+       SetResolutionDropdown();
+    }
+
+    private void SetResolutionDropdown()
+    {
         var options = new List<string>();
         var currentResolutionOption = 0;
 
@@ -31,6 +37,7 @@ public class GraphicMenu : MonoBehaviour
         resolutionDropdown.value = currentResolutionOption;
         resolutionDropdown.RefreshShownValue();
     }
+    
 
     public void SetQuality(int optionIndex)
     {

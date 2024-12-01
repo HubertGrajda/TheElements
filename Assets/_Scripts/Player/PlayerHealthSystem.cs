@@ -4,7 +4,7 @@ public class PlayerHealthSystem : BaseHealthSystem
 {
     public override void Death()
     {
-        if(isDead) return;
+        if (IsDead) return;
         
         PlayerManager.Instance.death.Invoke();
 

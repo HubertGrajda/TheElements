@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ce39cd3ad846e6a737179e50fad3bf, type: 3}
   m_Name: ShortWaterCasting
   m_EditorClassIdentifier: 
-  <CastingAnimationName>k__BackingField: WaterAttack
+  castingAnimationName: WaterAttack
   <CastingSound>k__BackingField: {fileID: 8300000, guid: 7f5b1f76d0c380549a767231ee0f7db6, type: 3}

@@ -9,6 +9,7 @@ public class FireballProjectile : EnemyProjectile
     [SerializeField] private float timeToDestroy = 3f;
     
     private const string VFX_SIZE_PROPERTY = "Size";
+    
     private bool _exploded;
 
     protected override void OnCollisionEnter(Collision collision)

@@ -49,12 +49,12 @@ namespace UI
             resolutionDropdown.RefreshShownValue();
         }
 
-        public void SetQuality(int optionIndex)
+        private void SetQuality(int optionIndex)
         {
             QualitySettings.SetQualityLevel(optionIndex);
         }
 
-        public void SetResolution(int optionIndex)
+        private void SetResolution(int optionIndex)
         {
             var res = _resolutions[optionIndex];
             Screen.SetResolution(res.width, res.height, Screen.fullScreen);

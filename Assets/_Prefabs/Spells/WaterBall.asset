@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: WaterBall
   m_EditorClassIdentifier: 
   <IsChildOfSpawnPoint>k__BackingField: 0
-  <Cooldown>k__BackingField: 0.5
   <CastingBehaviour>k__BackingField: {fileID: 11400000, guid: 9ad0c64198cff464ab66c4e02ad1fd4b, type: 2}
+  <SpellLimiterConfig>k__BackingField: {fileID: 11400000, guid: b4afe879962575744ae0ba7d9c07774d, type: 2}
+  <SpellUIConfig>k__BackingField: {fileID: 11400000, guid: 1621224db74366e4894347e89ae4bb27, type: 2}
   <ElementType>k__BackingField: {fileID: 11400000, guid: d56d55636dd2ed44bab16315528ff00f, type: 2}
   <SpellPrefab>k__BackingField: {fileID: 748124317444454764, guid: c3671c985e363ab40bb16bd7e06e54ec, type: 3}

@@ -47,7 +47,6 @@ public class SmokeAdjustment : MonoBehaviour, IColorProvider, IAirInteractable
         }
     }
 
-
     public Color GetColor() => vfx.GetVector4(COLOR_PARAM);
 
     public void OnInteractionStart()

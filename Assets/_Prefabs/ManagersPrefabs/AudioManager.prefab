@@ -129,4 +129,4 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  master: {fileID: 24100000, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
+  <Master>k__BackingField: {fileID: 24100000, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}

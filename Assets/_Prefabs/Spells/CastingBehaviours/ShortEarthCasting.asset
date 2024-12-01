@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ce39cd3ad846e6a737179e50fad3bf, type: 3}
   m_Name: ShortEarthCasting
   m_EditorClassIdentifier: 
-  <CastingAnimationName>k__BackingField: EarthAttack
-  <CastingSound>k__BackingField: 
+  castingAnimationName: EarthAttack
+  <CastingSound>k__BackingField: {fileID: 0}

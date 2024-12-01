@@ -7,15 +7,13 @@ public abstract class PlayerStateMachine : StateMachine
 {
     protected PlayerInputs.PlayerActions PlayerActions { get; private set; }
     
-    public Animator Anim { get; private set; }
-
+    public Animator Animator { get; private set; }
     public PlayerEvents PlayerEvents { get; private set; }
-
     protected PlayerManager PlayerManager { get; private set; }
 
     protected virtual void Awake()
     {
-        Anim = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
         PlayerEvents = GetComponent<PlayerEvents>();
         PlayerActions = InputsManager.Instance.PlayerActions;
         PlayerManager = PlayerManager.Instance;

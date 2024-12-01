@@ -2,6 +2,7 @@ using _Scripts.Managers;
 using Cinemachine;
 using UnityEngine;
 
+[RequireComponent(typeof(CinemachineFreeLook))]
 public class CameraAimBehaviourController : MonoBehaviour
 {
     private CinemachineFreeLook _virtualCamera;

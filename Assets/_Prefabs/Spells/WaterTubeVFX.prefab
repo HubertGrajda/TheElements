@@ -127,12 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <SpellData>k__BackingField: {fileID: 11400000, guid: 207c05724e3f74044b45ab03d88bdb0f, type: 2}
-  isChildOfSpawnPoint: 1
-  dealDamageInTime: 0
-  damagingFrequency: 0
-  damage: 1
   speed: 2
-  disableDelay: 0.1
   speedCurve:
     serializedVersion: 2
     m_Curve:
@@ -173,7 +168,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

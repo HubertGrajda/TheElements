@@ -12,6 +12,21 @@ namespace _Scripts.Spells
         
         private const string WATER_VFX_COLOR = "waterColor";
         private const string ON_HIT_EVENT = "OnHit";
+
+        public override void Launch()
+        {
+            base.Launch();
+            
+            var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
+            
+            var target = Physics.Raycast(ray, out var hit) 
+                ? hit.point 
+                : ray.GetPoint(50f);
+            
+            SetMaterial();
+            StartCoroutine(MoveToTarget(target));
+        }
         
         private IEnumerator MoveToTarget(Vector3 target)
         {
@@ -40,21 +55,6 @@ namespace _Scripts.Spells
             
             Vfx.SendEvent(ON_HIT_EVENT); 
             Disable();
-        }
-    
-        public override void CastSpell()
-        {
-            base.CastSpell();
-            
-            var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
-            
-            var target = Physics.Raycast(ray, out var hit) 
-                ? hit.point 
-                : ray.GetPoint(50f);
-            
-            SetMaterial();
-            StartCoroutine(MoveToTarget(target));
         }
         
         private void SetMaterial()

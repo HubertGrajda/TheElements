@@ -45,7 +45,7 @@ namespace UI
    
       private void OnVolumeSliderValueChanged(string mixerTag, float volume)
       {
-         _audioManager.master.SetFloat(mixerTag, Mathf.Log10(volume) * 20);
+         _audioManager.Master.SetFloat(mixerTag, Mathf.Log10(volume) * 20);
       }
 
       private void OnDestroy()

@@ -32,10 +32,11 @@ namespace UI
             UIManager.SetCurrentMenu(this);
         }
 
-        public virtual void Close()
+        public void Close()
         {
             gameObject.SetActive(false);
         }
+        
         protected abstract void InitUIElements();
 
         protected void OnBackButtonClicked()

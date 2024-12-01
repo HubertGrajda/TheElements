@@ -2,13 +2,14 @@ using UnityEngine;
 using System;
 using System.Linq;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 
 namespace _Scripts.Managers
 {
     public class AudioManager : Singleton<AudioManager>
     {
-        public Sound[] sounds;
-        public AudioMixer master;
+        [SerializeField] private Sound[] sounds;
+        [field: SerializeField] public AudioMixer Master {get; private set; }
 
         public const string MASTER_VOLUME_MIXER_TAG = "MasterVolume";
         public const string MUSIC_VOLUME_MIXER_TAG  = "MusicVolume";
@@ -56,9 +57,9 @@ namespace _Scripts.Managers
             _soundsSource.PlayOneShot(clip);
         }
     
-        public void StopSound(string name)
+        public void StopSound(string soundName)
         {
-            var sound = Array.Find(sounds, sound => sound.name == name);
+            var sound = Array.Find(sounds, sound => sound.name == soundName);
             
             if (sound == null) return;
             
@@ -67,7 +68,7 @@ namespace _Scripts.Managers
 
         public float GetCurrentVolume(string mixer)
         {
-            master.GetFloat(mixer, out var currVolume);
+            Master.GetFloat(mixer, out var currVolume);
             currVolume /= 20;
             currVolume = MathF.Pow(10, currVolume);
             return currVolume;

@@ -1,5 +1,4 @@
 using System.Collections;
-using _Scripts.Managers;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -7,7 +6,7 @@ namespace _Scripts.Spells
 {
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(VisualEffect))]
-    public abstract class Spell : MonoBehaviour, IPoolable
+    public abstract class Spell : MonoBehaviour, ISpell, IPoolable
     {
         [field: SerializeField] public SpellConfig SpellData { get; private set; }
         
@@ -15,7 +14,18 @@ namespace _Scripts.Spells
 
         protected VisualEffect Vfx { get; private set; }
         protected Collider SpellCollider { get; private set; }
-        public virtual bool CanBeCasted => true;
+        
+        public virtual bool CanBeLaunched => true;
+        public bool CanBeUsed =>
+            _spellLimiter == null && !TryGetSpellLimiter(out _spellLimiter) ||
+            _spellLimiter.IsLimited == false;
+
+        protected bool Launched { get; private set; }
+        protected bool Cancelled { get; private set; }
+        
+        private Animator _casterAnimator;
+        private SpellLimiterController _spellLimiterController;
+        private SpellLimiter _spellLimiter;
         
         protected virtual void Awake()
         {
@@ -23,11 +33,52 @@ namespace _Scripts.Spells
             Vfx = GetComponent<VisualEffect>();
         }
         
-        protected virtual void Start()
+        public virtual void Use(Animator casterAnimator)
         {
-            SpellCollider.isTrigger = true;
+            Launched = false;
+            Cancelled = false;
+            
+            _casterAnimator = casterAnimator;
+
+            if (TryGetSpellLimiter(out _spellLimiter))
+            {
+                _spellLimiter.OnSpellUsage();
+                _spellLimiter.OnBecameLimited += Cancel;
+            }
+            
+            Cast();
         }
 
+        public virtual void Cast()
+        {
+            SpellData.CastingBehaviour.StartCasting(_casterAnimator);
+        }
+
+        public virtual void PrepareToLaunch()
+        {
+        }
+        
+        public virtual void Launch()
+        {
+            PrepareToLaunch();
+            gameObject.SetActive(true);
+            Launched = true;
+        }
+        
+        public virtual void Cancel()
+        {
+            if (Cancelled) return;
+            
+            SpellData.CastingBehaviour.StopCasting(_casterAnimator);
+
+            if (TryGetSpellLimiter(out _spellLimiter))
+            {
+                _spellLimiter.OnSpellCanceled();
+            }
+            
+            Cancelled = true;
+        }
+        
         protected void Disable()
         {
             if (!gameObject.activeInHierarchy) return;
@@ -38,36 +89,23 @@ namespace _Scripts.Spells
         private IEnumerator DisableWithLastParticle()
         {
             yield return new WaitWhile(() => Vfx.aliveParticleCount > 1);
+            
             gameObject.SetActive(false);
         }
 
-        public virtual void CastSpell()
-        {
-            gameObject.SetActive(true);
-            AudioManager.Instance.PlaySound(SpellData.CastingBehaviour.CastingSound);
-        }
+        protected void OnDisable() => StopAllCoroutines();
 
-        protected virtual void OnDisable()
+        public bool TryGetSpellLimiter(out SpellLimiter limiter)
         {
-            StopAllCoroutines();
-            RemoveListeners();
-        }
+            limiter = default;
+            
+            var limiterConfig = SpellData.SpellLimiterConfig;
 
-        protected virtual void OnEnable()
-        {
-            AddListeners();
-        }
-
-        protected virtual void RemoveListeners()
-        {
-        }
-
-        protected virtual void AddListeners()
-        {
-        }
-
-        public virtual void OnGetFromPool()
-        {
+            if (limiterConfig == null) return false;
+            
+            limiter = limiterConfig.GetInstance(this);
+            
+            return limiter != null;
         }
     }
 }

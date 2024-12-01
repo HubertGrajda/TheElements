@@ -1,4 +1,3 @@
-using _Scripts.Managers;
 using UnityEngine;
 
 namespace UI
@@ -11,7 +10,6 @@ namespace UI
         {
             base.Start();
         
-            GameManager.Instance.ChangeState(GameManager.GameState.MainMenu);
             UIManager.CursorController.ChangePointer(pointer);
             Show();
         }

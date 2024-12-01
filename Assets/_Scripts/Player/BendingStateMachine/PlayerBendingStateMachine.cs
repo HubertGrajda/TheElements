@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Managers;
@@ -8,18 +7,20 @@ using UnityEngine.InputSystem;
 
 public class PlayerBendingStateMachine : PlayerStateMachine
 {
-    [SerializeField] private Transform spawnPoint;
+    [field: SerializeField] public List<SpellConfig> Spells { get; private set; }
 
-    [SerializeField] private List<SpellConfig> spells;
+    [SerializeField] private Transform spawnPoint;
     [SerializeField] private List<ElementType> bendingStyles;
     
-    public List<SpellConfig> Spells => spells;
-    private BendingState CurrentBendingState => CurrentState as BendingState;
+    private readonly Dictionary<ElementType, BendingState> _elementToBendingState = new();
 
     private Spell _spellToCast;
     private ObjectPoolingManager _objectPoolingManager;
-    private bool _onCooldown;
-    private readonly Dictionary<ElementType, BendingState> _elementToBendingState = new();
+    private SpellsManager _spellsManager;
+
+    private const int INITIAL_BENDING_SLOT_NUMBER = 1;
+    
+    private BendingState CurrentBendingState => CurrentState as BendingState;
     
     protected override void InitStates(out State entryState)
     {
@@ -36,7 +37,9 @@ public class PlayerBendingStateMachine : PlayerStateMachine
         base.Start();
         
         _objectPoolingManager = ObjectPoolingManager.Instance;
+        _spellsManager = SpellsManager.Instance;
         
+        OnBendingSlotStarted(INITIAL_BENDING_SLOT_NUMBER);
         AddListeners();
     }
 
@@ -44,24 +47,23 @@ public class PlayerBendingStateMachine : PlayerStateMachine
     {
         PlayerActions.NumKeys.started += OnNumKeyStarted;
         
-        PlayerActions.CastSpell.started += CastSpell;
-        PlayerActions.CastSpell.canceled += CancelSpellCasting;
+        PlayerActions.CastSpell.started += UseSpell;
+        PlayerActions.CastSpell.canceled += CancelSpell;
     }
 
     private void RemoveListeners()
     {
         PlayerActions.NumKeys.started -= OnNumKeyStarted;
         
-        PlayerActions.CastSpell.started -= CastSpell; 
-        PlayerActions.CastSpell.canceled -= CancelSpellCasting;
+        PlayerActions.CastSpell.started -= UseSpell; 
+        PlayerActions.CastSpell.canceled -= CancelSpell;
     }
 
     
     private void FireSpell() // called through animation event
     {
-        _spellToCast = _objectPoolingManager.GetFromPool(CurrentBendingState.SelectedSpell);
-
-        if (!_spellToCast.CanBeCasted) return;
+        if (_spellToCast == null) return;
+        if (!_spellToCast.CanBeLaunched) return;
         
         if (_spellToCast.SpellData.IsChildOfSpawnPoint)
         {
@@ -71,41 +73,27 @@ public class PlayerBendingStateMachine : PlayerStateMachine
         _spellToCast.transform.position = spawnPoint.position;
         _spellToCast.transform.rotation = transform.rotation;
         
-        _spellToCast.CastSpell();
+        _spellToCast.Launch();
     }
 
-    private IEnumerator Cooldown(float time)
+    private void UseSpell(InputAction.CallbackContext _)
     {
-        _onCooldown = true;
-        
-        var timer = time;
-        while (timer > 0)
-        {
-            timer -= Time.deltaTime;
-            yield return null;
-        }
-
-        _onCooldown = false;
-    }
-    
-    private void CastSpell(InputAction.CallbackContext _)
-    {
-        if (_onCooldown) return;
-        
         _spellToCast = _objectPoolingManager.GetFromPool(CurrentBendingState.SelectedSpell);
-        StartCoroutine(Cooldown(_spellToCast.SpellData.Cooldown));
         
-        PlayerManager.spellCastingStarted.Invoke(_spellToCast);
+        if (!_spellToCast.CanBeUsed) return;
+            
+        _spellToCast.Use(Animator);
     }
 
-    private void CancelSpellCasting(InputAction.CallbackContext _)
+    private void CancelSpell(InputAction.CallbackContext _)
     {
-        PlayerManager.spellCastingCanceled.Invoke(_spellToCast);
+        _spellToCast.Cancel();
     }
 
     private void OnNumKeyStarted(InputAction.CallbackContext context)
     {
         var value = (int)context.ReadValue<float>();
+        
         OnBendingSlotStarted(value);
     }
     
@@ -116,12 +104,11 @@ public class PlayerBendingStateMachine : PlayerStateMachine
         if (slotIndex < 0) return;
         if (bendingStyles.Count <= slotIndex) return;
         if (!_elementToBendingState.TryGetValue(bendingStyles[slotIndex], out var bendingState)) return;
-        
+
         ChangeState(bendingState);
+        _spellsManager.OnSelectedSpellChanged?.Invoke(bendingState.SelectedSpell);
+        _spellsManager.OnSelectedElementChanged?.Invoke(bendingStyles[slotIndex], slotIndex);
     }
     
-    private void OnDestroy()
-    {
-        RemoveListeners();
-    }
+    private void OnDestroy() => RemoveListeners();
 }

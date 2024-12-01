@@ -1886,9 +1886,10 @@ GameObject:
   - component: {fileID: 5322670699302608859}
   - component: {fileID: 5322670699302608857}
   - component: {fileID: 5750650092355113518}
-  - component: {fileID: 843877800176190372}
   - component: {fileID: 583636267907276116}
-  - component: {fileID: 5898329532490346697}
+  - component: {fileID: 1040623753607157095}
+  - component: {fileID: 5958067379769065661}
+  - component: {fileID: 8089371966086096435}
   m_Layer: 5
   m_Name: PauseView
   m_TagString: Untagged
@@ -1941,7 +1942,24 @@ MonoBehaviour:
   pauseGame: 1
   holdRequired: 0
   defaultMenu: {fileID: 5750650091291261557}
---- !u!223 &843877800176190372
+--- !u!114 &583636267907276116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5322670699302608858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!223 &1040623753607157095
 Canvas:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1964,7 +1982,7 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &583636267907276116
+--- !u!114 &5958067379769065661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1981,7 +1999,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5898329532490346697
+--- !u!114 &8089371966086096435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

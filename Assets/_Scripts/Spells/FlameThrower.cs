@@ -1,10 +1,9 @@
 using _Scripts.Managers;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace _Scripts.Spells
 {
-    public class FlameThrower : Spell
+    public class FlameThrower : LongSpell
     {
         [SerializeField] private float size;
         [SerializeField] private float sizeForExperienceModifier = 0.02f;
@@ -16,7 +15,6 @@ namespace _Scripts.Spells
         private const string SIZE = "Size";
 
         private PlayerExperienceSystem _experienceSystem;
-        private static PlayerInputs.PlayerActions Actions => InputsManager.Instance.PlayerActions;
         
         protected override void Awake()
         {
@@ -24,11 +22,9 @@ namespace _Scripts.Spells
             _experienceSystem = PlayerManager.Instance.ExperienceSystem;
         }
 
-        public override bool CanBeCasted => Actions.CastSpell.IsPressed();
-
-        private void FixedUpdate()
+        protected override void Perform()
         {
-            if (!_vfxIsPlaying) return;
+            base.Perform();
             
             var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
             var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
@@ -41,55 +37,31 @@ namespace _Scripts.Spells
             }
         }
 
-        private void OnCastSpellInput(InputAction.CallbackContext context)
+        public override void PrepareToLaunch()
         {
-            if (!_vfxIsPlaying) return;
-            
-            FlameThrowerStop();
-        }
-        
-        private void FlameThrowerStart()
-        {
-            _vfxIsPlaying = true;
-            Vfx.SetFloat(SIZE, _currSize);
-            Vfx.Play();
-            Debug.Log("start");
-        }
-    
-        private void FlameThrowerStop()
-        {
-            _vfxIsPlaying = false;
-            Vfx.Stop();
-            Disable();
-            Debug.Log("stop");
-        }
-    
-        public override void CastSpell()
-        {
-            base.CastSpell();
-            FlameThrowerStart();
-        }
-
-        protected override void AddListeners()
-        {
-            base.AddListeners();
-            Actions.CastSpell.canceled += OnCastSpellInput;
-        }
-
-        protected override void RemoveListeners()
-        {
-            base.RemoveListeners();
-            Actions.CastSpell.canceled -= OnCastSpellInput;
-        }
-        
-        protected override void OnEnable()
-        {
-            base.OnEnable();
+            base.PrepareToLaunch();
             
             var experience = _experienceSystem.GetExperienceValue(SpellData.ElementType);
             var additionalSize = experience * sizeForExperienceModifier;
-            
             _currSize = size + additionalSize;
+            Vfx.SetFloat(SIZE, _currSize);
+        }
+
+        public override void Launch()
+        {
+            base.Launch();
+            
+            Vfx.Play();
+        }
+        
+        public override void Cancel()
+        {
+            if (Cancelled) return;
+            
+            base.Cancel();
+            
+            Vfx.Stop();
+            Disable();
         }
         
         private void OnDrawGizmos()

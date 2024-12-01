@@ -9,7 +9,6 @@ public class ElementalStone : MonoBehaviour, IInputInteractable
     [SerializeField] private Animator anim;
 
     private bool _alreadyUsed;
-    private GameObject _player;
     private InputAction _inputAction;
     
     private static readonly int InRangeAnimParam = Animator.StringToHash("IsActive");
@@ -25,7 +24,6 @@ public class ElementalStone : MonoBehaviour, IInputInteractable
         if (!other.CompareTag(Constants.Tags.PLAYER_TAG)) return;
         
         _inputAction.started += InteractionBehaviour;
-        _player = other.gameObject;
         anim.SetBool(InRangeAnimParam, true);
     }
 

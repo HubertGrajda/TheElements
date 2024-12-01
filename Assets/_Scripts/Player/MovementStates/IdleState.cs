@@ -18,10 +18,10 @@ public class IdleState : State
     {
         base.UpdateState();
         
-        _fsm.Anim.SetFloat(Constants.AnimationNames.MOVEMENT_SPEED, 0f, 0.1f, Time.deltaTime);
-        if(_fsm.Anim.GetFloat(Constants.AnimationNames.MOVEMENT_SPEED) < 0.001f)
+        _fsm.Animator.SetFloat(Constants.AnimationNames.MOVEMENT_SPEED, 0f, 0.1f, Time.deltaTime);
+        if(_fsm.Animator.GetFloat(Constants.AnimationNames.MOVEMENT_SPEED) < 0.001f)
         {
-            _fsm.Anim.SetFloat(Constants.AnimationNames.MOVEMENT_SPEED, 0f);
+            _fsm.Animator.SetFloat(Constants.AnimationNames.MOVEMENT_SPEED, 0f);
         }
     }
 

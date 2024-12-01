@@ -1,6 +1,5 @@
 using _Scripts.Managers;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Player
 {
@@ -88,7 +87,7 @@ namespace Player
             _characterController.Move(SetDirection() * (CurrentSpeed * Time.deltaTime));
             _characterController.Move(_playerVelocity * Time.deltaTime);
 
-            Anim.SetBool(Constants.AnimationNames.GROUNDED, IsGrounded);
+            Animator.SetBool(Constants.AnimationNames.GROUNDED, IsGrounded);
         }
 
         public void SetCurrentSpeed(float speed)
