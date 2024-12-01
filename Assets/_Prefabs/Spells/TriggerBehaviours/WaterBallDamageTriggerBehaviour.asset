@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d320218297843fc96e79c98d1af9367, type: 3}
-  m_Name: TornadoTriggerBehaviour
+  m_Name: WaterBallDamageTriggerBehaviour
   m_EditorClassIdentifier: 
-  <RetriggerTime>k__BackingField: 4
+  <RetriggerTime>k__BackingField: 0
   damage: 3
-  dealDamageInTime: 1
+  dealDamageInTime: 0

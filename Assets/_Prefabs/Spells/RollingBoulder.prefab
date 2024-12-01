@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3354615612125695096}
   - component: {fileID: 5043285342458447014}
   - component: {fileID: -52093542002808752}
+  - component: {fileID: 801424585003623528}
   m_Layer: 2
   m_Name: RollingBoulder
   m_TagString: Untagged
@@ -208,11 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <SpellData>k__BackingField: {fileID: 11400000, guid: f0f00e5f874792d4e8db112b3c9fe8ad, type: 2}
-  dealDamageInTime: 0
-  damagingFrequency: 0
-  damage: 1
   speed: 7
-  disableDelay: 3
   detectingDistance: 3
   distanceBetweenGround: 0.1
   heightAdjustmentSpeed: 0.5
@@ -315,3 +312,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &801424585003623528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6940716695428297453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017b9ecf89414febaa859fc553403c1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerBehaviours:
+  - {fileID: 11400000, guid: 490233c18956c714d89fed180f1214ab, type: 2}

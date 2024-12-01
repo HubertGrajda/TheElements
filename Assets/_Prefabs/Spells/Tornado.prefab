@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -9114744479630245117}
   - component: {fileID: -981971542445738560}
   m_Layer: 2
-  m_Name: TornadoVFX
+  m_Name: Tornado
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

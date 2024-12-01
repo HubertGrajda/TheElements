@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 2731320865037719808}
   - component: {fileID: 748124317444454764}
   - component: {fileID: 6444362241118290409}
+  - component: {fileID: 5487317940807004702}
   m_Layer: 0
-  m_Name: WaterBallVFX
+  m_Name: WaterBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,11 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <SpellData>k__BackingField: {fileID: 11400000, guid: e60c3ae8990d5ec4eae816f1a05cd615, type: 2}
-  dealDamageInTime: 0
-  damagingFrequency: 0
-  damage: 1
   speed: 1
-  disableDelay: 3
   speedCurve:
     serializedVersion: 2
     m_Curve:
@@ -316,3 +313,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5487317940807004702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2617964850154746178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017b9ecf89414febaa859fc553403c1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerBehaviours:
+  - {fileID: 11400000, guid: c4aad109ad4c94a408654276d8e8365a, type: 2}

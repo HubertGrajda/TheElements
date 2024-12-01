@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82d3b5293f404fba8bc665f71e2bbc88, type: 3}
-  m_Name: InteractWithAir
+  m_Name: InteractWithAirTriggerBehaviour
   m_EditorClassIdentifier: 
   <RetriggerTime>k__BackingField: 0
