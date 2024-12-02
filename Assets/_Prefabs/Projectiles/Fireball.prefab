@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vfx: {fileID: 6039768105767937933}
   model: {fileID: 8038392609401311425}
+  damage: 10
   <Rigidbody>k__BackingField: {fileID: 2148232036446260166}
   vfxOnHitSize: 2
   vfxOnHitGrowingTime: 0.2

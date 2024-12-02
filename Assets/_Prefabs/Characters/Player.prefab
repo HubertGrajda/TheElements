@@ -574,7 +574,6 @@ GameObject:
   - component: {fileID: 1952667953298658432}
   - component: {fileID: 1764700688295398613}
   - component: {fileID: 5574676164771378320}
-  - component: {fileID: 7514612278359963509}
   - component: {fileID: 3514472187093657385}
   - component: {fileID: 5692109706186141099}
   - component: {fileID: 4383114352817477531}
@@ -599,7 +598,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1682906292463047282}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 40.1, y: -1.2071, z: 8.21}
   m_LocalScale: {x: 0.37, y: 0.37, z: 0.37}
   m_ConstrainProportionsScale: 1
@@ -711,14 +710,6 @@ CapsuleCollider:
   m_Height: 3.22
   m_Direction: 1
   m_Center: {x: 0, y: 1.61, z: 0}
---- !u!81 &7514612278359963509
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1682906292463047282}
-  m_Enabled: 1
 --- !u!114 &3514472187093657385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,13 +848,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040f89aeebf5b0c4abb609f9ded53231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 563417353159211469}
-  spells:
+  <Spells>k__BackingField:
   - {fileID: 11400000, guid: 7eddaf7168cf32549ac651c2fd06eea0, type: 2}
   - {fileID: 11400000, guid: f0f00e5f874792d4e8db112b3c9fe8ad, type: 2}
   - {fileID: 11400000, guid: 787cc661c56c2e94d94c498ccbfa2407, type: 2}
   - {fileID: 11400000, guid: e60c3ae8990d5ec4eae816f1a05cd615, type: 2}
   - {fileID: 11400000, guid: 207c05724e3f74044b45ab03d88bdb0f, type: 2}
+  spawnPoint: {fileID: 563417353159211469}
   bendingStyles:
   - {fileID: 11400000, guid: d56d55636dd2ed44bab16315528ff00f, type: 2}
   - {fileID: 11400000, guid: c147ba83097847643a61c8dec81ea4a0, type: 2}

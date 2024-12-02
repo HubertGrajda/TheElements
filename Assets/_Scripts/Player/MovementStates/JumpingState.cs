@@ -5,7 +5,7 @@ using UnityEngine;
 public class JumpingState : State
 {
     private readonly PlayerMovementStateMachine _fsm;
-    private readonly PlayerMovementStats_SO _stats;
+    private readonly PlayerMovementStatsConfig _stats;
     public JumpingState(PlayerMovementStateMachine fsm) : base(fsm)
     {
         _fsm = fsm;

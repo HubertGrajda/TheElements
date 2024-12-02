@@ -4,7 +4,7 @@ using UnityEngine;
 public class WalkingState : State
 {
     private readonly PlayerMovementStateMachine _fsm;
-    private readonly PlayerMovementStats_SO _stats;
+    private readonly PlayerMovementStatsConfig _stats;
     public WalkingState(PlayerMovementStateMachine fsm) : base(fsm)
     {
         _fsm = fsm;

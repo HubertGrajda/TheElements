@@ -94,39 +94,4 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: Waterball
-    clip: {fileID: 8300000, guid: e6635f9609d0cd045aa33e0224d3d098, type: 3}
-    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
-    volume: 0.41
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: RollingBoulder
-    clip: {fileID: 8300000, guid: c7865fd595be8a046a018f3e24771dd6, type: 3}
-    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
-    volume: 0.41
-    pitch: 0.87
-    loop: 0
-    source: {fileID: 0}
-  - name: FlameThrower
-    clip: {fileID: 8300000, guid: c7865fd595be8a046a018f3e24771dd6, type: 3}
-    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
-    volume: 0.41
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: Tornado
-    clip: {fileID: 8300000, guid: 7299018103695904d948d5e92f108c15, type: 3}
-    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
-    volume: 0.41
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: WaterTube
-    clip: {fileID: 8300000, guid: 251f4d0bc48513347aa7c937f5392a95, type: 3}
-    group: {fileID: -7727692671847958733, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}
-    volume: 0.41
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
   <Master>k__BackingField: {fileID: 24100000, guid: d90be5d74c6f1be48830fc87f0627d0d, type: 2}

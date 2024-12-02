@@ -4,7 +4,7 @@ using UnityEngine;
 public class RunningState : State
 {
     private readonly PlayerMovementStateMachine _fsm;
-    private readonly PlayerMovementStats_SO _stats;
+    private readonly PlayerMovementStatsConfig _stats;
     public RunningState(PlayerMovementStateMachine fsm) : base(fsm)
     {
         _fsm = fsm;

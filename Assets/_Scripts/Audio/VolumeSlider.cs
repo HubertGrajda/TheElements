@@ -12,6 +12,6 @@ public class VolumeSlider : MonoBehaviour
     private void Start()
     {
        _slider = GetComponent<Slider>();
-        _slider.value = AudioManager.Instance.GetCurrentVolume(mixerVolumeTag);
+       _slider.value = AudioManager.Instance.GetCurrentVolume(mixerVolumeTag);
     }
 }

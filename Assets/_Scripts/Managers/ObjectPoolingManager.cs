@@ -11,7 +11,7 @@ namespace _Scripts.Managers
         public class Pool<T> where T : IPoolable
         {
             public string Tag { get; private set; }
-            public T Prefab{ get; private set; }
+            public T Prefab { get; private set; }
             public GameObject Container { get; private set; }
             public List<IPoolable> Spawned { get; private set; }
         

@@ -8,7 +8,7 @@ namespace Player
     {
         [SerializeField] private float checkingForGroundDistance;
         [SerializeField] private LayerMask groundingLayers;
-        [SerializeField] private PlayerMovementStats_SO movementsStats;
+        [SerializeField] private PlayerMovementStatsConfig movementsStats;
     
         private Vector3 _playerVelocity;
         private float _turnSmoothVelocity;
@@ -36,7 +36,7 @@ namespace Player
         public bool IsGrounded => IsPlayerGrounded();
         public float CurrentSpeed { get; private set; }
 
-        public PlayerMovementStats_SO MovementStats => movementsStats;
+        public PlayerMovementStatsConfig MovementStats => movementsStats;
         
         protected override void Awake()
         {

@@ -21,7 +21,6 @@ public class BendingState : State
             _spells.Add(spell.SpellPrefab);
         }
         
-        SpellsManager.Instance.OnSelectedSpellChanged?.Invoke(SelectedSpell);
         _playerActions = InputsManager.Instance.PlayerActions;
     }
 

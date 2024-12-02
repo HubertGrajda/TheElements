@@ -34,15 +34,24 @@ public class PlayerBendingStateMachine : PlayerStateMachine
 
     protected override void Start()
     {
-        base.Start();
-        
         _objectPoolingManager = ObjectPoolingManager.Instance;
         _spellsManager = SpellsManager.Instance;
         
+        base.Start();
+
+        InitBendingStates();
         OnBendingSlotStarted(INITIAL_BENDING_SLOT_NUMBER);
         AddListeners();
     }
 
+    private void InitBendingStates()
+    {
+        foreach (var bendingState in _elementToBendingState.Values)
+        {
+            SpellsManager.Instance.OnSelectedSpellChanged?.Invoke(bendingState.SelectedSpell);
+        }
+    }
+    
     private void AddListeners()
     {
         PlayerActions.NumKeys.started += OnNumKeyStarted;

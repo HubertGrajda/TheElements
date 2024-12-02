@@ -147,4 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vfx: {fileID: 0}
+  model: {fileID: 0}
+  damage: 5
   <Rigidbody>k__BackingField: {fileID: 7266072680494239721}

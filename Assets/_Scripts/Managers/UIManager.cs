@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -43,7 +44,8 @@ namespace _Scripts.Managers
 
         public void OpenPreviousMenu()
         {
-            if (!_previousMenus.TryPeek(out var previousMenu)) return;
+            var filteredMenus = new Stack<Menu>(_previousMenus.Where(x => x != null));
+            if (!filteredMenus.TryPeek(out var previousMenu)) return;
         
             if (CurrentMenu != null)
             {

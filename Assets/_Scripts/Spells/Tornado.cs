@@ -20,6 +20,8 @@ namespace _Scripts.Spells
         [SerializeField] private float maxDistance = 30f; 
         [SerializeField] private float maxDissolve = 0.6f;
 
+        [SerializeField] private LayerMask ground;
+        
         private float _groundPosY;
         private float _currMaxSize;
         private float _currSize;
@@ -178,11 +180,7 @@ namespace _Scripts.Spells
             const float yOffset = 3f;
             var origin = new Vector3(position.x, position.y + yOffset, position.z);
 
-            if (!Physics.Raycast(origin, transform.TransformDirection(-Vector3.up), out var hit, MAX_SNAP_DISTANCE))
-            {
-                _groundPosY = transform.position.y;
-                return;
-            }
+            if (!Physics.Raycast(origin, transform.TransformDirection(-Vector3.up), out var hit, MAX_SNAP_DISTANCE, ground)) return;
             
             transform.position = Vector3.Lerp(transform.position, new Vector3(position.x, hit.point.y, position.z), 0.05f);
             _groundPosY = hit.point.y;

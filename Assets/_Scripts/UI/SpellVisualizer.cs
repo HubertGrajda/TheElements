@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using _Scripts.Managers;
+﻿using _Scripts.Managers;
 using _Scripts.Spells;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +26,6 @@ namespace UI
         }
 
         private void OnDestroy() => RemoveListeners();
-
 
         private void AddListeners()
         {
