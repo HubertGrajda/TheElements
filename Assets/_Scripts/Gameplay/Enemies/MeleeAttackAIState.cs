@@ -28,6 +28,7 @@ public class MeleeAttackAIState : AIState
     public override void UpdateState()
     {
         base.UpdateState();
+        Fsm.transform.LookAt(Fsm.PlayerTransform);
         
         if (_timer < 0)
         {

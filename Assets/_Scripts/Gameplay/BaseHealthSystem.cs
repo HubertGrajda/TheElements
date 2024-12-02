@@ -1,15 +1,17 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class BaseHealthSystem : MonoBehaviour, IDamageable
+public  class BaseHealthSystem : MonoBehaviour, IDamageable
 {
+    public event Action OnDeath;
+    
     [SerializeField] protected float destructionDelay;
     [SerializeField] protected Slider healthbar;
     [SerializeField] protected BaseStatsConfig stats;
-
-    protected bool IsDead { get; private set; }
     
+    private bool _isDead;
     private int _currentHealth;
     
     protected virtual void Start()
@@ -21,7 +23,7 @@ public abstract class BaseHealthSystem : MonoBehaviour, IDamageable
 
     public virtual void TakeDamage(int damage)
     {
-        if (IsDead) return;
+        if (_isDead) return;
         
         _currentHealth -= damage;
         StartCoroutine(SetHealthBar());
@@ -34,9 +36,10 @@ public abstract class BaseHealthSystem : MonoBehaviour, IDamageable
 
     public virtual void Death()
     {
-        if (IsDead) return;
+        if (_isDead) return;
         
-        IsDead = true;
+        _isDead = true;
+        OnDeath?.Invoke();
         healthbar.gameObject.SetActive(false);
         Destroy(gameObject, destructionDelay);
     }

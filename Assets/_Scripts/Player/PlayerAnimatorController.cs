@@ -6,11 +6,11 @@ public class PlayerAnimatorController : MonoBehaviour
 {
     private Animator _anim;
     private PlayerManager _playerManager;
+    private BaseHealthSystem _healthSystem;
     
     private void Awake()
     {
         _anim = GetComponent<Animator>();
-        _playerManager = PlayerManager.Instance;
     }
 
     private void Start()
@@ -20,12 +20,18 @@ public class PlayerAnimatorController : MonoBehaviour
 
     private void AddListeners()
     {
-        _playerManager.death += OnDeath;
+        if (TryGetComponent(out _healthSystem))
+        {
+            _healthSystem.OnDeath += OnDeath;
+        }
     }
 
     private void RemoveListeners()
     {
-        _playerManager.death -= OnDeath;
+        if (_healthSystem != null)
+        {
+            _healthSystem.OnDeath -= OnDeath;
+        }
     }
 
     private void OnDeath()

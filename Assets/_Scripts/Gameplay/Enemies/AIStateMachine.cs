@@ -1,3 +1,4 @@
+using System;
 using _Scripts.Managers;
 using UnityEngine;
 using UnityEngine.AI;
@@ -19,13 +20,18 @@ public class AIStateMachine : StateMachine
     
     public NavMeshAgent Agent { get; private set; }
     public Animator Anim { get; private set; }
+
+    private AIHealthSystem _healthSystem;
+    private BaseHealthSystem _playerHealthSystem;
     
     protected void Awake()
     {
         Agent = GetComponent<NavMeshAgent>();
         Anim = GetComponent<Animator>();
+
+        AddListeners();
     }
-    
+
     protected override void InitStates(out State entryState)
     {
         IdleState = new IdleAIState(this);
@@ -39,8 +45,11 @@ public class AIStateMachine : StateMachine
     protected override void Start()
     {
         base.Start();
-        
-        PlayerTransform = PlayerManager.Instance.PlayerRef.transform;
+
+        if (PlayerManager.Instance.TryGetPlayerController(out var controller))
+        {
+            PlayerTransform = controller.transform;
+        }
     }
     
     protected override void Update()
@@ -50,13 +59,46 @@ public class AIStateMachine : StateMachine
         if (PlayerTransform == null) return;
         
         DistanceToTarget = Vector3.Distance(transform.position, PlayerTransform.position);
-
-        if (CurrentState != IdleState && CurrentState != MovingState)
-        {
-            transform.LookAt(PlayerTransform);
-        }
     }
 
+    private void OnDestroy() => RemoveListeners();
+
+    private void AddListeners()
+    {
+        if (TryGetComponent(out _healthSystem))
+        {
+            _healthSystem.OnDeath += OnDeath;
+        }
+
+        if (PlayerManager.Instance.TryGetComponent(out _playerHealthSystem))
+        {
+            _playerHealthSystem.OnDeath += OnPlayerDeath;
+        }
+    }
+    
+    private void RemoveListeners()
+    {
+        if (_healthSystem != null)
+        {
+            _healthSystem.OnDeath -= OnDeath;
+        }
+
+        if (_playerHealthSystem != null)
+        {
+            _playerHealthSystem.OnDeath -= OnPlayerDeath;
+        }
+    }
+    
+    private void OnDeath()
+    {
+        StopAllCoroutines();
+    }
+    
+    private void OnPlayerDeath()
+    {
+        ChangeState(IdleState);
+    }
+    
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {

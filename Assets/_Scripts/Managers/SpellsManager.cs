@@ -10,7 +10,7 @@ namespace _Scripts.Managers
         public SpellLimiterController SpellLimiterController { get; private set; }
 
         public Action<Spell> OnSelectedSpellChanged;
-        public Action<ElementType, int> OnSelectedElementChanged;
+        public Action<ElementType> OnSelectedElementChanged;
 
         private void Start()
         {

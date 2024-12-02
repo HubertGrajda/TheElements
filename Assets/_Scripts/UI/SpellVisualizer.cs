@@ -41,7 +41,7 @@ namespace UI
             _spellsManager.OnSelectedElementChanged -= OnSelectedElementChanged;
         }
 
-        private void OnSelectedElementChanged(ElementType elementType, int index)
+        private void OnSelectedElementChanged(ElementType elementType)
         {
             if (selectedImage == null) return;
             

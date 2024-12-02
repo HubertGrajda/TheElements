@@ -37,13 +37,14 @@ namespace Player
         public float CurrentSpeed { get; private set; }
 
         public PlayerMovementStatsConfig MovementStats => movementsStats;
+
+        private BaseHealthSystem _healthSystem;
         
         protected override void Awake()
         {
             base.Awake();
-        
+            
             _characterController = GetComponent<CharacterController>();
-            _cameraTransform = Camera.main.transform;
         
             AddListeners();
             PlayerActions.Enable();
@@ -51,17 +52,25 @@ namespace Player
 
         private void AddListeners()
         {
-            PlayerManager.death += OnDeath;
+            if (TryGetComponent(out _healthSystem))
+            {
+                _healthSystem.OnDeath += OnDeath;
+            }
         }
 
         private void RemoveListeners()
         {
-            PlayerManager.death -= OnDeath;
+            if (_healthSystem != null)
+            {
+                _healthSystem.OnDeath -= OnDeath;
+            }
         }
+        
         protected override void Start()
         {
+            _cameraTransform = CameraManager.Instance.CameraMain.transform;
+            
             base.Start();
-        
             SetGravity();
         }
 

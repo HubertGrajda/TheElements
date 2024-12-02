@@ -5,26 +5,23 @@ namespace _Scripts.Managers
 {
     public class CameraManager : Singleton<CameraManager>
     {
-        [SerializeField] private Camera cameraMain;
-        [SerializeField] private Camera cameraUI;
-    
-        [SerializeField] private CinemachineFreeLook aimingFreeLook;
-        [SerializeField] private CinemachineFreeLook mainFreeLook;
-
-        public Camera CameraUI => cameraUI;
-        public Camera CameraMain => cameraMain;
-
-        private CinemachineFreeLook MainFreeLook => mainFreeLook;
+        private CinemachineFreeLook _aimingFreeLook;
 
         private float _xAxisSpeed;
         private float _yAxisSpeed;
+        
+        private Camera _cameraMain;
+        
+        public Camera CameraMain => _cameraMain != null ? _cameraMain : _cameraMain = Camera.main;
+        public Camera CameraUI { get; private set; }
+        private CinemachineFreeLook MainFreeLook { get; set; }
     
         //TODO:
-        public void SetUICamera(Camera cam) => cameraUI = cam;
-        public void SetMainCamera(Camera cam) => cameraMain = cam;
+        public void SetUICamera(Camera cam) => CameraUI = cam;
+        public void SetMainCamera(Camera cam) => _cameraMain = cam;
     
-        public void SetAimBehaviour(CinemachineFreeLook cam) => aimingFreeLook = cam;
-        public void SetMainBehaviour(CinemachineFreeLook cam) => mainFreeLook = cam;
+        public void SetAimBehaviour(CinemachineFreeLook cam) => _aimingFreeLook = cam;
+        public void SetMainBehaviour(CinemachineFreeLook cam) => MainFreeLook = cam;
 
         public void ToggleMainCameraMovement(bool enable)
         {

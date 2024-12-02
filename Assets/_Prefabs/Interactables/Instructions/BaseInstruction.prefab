@@ -144,7 +144,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3206610018284885629}
   - component: {fileID: 3206610018284885627}
-  m_Layer: 0
+  - component: {fileID: 3623030816006593523}
+  m_Layer: 2
   m_Name: BaseInstruction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,9 +202,30 @@ MonoBehaviour:
     ac feugiat. Ut tortor pretium viverra suspendisse potenti. Consectetur adipiscing
     elit duis tristique sollicitudin nibh sit. Orci nulla pellentesque dignissim
     enim sit amet.
-  activationDistance: 3.5
+  rotationSpeed: 10
   textContainer: {fileID: 9007146256212427401}
   instruction: {fileID: 6655857162569922133}
+--- !u!65 &3623030816006593523
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3206610018284885630}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8, y: 1, z: 8}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &6655857161702705349
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,10 +369,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cb882ea56eba694ea9406fdd5e10c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 0
-  vfx: {fileID: 0}
-  _playerTransform: {fileID: 0}
-  _canBeAffected: 0
+  canBeAffected: 0
+  rate: 500
+  size: 15
+  radius: 90
 --- !u!135 &6655857161702705406
 SphereCollider:
   m_ObjectHideFlags: 0

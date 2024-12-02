@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4924152010488022066}
   - component: {fileID: 4924152010488022061}
   m_Layer: 0
-  m_Name: Waterball
+  m_Name: WaterballParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

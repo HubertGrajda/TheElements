@@ -7,7 +7,8 @@ namespace UI
         private PlayerEvents _playerEvents;
         private PlayerManager _playerManager;
         private CameraManager _cameraManager;
-
+        private BaseHealthSystem _playerHealthSystem;
+        
         protected override void Awake()
         {
             base.Awake();
@@ -20,14 +21,18 @@ namespace UI
 
         private void AddListeners()
         {
-            _playerManager.death += LaunchDeathView;
+            if (_playerManager.TryGetPlayerController(out var playerController) &&
+                playerController.TryGetComponent(out _playerHealthSystem))
+            {
+                _playerHealthSystem.OnDeath += LaunchDeathView;
+            }
         }
 
         private void RemoveListeners()
         {
-            if (_playerManager == null) return;
+            if (_playerHealthSystem == null) return;
             
-            _playerManager.death -= LaunchDeathView;
+            _playerHealthSystem.OnDeath -= LaunchDeathView;
         }
     
         private void LaunchDeathView()

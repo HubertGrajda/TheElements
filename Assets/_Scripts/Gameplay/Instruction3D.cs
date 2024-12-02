@@ -9,56 +9,51 @@ public class Instruction3D : MonoBehaviour
 {
     [TextArea]
     [SerializeField] private List<string> listOfInstructions;
-    [SerializeField] private float activationDistance = 3.5f;
+    [SerializeField] private float rotationSpeed = 10;
+    
     [SerializeField] private GameObject textContainer;
     [SerializeField] private TMP_Text instruction;
-
-    private Transform _playerTransform;
+    
     private InputAction _inputAction;
     
     private int _currInstructionIndex;
     private bool _isShown;
     
+    private const float SHOW_ANIMATION_DURATION = 2f;
+    
     private void Start()
     {
         instruction.text = listOfInstructions[0];
-        _playerTransform = PlayerManager.Instance.PlayerRef.transform;
         _inputAction = InputsManager.Instance.PlayerActions.Accept;
     }
     
-    private void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        if(_playerTransform == null) return;
-        
-        InstructionHandling();
-        
-        if(!_isShown) return;
-        
-        RotateToPlayer();
+        if (!other.CompareTag(Constants.Tags.PLAYER_TAG)) return;
+        if (!_isShown)
+        {
+            textContainer.transform.DOScale(Vector3.one, SHOW_ANIMATION_DURATION);
+            _isShown = true;
+        }
+
+        _inputAction.started += NextInstruction;
     }
 
-    private void InstructionHandling()
+    private void OnTriggerStay(Collider other)
     {
-        var distance = Vector3.Distance(_playerTransform.transform.position, transform.position);
+        if (!other.CompareTag(Constants.Tags.PLAYER_TAG)) return;
         
-        if (distance < activationDistance)
-        {
-            if (!_isShown)
-            {
-                textContainer.transform.DOScale(new Vector3(1f, 1f, 1f), 2f);
-                _isShown = true;
-            }
+        RotateToPlayer(other.transform);
+    }
 
-            _inputAction.started += NextInstruction;
-        }
-        else
-        {
-            if(!_isShown) return;
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag(Constants.Tags.PLAYER_TAG)) return;
+        if (!_isShown) return;
 
-            _inputAction.started -= NextInstruction; 
-            textContainer.transform.DOScale(new Vector3(0, 0, 0), 2f);
-            _isShown = false;
-        }
+        _inputAction.started -= NextInstruction; 
+        textContainer.transform.DOScale(Vector3.zero, SHOW_ANIMATION_DURATION);
+        _isShown = false;
     }
     
     private void NextInstruction(InputAction.CallbackContext context)
@@ -66,17 +61,15 @@ public class Instruction3D : MonoBehaviour
         instruction.text = listOfInstructions[_currInstructionIndex++ % listOfInstructions.Count];
     }
     
-    private void RotateToPlayer()
+    private void RotateToPlayer(Transform playerTransform)
     {
-        var rotation = Quaternion.LookRotation(transform.position - _playerTransform.transform.position);
-        transform.rotation = Quaternion.Lerp(transform.rotation,new Quaternion(0, rotation.y, 0, rotation.w), 0.01f);
+        var rotation = Quaternion.LookRotation(transform.position - playerTransform.transform.position);
+        rotation.x = 0f;
+        rotation.z = 0f;
+        
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
     }
     
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(transform.position, activationDistance);
-    }
-
     private void OnDestroy()
     {
         if (_inputAction == null) return;

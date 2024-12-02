@@ -112,11 +112,16 @@ public class PlayerBendingStateMachine : PlayerStateMachine
         
         if (slotIndex < 0) return;
         if (bendingStyles.Count <= slotIndex) return;
-        if (!_elementToBendingState.TryGetValue(bendingStyles[slotIndex], out var bendingState)) return;
 
+        ChangeState(bendingStyles[slotIndex]);
+    }
+
+    public void ChangeState(ElementType elementType)
+    {
+        if (!_elementToBendingState.TryGetValue(elementType, out var bendingState)) return;
+        
         ChangeState(bendingState);
-        _spellsManager.OnSelectedSpellChanged?.Invoke(bendingState.SelectedSpell);
-        _spellsManager.OnSelectedElementChanged?.Invoke(bendingStyles[slotIndex], slotIndex);
+        _spellsManager.OnSelectedElementChanged?.Invoke(elementType);
     }
     
     private void OnDestroy() => RemoveListeners();

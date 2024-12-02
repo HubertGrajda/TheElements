@@ -12,6 +12,7 @@ public class RangedAttackAIState : AIState
     public override void UpdateState()
     {
         if (Fsm.PlayerTransform == null) return;
+        Fsm.transform.LookAt(Fsm.PlayerTransform);
         
         base.UpdateState();
         

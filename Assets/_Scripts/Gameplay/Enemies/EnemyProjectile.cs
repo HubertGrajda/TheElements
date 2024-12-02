@@ -19,7 +19,7 @@ public class EnemyProjectile : MonoBehaviour, IPoolable
     protected virtual void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag(Constants.Tags.PLAYER_TAG) &&
-            collision.collider.TryGetComponent(out PlayerHealthSystem playerHealthSystem))
+            collision.collider.TryGetComponent(out BaseHealthSystem playerHealthSystem))
         {
             playerHealthSystem.TakeDamage(damage); 
         }

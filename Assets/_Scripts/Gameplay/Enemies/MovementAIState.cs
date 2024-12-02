@@ -65,11 +65,14 @@ public class MovementAIState : AIState
 
     private IEnumerator StartMoving()
     {
-        if(_decreaseSpeedCoroutine != null)
+        if (_decreaseSpeedCoroutine != null)
+        {
             Fsm.StopCoroutine(_decreaseSpeedCoroutine);
+        }
 
         Agent.isStopped = false;
         _currentSpeed = 0f;
+        
         while (_currentSpeed < 1f)
         {
             _currentSpeed += 0.01f;
