@@ -3,8 +3,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private void OnEnable()
+    private PlayerManager _playerManager;
+    
+    private void Awake()
     {
-        PlayerManager.Instance.SetUpPlayerRef(this);
+        _playerManager = PlayerManager.Instance;
+        _playerManager.SetUpPlayerComponent(this);
+    }
+
+    private void OnDestroy()
+    {
+        _playerManager.Clear();
     }
 }

@@ -58,7 +58,7 @@ public class Instruction3D : MonoBehaviour
     
     private void NextInstruction(InputAction.CallbackContext context)
     {
-        instruction.text = listOfInstructions[_currInstructionIndex++ % listOfInstructions.Count];
+        instruction.text = listOfInstructions[++_currInstructionIndex % listOfInstructions.Count];
     }
     
     private void RotateToPlayer(Transform playerTransform)

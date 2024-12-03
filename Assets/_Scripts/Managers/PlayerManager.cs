@@ -1,36 +1,49 @@
 ﻿
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace _Scripts.Managers
 {
     public class PlayerManager : Singleton<PlayerManager>
     {
-        private PlayerController _playerRef;
+        private PlayerController _playerController;
+        
+        private PlayerController PlayerController => _playerController != null 
+            ? _playerController 
+            : _playerController = FindAnyObjectByType<PlayerController>();
+        
+        private readonly Dictionary<Type, Component> _playerComponents = new();
 
-        private PlayerExperienceSystem _experienceSystem;
-        public PlayerExperienceSystem ExperienceSystem => _experienceSystem;
-
-        public void SetUpPlayerRef(PlayerController player)
+        public void Clear()
         {
-            _playerRef = player;
-            _playerRef.TryGetComponent(out _experienceSystem);
+            _playerComponents.Clear();
+            _playerController = null;
+        }
+        
+        public void SetUpPlayerComponent(PlayerController player)
+        {
+            _playerController = player;
         }
 
-        public bool TryGetPlayerController(out PlayerController playerController)
+        public bool TryGetPlayerComponent<T>(out T component) where T : Component
         {
-            playerController = default;
-            
-            if (_playerRef != null)
+            if (_playerComponents.TryGetValue(typeof(T), out var matchingComponent))
             {
-                playerController = _playerRef;
+                component = matchingComponent as T;
                 return true;
             }
+
+            component = default;
             
-            var playerFound = FindAnyObjectByType<PlayerController>();
+            if (PlayerController == null) return false;
 
-            if (playerFound == null) return false;
-                
-            SetUpPlayerRef(playerFound);
+            if (_playerController.TryGetComponent(out component))
+            {
+                _playerComponents.Add(typeof(T), component);
+            }
 
-            return _playerRef != true;
+            return component != null;
         }
     }
 }

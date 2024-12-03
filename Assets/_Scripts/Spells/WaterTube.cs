@@ -22,7 +22,7 @@ namespace _Scripts.Spells
         private void Update()
         {
             SpellCollider.transform.position = Vfx.GetVector3(END_POINT_PARAM);
-            _middlePoint1 = Vector3.Lerp(_startPoint, _endPoint, 0.2f) + new Vector3(0,3f,0); ;
+            _middlePoint1 = Vector3.Lerp(_startPoint, _endPoint, 0.2f) + new Vector3(0,3f,0);
             _middlePoint2 = Vector3.Lerp(_startPoint, _endPoint, 0.7f) + new Vector3(0,1.5f, 0);
         }
 
@@ -32,11 +32,12 @@ namespace _Scripts.Spells
             
             var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
             var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
-            var nearestWater = Detection.GetNearestWaterSource(_endPoint);
-
+            
             _endPoint = Physics.Raycast(ray, out var hit) 
                 ? hit.point
                 : ray.GetPoint(50);
+            
+            var nearestWater = Detection.GetNearestWaterSource(_endPoint);
 
             _startPoint = nearestWater.transform.position;
             Vfx.SetVector4("Color", nearestWater.GetColor());

@@ -1,4 +1,3 @@
-using System;
 using _Scripts.Managers;
 using UnityEngine;
 using UnityEngine.AI;
@@ -46,7 +45,7 @@ public class AIStateMachine : StateMachine
     {
         base.Start();
 
-        if (PlayerManager.Instance.TryGetPlayerController(out var controller))
+        if (PlayerManager.Instance.TryGetPlayerComponent(out PlayerController controller))
         {
             PlayerTransform = controller.transform;
         }
@@ -91,6 +90,7 @@ public class AIStateMachine : StateMachine
     
     private void OnDeath()
     {
+        enabled = false;
         StopAllCoroutines();
     }
     

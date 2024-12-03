@@ -11,7 +11,7 @@ public abstract class BaseRangeAttackBehaviour : MonoBehaviour
 
     protected void Start()
     {
-        if (PlayerManager.Instance.TryGetPlayerController(out var controller))
+        if (PlayerManager.Instance.TryGetPlayerComponent(out PlayerController controller))
         {
             Target = controller.transform;
         }

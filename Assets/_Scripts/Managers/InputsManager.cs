@@ -1,28 +1,27 @@
-
 namespace _Scripts.Managers
 {
     public class InputsManager : Singleton<InputsManager>
     {
-        public PlayerInputs Inputs { get; private set; }
+        private PlayerInputs _inputs;
 
-        public PlayerInputs.UIActions UIActions => Inputs.UI;
-        public PlayerInputs.PlayerActions PlayerActions => Inputs.Player;
+        public PlayerInputs.UIActions UIActions => _inputs.UI;
+        public PlayerInputs.PlayerActions PlayerActions => _inputs.Player;
 
         protected override void Awake()
         {
             base.Awake();
 
-            Inputs = new PlayerInputs();
+            _inputs = new PlayerInputs();
         }
 
         private void DisableInputs()
         {
-            Inputs.Disable();
+            _inputs.Disable();
         }
 
         public void EnableInputs()
         {
-            Inputs.Enable();
+            _inputs.Enable();
         }
 
         private void OnDestroy()

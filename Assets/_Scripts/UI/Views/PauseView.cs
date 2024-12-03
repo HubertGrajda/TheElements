@@ -14,6 +14,8 @@ namespace UI
 
         protected override void Show()
         {
+            if (!CanBeShown) return;
+            
             defaultMenu.Open();
         
             base.Show();

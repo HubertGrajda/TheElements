@@ -2,16 +2,19 @@ using _Scripts.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Aiming : MonoBehaviour
+public class PlayerCameraController : MonoBehaviour
 {
-    [SerializeField] private GameObject crosshair;
-    [SerializeField] private GameObject aimingCamera;
-
+    [field: SerializeField] public Transform CameraLookAtPoint { get; private set; }
+    
+    private GameObject _crosshair;
+    private GameObject _aimingCamera;
     private InputAction _inputAction;
     
     private void Start()
     {
         _inputAction = InputsManager.Instance.PlayerActions.Aim;
+        _aimingCamera = CameraManager.Instance.AimingFreeLook.gameObject;
+        _crosshair = UIManager.Instance.CurrentHUD.Crosshair.gameObject;
         
         AddListeners();
     }
@@ -20,8 +23,8 @@ public class Aiming : MonoBehaviour
     {
         var show = context is { started: true, canceled: false };
         
-        aimingCamera.SetActive(show);
-        crosshair.SetActive(show);
+        _aimingCamera.SetActive(show);
+        _crosshair.SetActive(show);
     }
 
     private void OnDestroy()

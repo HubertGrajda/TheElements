@@ -23,9 +23,10 @@ namespace UI
 
         private void Start()
         {
-            _experienceSystem = PlayerManager.Instance.ExperienceSystem;
-            
-            AddListeners();
+            if (PlayerManager.Instance.TryGetPlayerComponent(out _experienceSystem))
+            {
+                AddListeners();
+            }
         }
 
         private void OnDestroy()

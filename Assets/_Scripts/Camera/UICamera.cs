@@ -1,18 +1,21 @@
 using _Scripts.Managers;
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
-public class UICamera : MonoBehaviour
+namespace Cameras
 {
-    private Camera _cameraUI;
+    [RequireComponent(typeof(Camera))]
+    public class UICamera : MonoBehaviour
+    {
+        private Camera _cameraUI;
     
-    private void Awake()
-    {
-        _cameraUI = GetComponent<Camera>();
-    }
+        private void Awake()
+        {
+            _cameraUI = GetComponent<Camera>();
+        }
 
-    private void Start()
-    {
-        CameraManager.Instance.SetUICamera(_cameraUI);
+        private void Start()
+        {
+            CameraManager.Instance.SetUICamera(_cameraUI);
+        }
     }
 }

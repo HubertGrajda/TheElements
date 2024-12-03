@@ -60,6 +60,9 @@ namespace _Scripts.Spells
         private void SetMaterial()
         {
             var nearestWater = Detection.GetNearestWaterSource(transform.position);
+            
+            if (nearestWater == null) return;
+            
             var color = nearestWater.GetColor();  
             
             Vfx.SetVector4(WATER_VFX_COLOR, color);

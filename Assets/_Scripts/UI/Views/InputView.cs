@@ -15,6 +15,17 @@ namespace UI
             AddListeners();
         }
 
+        protected virtual void ToggleByInput(InputAction.CallbackContext context)
+        {
+            if (IsShown)
+            {
+                Hide();
+                return;
+            }
+        
+            Show();
+        }
+        
         private void AddListeners()
         {
             inputAction.started += ToggleByInput;

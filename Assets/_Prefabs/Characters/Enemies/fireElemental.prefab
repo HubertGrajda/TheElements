@@ -478,7 +478,7 @@ Transform:
   m_GameObject: {fileID: 1473849914644856908}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.9, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -609,7 +609,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destructionDelay: 3.52
-  healthbar: {fileID: 1097435704781816350}
   stats: {fileID: 11400000, guid: b130b97d17b037a4e8872ab2c59d272c, type: 2}
 --- !u!114 &3426565499612156166
 MonoBehaviour:
@@ -2306,8 +2305,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8236173518077178367, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: EnemyUI
       objectReference: {fileID: 0}
+    - target: {fileID: 8457420312167406037, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
+      propertyPath: healthSystem
+      value: 
+      objectReference: {fileID: 549738135133492683}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2318,14 +2321,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2005817928202836597, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
   m_PrefabInstance: {fileID: 2211590290744504482}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1097435704781816350 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1264379356539433660, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
-  m_PrefabInstance: {fileID: 2211590290744504482}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

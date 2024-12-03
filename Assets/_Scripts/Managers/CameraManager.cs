@@ -5,8 +5,6 @@ namespace _Scripts.Managers
 {
     public class CameraManager : Singleton<CameraManager>
     {
-        private CinemachineFreeLook _aimingFreeLook;
-
         private float _xAxisSpeed;
         private float _yAxisSpeed;
         
@@ -15,12 +13,12 @@ namespace _Scripts.Managers
         public Camera CameraMain => _cameraMain != null ? _cameraMain : _cameraMain = Camera.main;
         public Camera CameraUI { get; private set; }
         private CinemachineFreeLook MainFreeLook { get; set; }
+        public CinemachineFreeLook AimingFreeLook { get; private set; }
     
-        //TODO:
         public void SetUICamera(Camera cam) => CameraUI = cam;
         public void SetMainCamera(Camera cam) => _cameraMain = cam;
     
-        public void SetAimBehaviour(CinemachineFreeLook cam) => _aimingFreeLook = cam;
+        public void SetAimBehaviour(CinemachineFreeLook cam) => AimingFreeLook = cam;
         public void SetMainBehaviour(CinemachineFreeLook cam) => MainFreeLook = cam;
 
         public void ToggleMainCameraMovement(bool enable)

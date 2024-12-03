@@ -42,7 +42,7 @@ namespace _Scripts.Spells
         protected override void Awake()
         {
             base.Awake();
-            _experienceSystem = PlayerManager.Instance.ExperienceSystem;
+            PlayerManager.Instance.TryGetPlayerComponent(out _experienceSystem);
         }
 
         protected override void Perform()

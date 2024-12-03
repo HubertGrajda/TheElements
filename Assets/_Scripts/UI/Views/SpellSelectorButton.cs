@@ -13,10 +13,7 @@ namespace UI
         
         protected override void Prepare()
         {
-            if (PlayerManager.Instance.TryGetPlayerController(out var playerController))
-            {
-                playerController.TryGetComponent(out _bendingStateMachine);
-            }
+            PlayerManager.Instance.TryGetPlayerComponent(out _bendingStateMachine);
         }
 
         protected override void OnClick()

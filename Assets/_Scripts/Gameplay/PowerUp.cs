@@ -11,8 +11,10 @@ public class PowerUp : MonoBehaviour, ICollectable
     {
         AudioSource.PlayClipAtPoint(collectingSound, transform.position);
         
-        var experienceSystem = PlayerManager.Instance.ExperienceSystem;
-        experienceSystem.AddExperience(powerUpType, value);
-        Destroy(gameObject);
+        if (PlayerManager.Instance.TryGetPlayerComponent(out PlayerExperienceSystem experienceSystem))
+        {
+            experienceSystem.AddExperience(powerUpType, value);
+            Destroy(gameObject);
+        }
     }
 }

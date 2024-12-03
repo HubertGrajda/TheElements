@@ -10,6 +10,8 @@ public class PlayerExperienceSystem : MonoBehaviour
     
     public void AddExperience(ElementType elementType, float value)
     {
+        if (elementType == null) return;
+        
         if (!_elementTypeToExperience.TryAdd(elementType, value))
         {
             _elementTypeToExperience[elementType] += value;

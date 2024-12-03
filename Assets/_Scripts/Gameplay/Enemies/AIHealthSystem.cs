@@ -4,8 +4,9 @@ public class AIHealthSystem : BaseHealthSystem
 {
     private Animator _anim;
     
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _anim = GetComponent<Animator>();
     }
     
@@ -18,7 +19,6 @@ public class AIHealthSystem : BaseHealthSystem
     
     public override void Death()
     {
-        GetComponent<AIStateMachine>().enabled = false;
         _anim.SetTrigger(Constants.AnimationNames.DEATH);
         
         base.Death();

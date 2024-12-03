@@ -22,7 +22,7 @@ namespace UI
 
         protected override void AssignInputAction()
         {
-            inputAction = InputsManager.Instance.Inputs.UI.ElementTypeSelectionView;
+            inputAction = InputsManager.Instance.UIActions.ElementTypeSelectionView;
         }
      
         protected override void ToggleByInput(InputAction.CallbackContext context)
@@ -34,13 +34,14 @@ namespace UI
 
             if (context.canceled)
             {
-                GameManager.ChangeTimeScale(DEFAULT_TIMESCALE, transitionTime);
                 Hide();
             }
         }
 
         protected override void Show()
         {
+            if (!CanBeShown) return;
+            
             base.Show();
             _cameraManager.ToggleMainCameraMovement(false);
             GameManager.ChangeTimeScale(slowedTimeScale, transitionTime);
@@ -48,6 +49,7 @@ namespace UI
 
         public override void Hide()
         {
+            if (!IsShown) return;
             base.Hide();
             _cameraManager.ToggleMainCameraMovement(true);
             GameManager.ChangeTimeScale(DEFAULT_TIMESCALE, transitionTime);

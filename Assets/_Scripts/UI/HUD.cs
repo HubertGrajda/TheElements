@@ -1,23 +1,26 @@
 ﻿using _Scripts.Managers;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
     [RequireComponent(typeof(Canvas))]
     public class HUD : MonoBehaviour
     {
+        [field: SerializeField] public Image Crosshair { get; private set; }
+
         private UIManager _uiManager;
         private Canvas _canvas;
-
+        
         private void Awake()
         {
             _canvas = GetComponent<Canvas>();
+            _uiManager = UIManager.Instance;
+            _uiManager.AttachHUD(this);
         }
 
         private void Start()
         {
-            _uiManager = UIManager.Instance;
-            
             AddListeners();
         }
 

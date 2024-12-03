@@ -1,34 +1,30 @@
 using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public  class BaseHealthSystem : MonoBehaviour, IDamageable
 {
     public event Action OnDeath;
+    public event Action<int> OnHealthChanged;
     
     [SerializeField] protected float destructionDelay;
-    [SerializeField] protected Slider healthbar;
     [SerializeField] protected BaseStatsConfig stats;
     
     private bool _isDead;
-    private int _currentHealth;
-    
-    protected virtual void Start()
+    public int CurrentHealth { get; private set; }
+
+    protected virtual void Awake()
     {
-        _currentHealth = stats.maxHealth;
-        healthbar.maxValue = _currentHealth;
-        healthbar.value = _currentHealth;
+        CurrentHealth = stats.maxHealth;
     }
 
     public virtual void TakeDamage(int damage)
     {
         if (_isDead) return;
         
-        _currentHealth -= damage;
-        StartCoroutine(SetHealthBar());
+        CurrentHealth -= damage;
+        OnHealthChanged?.Invoke(CurrentHealth);
         
-        if (_currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
             Death();
         }
@@ -40,16 +36,6 @@ public  class BaseHealthSystem : MonoBehaviour, IDamageable
         
         _isDead = true;
         OnDeath?.Invoke();
-        healthbar.gameObject.SetActive(false);
         Destroy(gameObject, destructionDelay);
-    }
-    
-    private IEnumerator SetHealthBar()
-    {
-        while (healthbar.value > _currentHealth)
-        {
-            healthbar.value -= 0.1f;
-            yield return null;
-        }
     }
 }

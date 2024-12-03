@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 664653898699756984, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
@@ -59,6 +60,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -4516849580160027438, guid: 5bcfab408b37c264db24ff0500959fe7, type: 2}
+    - target: {fileID: 4476515706812422853, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
+      propertyPath: powerUpType
+      value: 
+      objectReference: {fileID: 11400000, guid: 227829f502ce33b45adaa89026c5f4d5, type: 2}
     - target: {fileID: 4476515706812422854, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -69,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6961424053134030790, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
       propertyPath: m_Name
-      value: FireStone (1)
+      value: FireStone
       objectReference: {fileID: 0}
     - target: {fileID: 7879349732346094979, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -80,4 +85,7 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -4516849580160027438, guid: 5bcfab408b37c264db24ff0500959fe7, type: 2}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbe7ff8e95bddc74ea1ad6ecdedd5d3c, type: 3}

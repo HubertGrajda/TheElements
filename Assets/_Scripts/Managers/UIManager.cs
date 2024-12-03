@@ -15,13 +15,17 @@ namespace _Scripts.Managers
         public Menu CurrentMenu { get; private set; }
         public View CurrentView { get; set; }
 
+        public HUD CurrentHUD { get; private set; }
+        
         public UnityAction<View> OnViewOpened;
         public UnityAction<View> OnViewClosed;
-
+        
         private void Start()
         {
-            InputsManager.Instance.Inputs.UI.Enable();
+            InputsManager.Instance.UIActions.Enable();
         }
+
+        public void AttachHUD(HUD newHUD) => CurrentHUD = newHUD;
 
         public void SetCurrentMenu(Menu newCurrentMenu)
         {

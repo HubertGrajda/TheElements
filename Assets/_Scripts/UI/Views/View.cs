@@ -1,6 +1,5 @@
 using _Scripts.Managers;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace UI
 {
@@ -17,28 +16,21 @@ namespace UI
         protected GameManager GameManager { get; private set; }
         protected UIManager UIManager { get; private set; }
     
-        private bool IsShown { get; set; }
-    
+        protected bool IsShown { get; private set; }
+        
+        protected bool CanBeShown => UIManager.CurrentView == null;
+        
         protected virtual void Awake()
         {
             UIManager = UIManager.Instance;
             GameManager = GameManager.Instance;
             _inputsManager = InputsManager.Instance;
         }
-
-        protected virtual void ToggleByInput(InputAction.CallbackContext context)
-        {
-            if (IsShown)
-            {
-                Hide();
-                return;
-            }
-        
-            Show();
-        }
     
         protected virtual void Show()
         {
+            if (!CanBeShown) return;
+            
             _inputsManager.PlayerActions.Disable();
             UIManager.CurrentView = this;
         
@@ -54,10 +46,16 @@ namespace UI
 
         public virtual void Hide()
         {
+            if (!IsShown) return;
+            
             UIManager.CurrentView = null;
             _inputsManager.PlayerActions.Enable();
-            GameManager.ResumeGame();
-        
+
+            if (pauseGame)
+            {
+                GameManager.ResumeGame();
+            }
+
             containerUI.SetActive(false);
             IsShown = false;
             UIManager.OnViewClosed?.Invoke(this);

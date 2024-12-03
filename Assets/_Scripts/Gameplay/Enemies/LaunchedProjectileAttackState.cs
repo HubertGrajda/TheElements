@@ -10,6 +10,8 @@ public class LaunchedProjectileAttackState : BaseRangeAttackBehaviour
 
     private void AddForceToProjectiles()
     {
+        if (Target == null) return;
+        
         var projectile = ObjectPoolingManager.Instance.SpawnFromPool(Stats.Projectile, projectileSpawnPoint.position, transform.localRotation);
         var direction = (Target.position - transform.position).normalized;
 

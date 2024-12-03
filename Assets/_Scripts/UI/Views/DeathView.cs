@@ -21,8 +21,7 @@ namespace UI
 
         private void AddListeners()
         {
-            if (_playerManager.TryGetPlayerController(out var playerController) &&
-                playerController.TryGetComponent(out _playerHealthSystem))
+            if (_playerManager.TryGetPlayerComponent(out _playerHealthSystem))
             {
                 _playerHealthSystem.OnDeath += LaunchDeathView;
             }
@@ -38,11 +37,14 @@ namespace UI
         private void LaunchDeathView()
         {
             _cameraManager.ToggleMainCameraMovement(false);
+            UIManager.HideCurrentView();
             Show();
         }
 
         public override void Hide()
         {
+            if (!IsShown) return;
+            
             base.Hide();
         
             _cameraManager.ToggleMainCameraMovement(true);

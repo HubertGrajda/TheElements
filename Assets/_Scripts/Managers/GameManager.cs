@@ -8,6 +8,8 @@ namespace _Scripts.Managers
         private bool _isGamePaused;
         private Coroutine _changeTimeScaleCoroutine;
         
+        private const float DEFAULT_FIXED_DELTA_TIME = 0.02f;
+        
         public void QuitTheGame()
         {
             Debug.Log("Quit");
@@ -29,6 +31,7 @@ namespace _Scripts.Managers
             
             _isGamePaused = false;
             Time.timeScale = 1;
+            Time.fixedDeltaTime = DEFAULT_FIXED_DELTA_TIME;
             InputsManager.Instance.PlayerActions.Enable();
         }
 
@@ -50,7 +53,9 @@ namespace _Scripts.Managers
             while (timer <= transitionTime)
             {
                 timer += Time.unscaledDeltaTime;
-                Time.timeScale = Mathf.Lerp(startingTimeScale, targetTimeScale, timer / transitionTime);
+                var timescale = Mathf.Lerp(startingTimeScale, targetTimeScale, timer / transitionTime);
+                Time.timeScale = timescale;
+                Time.fixedDeltaTime = DEFAULT_FIXED_DELTA_TIME * timescale;
                 yield return null;
             }
         }

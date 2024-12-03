@@ -21,7 +21,7 @@ public static class Detection
             nearestWater = water;
         }
 
-        return !nearestWater.TryGetComponent(out WaterSource nearestWaterSource) ? null : nearestWaterSource;
+        return nearestWater.TryGetComponent(out WaterSource nearestWaterSource) ? nearestWaterSource : null;
     }
 
     public static Color32 AverageColorFromTexture(Texture2D texture)

@@ -582,6 +582,7 @@ GameObject:
   - component: {fileID: 4041103514207173895}
   - component: {fileID: 77317425676235881}
   - component: {fileID: 3339645612182373003}
+  - component: {fileID: 2207393710245886337}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -733,6 +734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb0a99390351ae4791e1618371c20fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <CameraLookAtPoint>k__BackingField: {fileID: 5328467046540725128}
   crosshair: {fileID: 0}
   aimingCamera: {fileID: 0}
 --- !u!114 &4383114352817477531
@@ -895,6 +897,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c97d6909f155f48b876e8b41a0824f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2207393710245886337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682906292463047282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc75fc7407583a244a3ffe480c59550b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destructionDelay: 3
+  healthbar: {fileID: 0}
+  stats: {fileID: 11400000, guid: 2b80ae8e90d9f1b4ca119de56de5ee4f, type: 2}
 --- !u!1 &1790872072890787730
 GameObject:
   m_ObjectHideFlags: 0
