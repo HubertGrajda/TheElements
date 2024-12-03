@@ -18,9 +18,12 @@ public class MovementAIState : AIState
 
     public override void UpdateState()
     {
+        if (Fsm.PlayerTransform == null) return;
+        
         base.UpdateState();
         
         Agent.speed = Fsm.Stats.MovementSpeed * _currentSpeed;
+        
         Agent.destination = Fsm.PlayerTransform.position;
     }
     public override void EndState()

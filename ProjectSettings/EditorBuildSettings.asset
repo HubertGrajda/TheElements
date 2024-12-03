@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/_Scenes/MainMenu.unity
     guid: 65b2099a7bc888e4f9b2cbc8362a74f6
   - enabled: 1
-    path: Assets/_Scenes/PrefabsSetUpScene.unity
+    path: Assets/_Scenes/SetUpScene.unity
     guid: 7b221f53105153549aedb2782b54bb04
   - enabled: 0
     path: Assets/_Scenes/TestLevel.unity

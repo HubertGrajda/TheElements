@@ -11,10 +11,6 @@ namespace Cameras
         private void Awake()
         {
             _cameraUI = GetComponent<Camera>();
-        }
-
-        private void Start()
-        {
             CameraManager.Instance.SetUICamera(_cameraUI);
         }
     }
