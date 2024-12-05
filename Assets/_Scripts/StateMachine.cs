@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class StateMachine : MonoBehaviour
 {
     protected State CurrentState { get; private set; }
+    public List<State> States { get; } = new();
 
     protected virtual void Start()
     {

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class MovementAIState : AIState
 {
+    protected override bool CanBeEntered => HasTarget && DistanceToTarget < Stats.FollowingTargetRange;
+
     public MovementAIState(AIStateMachine fsm) : base(fsm)
     {
     }
@@ -11,6 +13,7 @@ public class MovementAIState : AIState
     private Coroutine _increaseSpeedCoroutine;
     private Coroutine _decreaseSpeedCoroutine;
     
+    
     public override void EnterState()
     {
         _increaseSpeedCoroutine = Fsm.StartCoroutine(StartMoving());
@@ -18,34 +21,14 @@ public class MovementAIState : AIState
 
     public override void UpdateState()
     {
-        if (Fsm.PlayerTransform == null) return;
-        
         base.UpdateState();
         
-        Agent.speed = Fsm.Stats.MovementSpeed * _currentSpeed;
-        
-        Agent.destination = Fsm.PlayerTransform.position;
+        Agent.speed = Stats.MovementSpeed * _currentSpeed;
+        Agent.destination = TargetTransform.position;
     }
     public override void EndState()
     {
         _decreaseSpeedCoroutine = Fsm.StartCoroutine(StopMoving());
-    }
-
-    protected override bool TryGetStateToSwitch(out State stateToSwitch)
-    {
-        stateToSwitch = default;
-        
-        if (Fsm.DistanceToTarget < Fsm.Stats.RangedAttackRange)
-        {
-            stateToSwitch = Fsm.RangedAttackState;
-            
-        }
-        else if (Fsm.DistanceToTarget > Fsm.Stats.FollowingTargetRange)
-        {
-            stateToSwitch = Fsm.IdleState;
-        }
-
-        return stateToSwitch != null;
     }
 
     private IEnumerator StopMoving()

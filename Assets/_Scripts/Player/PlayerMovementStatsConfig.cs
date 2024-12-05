@@ -3,19 +3,15 @@
 [CreateAssetMenu(fileName = "PlayerMovementStats", menuName = "Stats/PlayerStats/PlayerMovementStats")]
 public class PlayerMovementStatsConfig : ScriptableObject
 {
-    [Header("Jumping settings")]
-    public int maxJumps = 2;
-    public float jumpHeight = 1.5f;
+    [field: SerializeField] public int MaxJumps { get; private set; } = 2;
+    [field: SerializeField] public float JumpHeight { get; private set; } = 1.5f;
+    
+    [field: SerializeField] public float WalkSpeed { get; private set; } = 1.5f;
+    [field: SerializeField] public float RunSpeed { get; private set; } = 3f;
+    [field: SerializeField] public float CrouchSpeed { get; private set; } = 0.7f;
+    [field: SerializeField] public float AccelerationSpeed { get; private set; } = 6f;
+    [field: SerializeField] public float TurnSmoothTime { get; private set; } = 0.1f;
 
-    [Header("Movement settings")]
-    public float walkSpeed = 1.5f;
-    public float runSpeed = 3f;
-    public float crouchSpeed = 0.7f;
-    public float floatingSpeed = 0.5f;
-
-    public float turnSmoothTime = 0.1f;
-
-    [Header("Falling Settings")]
-    public float groundedGravity = -4f;
-    public float gravityValue = -10f;
+    [field: SerializeField] public float GroundedGravity { get; private set; } = -4f;
+    [field: SerializeField] public float GravityValue { get; private set; } = -10f;
 }

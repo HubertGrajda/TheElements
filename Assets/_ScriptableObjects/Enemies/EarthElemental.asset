@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 50
   <MovementSpeed>k__BackingField: 1.4
-  <MeleeAttackRange>k__BackingField: 2
-  <RangedAttackRange>k__BackingField: 6
+  <MeleeAttackRange>k__BackingField: 1.69
+  <RangedAttackMinDistance>k__BackingField: 4.11
+  <RangedAttackMaxDistance>k__BackingField: 6
   <FollowingTargetRange>k__BackingField: 10
   <ShootingFrequency>k__BackingField: 0.5
   <ShootingForce>k__BackingField: 6

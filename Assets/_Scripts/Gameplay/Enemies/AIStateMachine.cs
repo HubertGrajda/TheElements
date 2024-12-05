@@ -10,12 +10,6 @@ public class AIStateMachine : StateMachine
     [field: SerializeField] public AIStatsConfig Stats { get; private set; }
     
     public Transform PlayerTransform { get; private set; }
-    public float DistanceToTarget { get; private set; }
-    
-    public IdleAIState IdleState { get; private set; }
-    public MovementAIState MovingState { get; private set; }
-    public MeleeAttackAIState MeleeAttackState { get; private set; }
-    public RangedAttackAIState RangedAttackState { get; private set; }
     
     public NavMeshAgent Agent { get; private set; }
     public Animator Anim { get; private set; }
@@ -33,12 +27,12 @@ public class AIStateMachine : StateMachine
 
     protected override void InitStates(out State entryState)
     {
-        IdleState = new IdleAIState(this);
-        MovingState = new MovementAIState(this);
-        MeleeAttackState =  new MeleeAttackAIState(this);
-        RangedAttackState = new RangedAttackAIState(this);
+        States.Add(new IdleAIState(this));
+        States.Add(new MovementAIState(this));
+        States.Add(new MeleeAttackAIState(this));
+        States.Add(new RangedAttackAIState(this));
         
-        entryState = IdleState;
+        entryState = States[0];
     }
 
     protected override void Start()
@@ -50,15 +44,6 @@ public class AIStateMachine : StateMachine
             PlayerTransform = controller.transform;
         }
     }
-    
-    protected override void Update()
-    {
-        base.Update();
-        
-        if (PlayerTransform == null) return;
-        
-        DistanceToTarget = Vector3.Distance(transform.position, PlayerTransform.position);
-    }
 
     private void OnDestroy() => RemoveListeners();
 
@@ -68,11 +53,6 @@ public class AIStateMachine : StateMachine
         {
             _healthSystem.OnDeath += OnDeath;
         }
-
-        if (PlayerManager.Instance.TryGetComponent(out _playerHealthSystem))
-        {
-            _playerHealthSystem.OnDeath += OnPlayerDeath;
-        }
     }
     
     private void RemoveListeners()
@@ -81,22 +61,12 @@ public class AIStateMachine : StateMachine
         {
             _healthSystem.OnDeath -= OnDeath;
         }
-
-        if (_playerHealthSystem != null)
-        {
-            _playerHealthSystem.OnDeath -= OnPlayerDeath;
-        }
     }
     
     private void OnDeath()
     {
         enabled = false;
         StopAllCoroutines();
-    }
-    
-    private void OnPlayerDeath()
-    {
-        ChangeState(IdleState);
     }
     
 #if UNITY_EDITOR
@@ -107,8 +77,11 @@ public class AIStateMachine : StateMachine
         Handles.color = new Color(1, 0, 0, 0.03f);
         Handles.DrawSolidDisc(center, Vector3.up, Stats.MeleeAttackRange);
         
+        Handles.color = new Color(0, 1, 1, 0.02f);
+        Handles.DrawSolidDisc(center, Vector3.up, Stats.RangedAttackMinDistance);
+        
         Handles.color = new Color(0, 1, 0, 0.01f);
-        Handles.DrawSolidDisc(center, Vector3.up, Stats.RangedAttackRange);
+        Handles.DrawSolidDisc(center, Vector3.up, Stats.RangedAttackMaxDistance);
 
         Handles.color = new Color(0, 0, 1, 0.005f);
         Handles.DrawSolidDisc(center, Vector3.up, Stats.FollowingTargetRange);

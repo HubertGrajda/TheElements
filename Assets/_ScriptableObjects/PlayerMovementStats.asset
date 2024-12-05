@@ -15,10 +15,9 @@ MonoBehaviour:
   maxJumps: 2
   jumpHeight: 1.5
   walkSpeed: 1.5
-  runSpeed: 3
+  runSpeed: 3.5
   crouchSpeed: 0.7
-  floatingSpeed: 0.5
+  accelerationSpeed: 6
   turnSmoothTime: 0.1
-  turnSmoothVelocity: -182.68323
   groundedGravity: -4
   gravityValue: -10

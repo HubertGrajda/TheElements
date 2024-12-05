@@ -1,11 +1,18 @@
+using System;
+using System.Collections;
 using _Scripts.Managers;
 using UnityEngine;
 
 namespace Player
 {
     [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(GroundDetector))]
+    [RequireComponent(typeof(PlayerAnimatorController))]
     public class PlayerMovementStateMachine : PlayerStateMachine
     {
+        public Action<JumpingState.JumpingSubState> OnJumpingSubStateChanged;
+        public Action<bool> OnCrouchingStateChanged;
+        
         [SerializeField] private float checkingForGroundDistance;
         [SerializeField] private LayerMask groundingLayers;
         [SerializeField] private PlayerMovementStatsConfig movementsStats;
@@ -19,32 +26,28 @@ namespace Player
         private Vector2 _movementInput;
         
         private Transform _cameraTransform;
-        private CharacterController _characterController;
+        public CharacterController CharacterController { get; private set; }
+        public GroundDetector GroundDetector { get; private set; }
         
-        public IdleState IdleState { get; private set; }
-        public JumpingState JumpingState { get; private set; }
-        public WalkingState WalkingState { get; private set; }
-        public RunningState RunningState { get; private set; }
-        public CrouchingState CrouchingState { get; private set; }
-
         public bool IsMovingInputActive => PlayerActions.Move.IsPressed();
         public bool IsCrouchingInputActive => PlayerActions.Crouch.IsPressed();
         public bool IsRunningInputActive => PlayerActions.Run.IsPressed();
         public bool IsJumpingInputActive => PlayerActions.Jump.IsPressed();
     
         public Vector3 PlayerVelocity => _playerVelocity;
-        public bool IsGrounded => IsPlayerGrounded();
         public float CurrentSpeed { get; private set; }
 
         public PlayerMovementStatsConfig MovementStats => movementsStats;
 
         private BaseHealthSystem _healthSystem;
+        private Coroutine _movementSmoothingCoroutine;
         
         protected override void Awake()
         {
             base.Awake();
             
-            _characterController = GetComponent<CharacterController>();
+            CharacterController = GetComponent<CharacterController>();
+            GroundDetector = GetComponent<GroundDetector>();
         
             AddListeners();
             PlayerActions.Enable();
@@ -76,83 +79,86 @@ namespace Player
 
         protected override void InitStates(out State entryState)
         {
-            IdleState = new IdleState(this);
-            JumpingState = new JumpingState(this);
-            WalkingState = new WalkingState(this);
-            RunningState = new RunningState(this);
-            CrouchingState = new CrouchingState(this);
-
-            entryState = IdleState;
+            States.Add(new IdleState(this));
+            States.Add(new JumpingState(this));
+            States.Add(new WalkingState(this));
+            States.Add(new RunningState(this));
+            States.Add(new CrouchingState(this));
+            
+            entryState = States[0];
         }
     
         protected override void Update()
         {
             base.Update();
-            Move();
+            ApplyGravity();
         }
     
-        private void Move()
+        private void ApplyGravity()
         {
-            _characterController.Move(SetDirection() * (CurrentSpeed * Time.deltaTime));
-            _characterController.Move(_playerVelocity * Time.deltaTime);
-
-            Animator.SetBool(Constants.AnimationNames.GROUNDED, IsGrounded);
+            CharacterController.Move(_playerVelocity * Time.deltaTime);
         }
 
         public void SetCurrentSpeed(float speed)
         {
+            if (Mathf.Approximately(CurrentSpeed, speed)) return;
+            
+            if (_movementSmoothingCoroutine != null)
+            {
+                StopCoroutine(_movementSmoothingCoroutine);
+            }
+
+            _movementSmoothingCoroutine = StartCoroutine(MovementSmoothing(speed));
+        }
+        
+        private IEnumerator MovementSmoothing(float speed)
+        {
+            while (!Mathf.Approximately(CurrentSpeed, speed))
+            {
+                CurrentSpeed = Mathf.Lerp(CurrentSpeed, speed, movementsStats.AccelerationSpeed * Time.deltaTime);
+                PlayerAnimatorController.OnMovementSpeedChanged(CurrentSpeed);
+                yield return null;
+            }
+            
             CurrentSpeed = speed;
+            PlayerAnimatorController.OnMovementSpeedChanged(CurrentSpeed);
+            _movementSmoothingCoroutine = null;
         }
 
-        public void AddVelocityY(float velocity)
-        {
-            _playerVelocity.y += velocity;
-        }
+        public void AddVelocityY(float velocity) => _playerVelocity.y += velocity;
+        
+        public void SetVelocity(Vector3 velocity) => _playerVelocity = velocity;
 
-        public void SetVelocity(Vector3 velocity)
+        public Vector3 SetDirection()
         {
-            _playerVelocity = velocity;
-        }
+            var movementDirection = PlayerActions.Move.ReadValue<Vector2>();
 
-        private Vector3 SetDirection()
-        {
-            var dir = PlayerActions.Move.ReadValue<Vector2>();
-
-            _targetAngle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg + _cameraTransform.eulerAngles.y;
-            _angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetAngle, ref _turnSmoothVelocity, movementsStats.turnSmoothTime);
+            _targetAngle = Mathf.Atan2(movementDirection.x, movementDirection.y) * Mathf.Rad2Deg + _cameraTransform.eulerAngles.y;
+            _angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetAngle, ref _turnSmoothVelocity, movementsStats.TurnSmoothTime);
+            
             transform.rotation = Quaternion.Euler(0f, _angle, 0f);
+            
             return Quaternion.Euler(0f, _targetAngle, 0f) * Vector3.forward;;
         }
 
         private void SetGravity()
         {
-            if (CurrentState != JumpingState)
+            if (GroundDetector.IsGrounded)
             {
-                _playerVelocity.y = movementsStats.groundedGravity;
+                _playerVelocity.y = movementsStats.GroundedGravity;
             }
         }
 
-        private bool IsPlayerGrounded()
-        {
-            var capsuleCenter = transform.position + Vector3.up;
-        
-            return Physics.CapsuleCast(capsuleCenter, capsuleCenter,
-                _characterController.radius, Vector3.down, checkingForGroundDistance, groundingLayers);
-        }
-
-        private void PlayFootstepSound(string soundName) //function call in animation event
+        private void PlayFootstepSound(string soundName)
         {
             AudioManager.Instance.PlaySound(soundName);
         }
 
         private void OnDeath()
         {
-            _characterController.enabled = false;
+            CharacterController.enabled = false;
         }
 
-        private void OnDestroy()
-        {
-            RemoveListeners();
-        }
+        private void OnDestroy() => RemoveListeners();
     }
 }

@@ -5,13 +5,15 @@ using _Scripts.Managers;
 
 public class BendingState : State
 {
+    public Spell SelectedSpell => _spells[_currSpellIndex];
+
     private readonly List<Spell> _spells = new();
     private int _currSpellIndex;
 
-    public Spell SelectedSpell => _spells[_currSpellIndex];
-
     private readonly PlayerInputs.PlayerActions _playerActions;
     private readonly SpellsManager _spellsManager;
+    
+    protected override bool CanBeEntered => false;
     
     public BendingState(PlayerBendingStateMachine fsm, ElementType type) : base(fsm)
     {
@@ -53,12 +55,5 @@ public class BendingState : State
     {
         _playerActions.NextSpell.started -= NextSpell;
         _playerActions.PreviousSpell.started -= PreviousSpell;
-    }
-
-    protected override bool TryGetStateToSwitch(out State stateToSwitch)
-    {
-        stateToSwitch = default;
-        
-        return false;
     }
 }

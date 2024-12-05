@@ -1,6 +1,10 @@
+using System.Linq;
 
 public abstract class State
 {
+    protected virtual bool CanBeEntered => true;
+    protected virtual bool CanBeEnded => true;
+    
     protected State(StateMachine fsm)
     {
         _fsm = fsm;
@@ -24,5 +28,13 @@ public abstract class State
     {
     }
 
-    protected abstract bool TryGetStateToSwitch(out State stateToSwitch);
+    private bool TryGetStateToSwitch(out State stateToSwitch)
+    {
+        stateToSwitch = default;
+        if (!CanBeEnded) return false;
+
+        stateToSwitch = _fsm.States.FirstOrDefault(x => x.CanBeEntered && x != this);
+        
+        return stateToSwitch != null;
+    }
 }

@@ -6,7 +6,8 @@ public class AIStatsConfig : BaseStatsConfig
     [field: SerializeField] public float MovementSpeed { get; private set; }
 
     [field: SerializeField] public float MeleeAttackRange { get; private set; }
-    [field: SerializeField] public float RangedAttackRange { get; private set; }
+    [field: SerializeField] public float RangedAttackMinDistance { get; private set; }
+    [field: SerializeField] public float RangedAttackMaxDistance { get; private set; }
     [field: SerializeField] public float FollowingTargetRange { get; private set; }
     
     [field: SerializeField] public float ShootingFrequency { get; private set; }

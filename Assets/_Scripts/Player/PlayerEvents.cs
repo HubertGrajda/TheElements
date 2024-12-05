@@ -3,14 +3,9 @@ using UnityEngine.Events;
 
 public class PlayerEvents : MonoBehaviour
 {
-    public UnityAction step;
-    public UnityAction jump;
-    public UnityAction<JumpingState.JumpingSubState> jumpingSubStateChanged;
+    public UnityAction Step;
+    public UnityAction Jump;
     
-    public void OnStep() => step?.Invoke();
-    public void OnJump() => jump?.Invoke();
-    public void OnJumpingSubStateChanged(JumpingState.JumpingSubState subState) => jumpingSubStateChanged?.Invoke(subState);
-    
-
-
+    public void OnStep() => Step?.Invoke();
+    public void OnJump() => Jump?.Invoke();
 }
