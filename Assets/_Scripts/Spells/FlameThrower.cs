@@ -1,4 +1,5 @@
 using _Scripts.Managers;
+using _Scripts.Player;
 using UnityEngine;
 
 namespace _Scripts.Spells
@@ -25,11 +26,8 @@ namespace _Scripts.Spells
         protected override void Perform()
         {
             base.Perform();
-            
-            var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
 
-            transform.LookAt(ray.GetPoint(100));
+            transform.LookAt(SpellLauncher.GetTarget());
             
             if (Physics.Raycast(Vfx.transform.position, Vfx.transform.forward, out var hit))
             {
@@ -60,6 +58,7 @@ namespace _Scripts.Spells
             
             base.Cancel();
             
+            if (!Launched) return;
             Vfx.Stop();
             Disable();
         }

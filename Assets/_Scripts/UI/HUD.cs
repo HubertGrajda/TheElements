@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace _Scripts.UI
 {
     [RequireComponent(typeof(Canvas))]
     public class HUD : MonoBehaviour

@@ -1,8 +1,11 @@
-public class IdleAIState : AIState
+namespace _Scripts.AI
 {
-    protected override bool CanBeEntered => !HasTarget || DistanceToTarget > Stats.FollowingTargetRange;
-
-    public IdleAIState(AIStateMachine fsm) : base(fsm)
+    public class IdleAIState : AIState
     {
+        protected override bool CanBeEntered => !HasTarget || DistanceToTarget > Stats.FollowingTargetRange;
+
+        public IdleAIState(AIStateMachine fsm) : base(fsm)
+        {
+        }
     }
 }

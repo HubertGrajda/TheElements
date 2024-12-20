@@ -1,13 +1,14 @@
 using _Scripts.Managers;
+using _Scripts.Player;
 
-namespace UI
+namespace _Scripts.UI
 {
     public class DeathView : View
     {
         private PlayerEvents _playerEvents;
         private PlayerManager _playerManager;
         private CameraManager _cameraManager;
-        private BaseHealthSystem _playerHealthSystem;
+        private HealthSystem _playerHealthSystem;
         
         protected override void Awake()
         {

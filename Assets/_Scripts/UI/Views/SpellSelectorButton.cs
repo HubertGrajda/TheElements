@@ -1,7 +1,8 @@
 ﻿using _Scripts.Managers;
+using _Scripts.Player;
 using UnityEngine;
 
-namespace UI
+namespace _Scripts.UI
 {
     public class SpellSelectorButton : ButtonAction
     {

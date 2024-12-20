@@ -7,9 +7,9 @@ namespace _Scripts.Spells
     {
         [SerializeField] private float cooldown;
 
-        protected override CooldownLimiter CreateInstance(SpellLimiterController controller, Spell spell)
+        protected override CooldownLimiter CreateInstance()
         {
-            return new CooldownLimiter(controller, cooldown);
+            return new CooldownLimiter(cooldown);
         }
     }
 }

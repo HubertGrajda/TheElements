@@ -1,26 +1,28 @@
-using Player;
 using UnityEngine;
 
-public class WalkingState : PlayerMovementState
+namespace _Scripts.Player
 {
-    protected override bool CanBeEntered => 
-        IsGrounded && Fsm.IsMovingInputActive && 
-        !Fsm.IsCrouchingInputActive && 
-        !Fsm.IsRunningInputActive;
-
-    public WalkingState(PlayerMovementStateMachine fsm) : base(fsm)
+    public class WalkingState : PlayerMovementState
     {
-    }
+        protected override bool CanBeEntered => 
+            IsGrounded && Fsm.IsMovingInputActive && 
+            !Fsm.IsCrouchingInputActive && 
+            !Fsm.IsRunningInputActive;
 
-    public override void EnterState()
-    {
-        Fsm.SetCurrentSpeed(Stats.WalkSpeed);
-    }
+        public WalkingState(PlayerMovementStateMachine fsm) : base(fsm)
+        {
+        }
 
-    public override void UpdateState()
-    {
-        base.UpdateState();
+        public override void EnterState()
+        {
+            Fsm.SetCurrentSpeed(Stats.WalkSpeed);
+        }
+
+        public override void UpdateState()
+        {
+            base.UpdateState();
         
-        CharacterController.Move(Fsm.SetDirection() * (Fsm.CurrentSpeed * Time.deltaTime));
+            CharacterController.Move(Fsm.SetDirection() * (Fsm.CurrentSpeed * Time.deltaTime));
+        }
     }
 }

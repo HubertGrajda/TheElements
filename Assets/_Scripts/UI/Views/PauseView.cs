@@ -1,7 +1,7 @@
 using _Scripts.Managers;
 using UnityEngine;
 
-namespace UI
+namespace _Scripts.UI
 {
     public class PauseView : InputView
     {

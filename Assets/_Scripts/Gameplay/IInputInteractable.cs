@@ -1,17 +1,20 @@
 using UnityEngine.InputSystem;
 
-public interface IInputInteractable
+namespace _Scripts
 {
-    public void InteractionBehaviour(InputAction.CallbackContext context);
-}
+    public interface IInputInteractable
+    {
+        public void InteractionBehaviour(InputAction.CallbackContext context);
+    }
 
-public interface IAirInteractable
-{
-    public void OnInteractionStart();
-    public void OnInteractionEnd();
-}
-
-public interface ICollectable
-{
-    public void Collect();
+    public interface IAirInteractable
+    {
+        public void OnInteractionStart();
+        public void OnInteractionEnd();
+    }
+    
+    public interface ICollectable
+    {
+        public void Collect();
+    }
 }

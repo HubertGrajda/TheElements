@@ -16,12 +16,12 @@ namespace _Scripts.Spells
         [SerializeField] private float slowingDownTime = 3f;
         [SerializeField] private float delayToSlowDown = 10f;
         
-        private Rigidbody _rb;
-        private Texture2D _currTex;
+        private Rigidbody _rigidbody;
+        private Texture2D _currentTexture;
 
         private bool _stopped;
         private float _currentSpeed;
-        private Color _currColor = Color.black;
+        private Color _currentColor = Color.black;
 
         private const string COLOR_PARAM = "Color1";
         private const string COLLIDER_POSITION_PARAM = "ColliderPosition";
@@ -31,7 +31,7 @@ namespace _Scripts.Spells
         protected override void Awake()
         {
             base.Awake();
-            _rb = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody>();
         }
         
         private void Update()
@@ -42,10 +42,10 @@ namespace _Scripts.Spells
             SnapToGround();
         }
         
-        private void AddVelocity(Vector3 direction) // function call when casting
+        private void AddVelocity(Vector3 direction)
         {
             _stopped = false;
-            _rb.velocity = direction * speed;
+            _rigidbody.velocity = direction * speed;
             transform.rotation.SetLookRotation(direction);
         }
 
@@ -72,10 +72,11 @@ namespace _Scripts.Spells
             }
         }
         
+        
         public override void Launch()
         {
             base.Launch();
-            AddVelocity(transform.forward);
+            AddVelocity((SpellLauncher.GetTarget() - transform.position).normalized);
             StartCoroutine(SlowDownAfterDelay(delayToSlowDown));
             Vfx.SendEvent(ON_PLAY_EVENT);
         }
@@ -83,19 +84,19 @@ namespace _Scripts.Spells
         private IEnumerator SlowDownAfterDelay(float delay)
         {
             var timer = 0f;
-            var velocity = _rb.velocity;
+            var velocity = _rigidbody.velocity;
             
             yield return new WaitForSeconds(delay);
             
             while (timer < slowingDownTime)
             {
-                _rb.velocity = Vector3.Lerp(velocity, Vector3.zero, timer / slowingDownTime);
+                _rigidbody.velocity = Vector3.Lerp(velocity, Vector3.zero, timer / slowingDownTime);
                 
                 timer += Time.deltaTime;
                 yield return null;
             }
 
-            _rb.velocity = Vector3.zero;
+            _rigidbody.velocity = Vector3.zero;
             _stopped = true;
             Disable();
         }
@@ -122,10 +123,10 @@ namespace _Scripts.Spells
                 return;
             }
 
-            _currTex = null;
-            _currColor = meshRenderer.material.color;
+            _currentTexture = null;
+            _currentColor = meshRenderer.material.color;
             
-            Vfx.SetVector4(COLOR_PARAM, _currColor);
+            Vfx.SetVector4(COLOR_PARAM, _currentColor);
         }
 
         private void SetVisualsFromTerrain(Vector3 point, Terrain terrain)
@@ -157,12 +158,12 @@ namespace _Scripts.Spells
 
         private void SetVisualsFromTexture2D(Texture2D texture)
         {
-            if (texture == _currTex) return;
+            if (texture == _currentTexture) return;
             
-            _currColor = Detection.MainColorFromTexture(texture, 50);
-            _currTex = texture;
+            _currentColor = Detection.MainColorFromTexture(texture, 50);
+            _currentTexture = texture;
             
-            Vfx.SetVector4(COLOR_PARAM, _currColor);
+            Vfx.SetVector4(COLOR_PARAM, _currentColor);
         }
     }
 }

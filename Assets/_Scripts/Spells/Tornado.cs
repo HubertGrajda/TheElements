@@ -1,5 +1,4 @@
 using System.Collections;
-using _Scripts.Managers;
 using UnityEngine;
 
 namespace _Scripts.Spells
@@ -36,14 +35,6 @@ namespace _Scripts.Spells
         
         private Coroutine _changeColorCoroutine;
         private Coroutine _dissolveCoroutine;
-        
-        private PlayerExperienceSystem _experienceSystem;
-        
-        protected override void Awake()
-        {
-            base.Awake();
-            PlayerManager.Instance.TryGetPlayerComponent(out _experienceSystem);
-        }
 
         protected override void Perform()
         {
@@ -58,22 +49,14 @@ namespace _Scripts.Spells
             base.PrepareToLaunch();
             
             _currSize = minSize;
-            SpellCollider.enabled = true;
-            
-            var experience = _experienceSystem.GetExperienceValue(SpellData.ElementType);
-            var additionalMaxSize = experience * sizeForExperienceModifier;
-            _currMaxSize = maxSize + additionalMaxSize;
+            _currMaxSize = maxSize;
             
             Vfx.SetFloat(DISSOLVE_PARAM, MIN_DISSOLVE);
             Vfx.SetFloat(SIZE_PARAM, _currSize);
             Vfx.SetVector4(COLOR_PARAM, basicColor);
             
-            var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
-            
-            transform.position = Physics.Raycast(ray, out var hit, maxDistance) 
-                ? new Vector3(hit.point.x, _groundPosY, hit.point.z)
-                : new Vector3(ray.GetPoint(maxDistance).x , _groundPosY, ray.GetPoint(maxDistance).z);
+            var target = SpellLauncher.GetTarget();
+            transform.position = new Vector3(target.x, _groundPosY, target.z);
         }
 
         public override void Launch()
@@ -90,6 +73,8 @@ namespace _Scripts.Spells
             
             base.Cancel();
 
+            if (!Launched) return;
+            
             Vfx.SendEvent(STOP_EVENT_NAME);
             DissolveToValue(MIN_DISSOLVE);
             Disable();
@@ -141,13 +126,10 @@ namespace _Scripts.Spells
 
         private void Movement()
         {
-            var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
-
-            if (!Physics.Raycast(ray, out var hit)) return;
-            
-            var direction = (hit.point - transform.position).normalized;
+            var target = SpellLauncher.GetTarget();
+            var direction = (target - transform.position).normalized;
             direction.y = 0;
+            
             transform.position += direction * (speed * Time.deltaTime);
         }
 
@@ -156,7 +138,7 @@ namespace _Scripts.Spells
             if (other.TryGetComponent(out IColorProvider colorProvider))
             {
                 var desiredColor = colorProvider.GetColor();
-                _changeColorCoroutine = StartCoroutine(ChangeColorOverTime(colorTransitionDuration, desiredColor));
+                ChangeColor(colorTransitionDuration, desiredColor);
             }
         }
         
@@ -164,13 +146,18 @@ namespace _Scripts.Spells
         {
             if (other.TryGetComponent(out IColorProvider _))
             {
-                if (_changeColorCoroutine != null)
-                {
-                    StopCoroutine(_changeColorCoroutine);
-                }
-                
-                _changeColorCoroutine = StartCoroutine(ChangeColorOverTime(colorTransitionDuration, basicColor));
+                ChangeColor(colorTransitionDuration, basicColor);
             }
+        }
+
+        private void ChangeColor(float time, Color desiredColor)
+        {
+            if (_changeColorCoroutine != null)
+            {
+                StopCoroutine(_changeColorCoroutine);
+            }
+                
+            _changeColorCoroutine = StartCoroutine(ChangeColorOverTime(time, desiredColor));
         }
 
         private void SnapToGround()

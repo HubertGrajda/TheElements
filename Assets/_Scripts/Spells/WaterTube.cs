@@ -1,5 +1,4 @@
 using System.Collections;
-using _Scripts.Managers;
 using UnityEngine;
 
 namespace _Scripts.Spells
@@ -29,17 +28,12 @@ namespace _Scripts.Spells
         public override void PrepareToLaunch()
         {
             base.PrepareToLaunch();
-            
-            var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
-            
-            _endPoint = Physics.Raycast(ray, out var hit) 
-                ? hit.point
-                : ray.GetPoint(50);
+
+            _endPoint = SpellLauncher.GetTarget();
             
             var nearestWater = Detection.GetNearestWaterSource(_endPoint);
-
             _startPoint = nearestWater.transform.position;
+            
             Vfx.SetVector4("Color", nearestWater.GetColor());
         }
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <IsChildOfSpawnPoint>k__BackingField: 1
   <CastingBehaviour>k__BackingField: {fileID: 11400000, guid: 9ad0c64198cff464ab66c4e02ad1fd4b, type: 2}
-  <SpellLimiterConfig>k__BackingField: {fileID: 0}
+  <SpellLimiterConfig>k__BackingField: {fileID: 11400000, guid: f10e23c3aa02f754d8480b31f0efd797, type: 2}
   <SpellUIConfig>k__BackingField: {fileID: 11400000, guid: 3dc8c75e53abf9d459efc758feaf7271, type: 2}
   <ElementType>k__BackingField: {fileID: 11400000, guid: d56d55636dd2ed44bab16315528ff00f, type: 2}
   <SpellPrefab>k__BackingField: {fileID: 8501655940845536082, guid: 86292f02e31b021438826b4715615d8f, type: 3}

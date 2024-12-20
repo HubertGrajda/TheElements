@@ -1,28 +1,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class StateMachine : MonoBehaviour
+namespace _Scripts
 {
-    protected State CurrentState { get; private set; }
-    public List<State> States { get; } = new();
-
-    protected virtual void Start()
+    public abstract class StateMachine : MonoBehaviour
     {
-        InitStates(out var state);
-        CurrentState = state;
-    }
+        protected State CurrentState { get; private set; }
+        public List<State> States { get; } = new();
 
-    protected virtual void Update()
-    {
-        CurrentState?.UpdateState();
-    }
+        protected virtual void Start()
+        {
+            InitStates(out var state);
+            CurrentState = state;
+        }
 
-    public void ChangeState(State nextState)
-    {
-        CurrentState.EndState();
-        CurrentState = nextState;
-        CurrentState.EnterState();
-    }
+        protected virtual void Update()
+        {
+            CurrentState?.UpdateState();
+        }
 
-    protected abstract void InitStates(out State entryState);
+        public void ChangeState(State nextState)
+        {
+            CurrentState.EndState();
+            CurrentState = nextState;
+            CurrentState.EnterState();
+        }
+
+        protected abstract void InitStates(out State entryState);
+    }
 }

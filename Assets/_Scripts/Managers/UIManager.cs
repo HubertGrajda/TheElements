@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using UI;
+using _Scripts.UI;
 using UnityEngine;
 using UnityEngine.Events;
 

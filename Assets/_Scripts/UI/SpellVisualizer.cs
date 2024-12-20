@@ -3,7 +3,7 @@ using _Scripts.Spells;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace _Scripts.UI
 {
     [RequireComponent(typeof(Slider))]
     public class SpellVisualizer : MonoBehaviour
@@ -16,12 +16,15 @@ namespace UI
         
         private Slider _slider;
         private SpellsManager _spellsManager;
+        private SpellLauncher _playerSpellLauncher;
         private SpellLimiter _visualizedSpellLimiter;
         
         private void Awake()
         {
             _slider = GetComponent<Slider>();
             _spellsManager = SpellsManager.Instance;
+            PlayerManager.Instance.TryGetPlayerComponent(out _playerSpellLauncher);
+            
             AddListeners();
         }
 
@@ -31,14 +34,14 @@ namespace UI
         {
             _spellsManager.OnSelectedSpellChanged += OnSelectedSpellChanged;
             _spellsManager.OnSelectedElementChanged += OnSelectedElementChanged;
+            _playerSpellLauncher.OnSpellUsed += OnSpellUsed;
         }
         
         private void RemoveListeners()
         {
-            if (_spellsManager == null) return;
-            
             _spellsManager.OnSelectedSpellChanged -= OnSelectedSpellChanged;
             _spellsManager.OnSelectedElementChanged -= OnSelectedElementChanged;
+            _playerSpellLauncher.OnSpellUsed -= OnSpellUsed;
         }
 
         private void OnSelectedElementChanged(ElementType elementType)
@@ -48,22 +51,24 @@ namespace UI
             selectedImage.gameObject.SetActive(elementType == visualizedType);
         }
 
-        private void OnSelectedSpellChanged(Spell spell)
+        private void OnSelectedSpellChanged(SpellConfig spell)
         {
-            if (visualizedType != spell.SpellData.ElementType) return;
+            if (visualizedType != spell.ElementType) return;
 
-            VisualizeSpell(spell);
-        }
-
-        private void VisualizeSpell(Spell spell)
-        {
             VisualizeSliderImages(spell);
             VisualizeSliderValue(spell);
         }
 
-        private void VisualizeSliderImages(Spell spell)
+        private void OnSpellUsed(SpellConfig spell)
         {
-            var spellUIConfig = spell.SpellData.SpellUIConfig;
+            if (visualizedType != spell.ElementType) return;
+            
+            VisualizeSliderValue(spell);
+        }
+
+        private void VisualizeSliderImages(SpellConfig spell)
+        {
+            var spellUIConfig = spell.SpellUIConfig;
             
             if (spellImageFill != null)
             {
@@ -76,7 +81,7 @@ namespace UI
             }
         }
 
-        private void VisualizeSliderValue(Spell spell)
+        private void VisualizeSliderValue(SpellConfig spellConfig)
         {
             if (_visualizedSpellLimiter != null)
             {
@@ -84,7 +89,7 @@ namespace UI
                 _visualizedSpellLimiter = null;
             }
             
-            if (spell.TryGetSpellLimiter(out var limiter))
+            if (_playerSpellLauncher.TryGetLimiter(spellConfig, out var limiter))
             {
                 _visualizedSpellLimiter = limiter;
                 _slider.maxValue = limiter.MaxValue;

@@ -7,9 +7,9 @@ namespace _Scripts.Spells
     {
         [SerializeField] private float maxDuration;
 
-        protected override UsageTimeLimiter CreateInstance(SpellLimiterController controller, Spell spell)
+        protected override UsageTimeLimiter CreateInstance()
         {
-            return new UsageTimeLimiter(controller, maxDuration);
+            return new UsageTimeLimiter(maxDuration);
         }
     }
 }

@@ -584,6 +584,7 @@ GameObject:
   - component: {fileID: 3339645612182373003}
   - component: {fileID: 2207393710245886337}
   - component: {fileID: 9041098844987850059}
+  - component: {fileID: 8630659474994857000}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -855,6 +856,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 787cc661c56c2e94d94c498ccbfa2407, type: 2}
   - {fileID: 11400000, guid: e60c3ae8990d5ec4eae816f1a05cd615, type: 2}
   - {fileID: 11400000, guid: 207c05724e3f74044b45ab03d88bdb0f, type: 2}
+  - {fileID: 11400000, guid: 988fc65cb842f974e946e64290791a3e, type: 2}
+  - {fileID: 11400000, guid: 71266421788ee91408958c3d6dd3ce5e, type: 2}
   spawnPoint: {fileID: 563417353159211469}
   bendingStyles:
   - {fileID: 11400000, guid: d56d55636dd2ed44bab16315528ff00f, type: 2}
@@ -928,6 +931,19 @@ MonoBehaviour:
   detectionLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &8630659474994857000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682906292463047282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47784f14a3c54e4cb8301d01202803de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 563417353159211469}
 --- !u!1 &1790872072890787730
 GameObject:
   m_ObjectHideFlags: 0

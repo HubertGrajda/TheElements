@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public abstract class BaseStatsConfig : ScriptableObject
+namespace _Scripts
 {
-    public int maxHealth;
+    public abstract class BaseStatsConfig : ScriptableObject
+    {
+        public int maxHealth;
+    }
 }

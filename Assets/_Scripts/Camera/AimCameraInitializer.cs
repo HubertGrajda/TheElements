@@ -2,7 +2,7 @@ using _Scripts.Managers;
 using Cinemachine;
 using UnityEngine;
 
-namespace Cameras
+namespace _Scripts.Cameras
 {
     [RequireComponent(typeof(CinemachineFreeLook))]
     public class AimCameraInitializer : CameraBehaviourInitializer

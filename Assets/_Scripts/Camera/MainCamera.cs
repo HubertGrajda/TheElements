@@ -1,7 +1,7 @@
 using _Scripts.Managers;
 using UnityEngine;
 
-namespace Cameras
+namespace _Scripts.Cameras
 {
     [RequireComponent(typeof(Camera))]
     public class MainCamera : MonoBehaviour

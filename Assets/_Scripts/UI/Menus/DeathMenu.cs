@@ -2,7 +2,7 @@ using _Scripts.Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace _Scripts.UI
 {
     public class DeathMenu : Menu
     {

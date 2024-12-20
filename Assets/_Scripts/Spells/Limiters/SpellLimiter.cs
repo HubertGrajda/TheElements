@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using _Scripts.Managers;
 using UnityEngine;
 
 namespace _Scripts.Spells
@@ -14,14 +15,14 @@ namespace _Scripts.Spells
 
         public Action<float> OnCurrentValueChanged;
         public Action OnBecameLimited;
-        protected SpellLimiterController Controller { get; }
+        protected SpellsManager SpellsManager { get; }
         
-        protected SpellLimiter(SpellLimiterController controller)
+        protected SpellLimiter()
         {
-            Controller = controller;
+            SpellsManager = SpellsManager.Instance;
         }
         
-        public virtual void OnSpellUsage()
+        public virtual void OnSpellUsed()
         {
         }
 
@@ -41,15 +42,15 @@ namespace _Scripts.Spells
         private readonly float _cooldown;
         private Action _onCooldownEnd;
 
-        public CooldownLimiter(SpellLimiterController controller, float cooldown) : base(controller)
+        public CooldownLimiter(float cooldown)
         {
             _cooldown = cooldown;
             MaxValue = cooldown;
         }
 
-        public override void OnSpellUsage()
+        public override void OnSpellUsed()
         {
-            Controller.StartCoroutine(StartCooldown());
+            SpellsManager.StartCoroutine(StartCooldown());
         }
         
         private IEnumerator StartCooldown()
@@ -79,15 +80,15 @@ namespace _Scripts.Spells
         
         private Coroutine _changeValueCoroutine;
         
-        public UsageTimeLimiter(SpellLimiterController controller, float maxDuration) : base(controller)
+        public UsageTimeLimiter(float maxDuration)
         {
             _maxDuration = maxDuration;
             MaxValue = maxDuration;
         }
 
-        public override void OnSpellUsage()
+        public override void OnSpellUsed()
         {
-            base.OnSpellUsage();
+            base.OnSpellUsed();
 
             ChangeValue(_maxDuration);
         }
@@ -96,10 +97,10 @@ namespace _Scripts.Spells
         {
             if (_changeValueCoroutine != null)
             {
-                Controller.StopCoroutine(_changeValueCoroutine);
+                SpellsManager.StopCoroutine(_changeValueCoroutine);
             }
             
-            _changeValueCoroutine = Controller.StartCoroutine(ChangeValueOverTime(value));
+            _changeValueCoroutine = SpellsManager.StartCoroutine(ChangeValueOverTime(value));
         }
         
         private IEnumerator ChangeValueOverTime(float desiredValue)

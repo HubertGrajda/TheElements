@@ -1,7 +1,10 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Stats/PlayerStats/BaseStats", fileName ="PlayerBaseStats")]
-public class PlayerStatsConfig : BaseStatsConfig
+namespace _Scripts.Player
 {
+    [CreateAssetMenu(menuName = "Stats/PlayerStats/BaseStats", fileName ="PlayerBaseStats")]
+    public class PlayerStatsConfig : BaseStatsConfig
+    {
     
+    }
 }

@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-namespace UI
+namespace _Scripts.UI
 {
     public class UnitHealthBar : HealthBar
     {
-        [SerializeField] private BaseHealthSystem healthSystem;
+        [SerializeField] private HealthSystem healthSystem;
 
         private void Start()
         {

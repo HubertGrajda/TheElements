@@ -1,8 +1,9 @@
 ﻿using _Scripts.Managers;
+using _Scripts.Player;
 using Cinemachine;
 using UnityEngine;
 
-namespace Cameras
+namespace _Scripts.Cameras
 {
     [RequireComponent(typeof(CinemachineFreeLook))]
     public abstract class CameraBehaviourInitializer : MonoBehaviour

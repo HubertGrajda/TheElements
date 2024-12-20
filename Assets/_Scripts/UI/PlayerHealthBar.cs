@@ -1,10 +1,10 @@
 ﻿using _Scripts.Managers;
 
-namespace UI
+namespace _Scripts.UI
 {
     public class PlayerHealthBar : HealthBar
     {
-        private BaseHealthSystem healthSystem;
+        private HealthSystem healthSystem;
 
         private void Start()
         {

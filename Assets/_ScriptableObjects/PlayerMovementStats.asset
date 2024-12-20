@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4db9edf5bbb412f8ede7058c2906300, type: 3}
   m_Name: PlayerMovementStats
   m_EditorClassIdentifier: 
-  maxJumps: 2
-  jumpHeight: 1.5
-  walkSpeed: 1.5
-  runSpeed: 3.5
-  crouchSpeed: 0.7
-  accelerationSpeed: 6
-  turnSmoothTime: 0.1
-  groundedGravity: -4
-  gravityValue: -10
+  <MaxJumps>k__BackingField: 2
+  <JumpHeight>k__BackingField: 1.5
+  <WalkSpeed>k__BackingField: 1.5
+  <RunSpeed>k__BackingField: 3
+  <RunMaxSpeed>k__BackingField: 5
+  <RunAccelerationTime>k__BackingField: 5
+  <CrouchSpeed>k__BackingField: 0.7
+  <AccelerationSpeed>k__BackingField: 6
+  <TurnSmoothTime>k__BackingField: 0.1
+  <GroundedGravity>k__BackingField: -4
+  <GravityValue>k__BackingField: -10

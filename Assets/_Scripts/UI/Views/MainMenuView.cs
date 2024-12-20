@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UI
+namespace _Scripts.UI
 {
     public class MainMenuView : View
     {

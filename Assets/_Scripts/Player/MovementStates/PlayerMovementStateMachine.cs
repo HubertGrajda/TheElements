@@ -3,7 +3,7 @@ using System.Collections;
 using _Scripts.Managers;
 using UnityEngine;
 
-namespace Player
+namespace _Scripts.Player
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(GroundDetector))]
@@ -39,8 +39,10 @@ namespace Player
 
         public PlayerMovementStatsConfig MovementStats => movementsStats;
 
-        private BaseHealthSystem _healthSystem;
+        private HealthSystem _healthSystem;
         private Coroutine _movementSmoothingCoroutine;
+
+        private const float SMOOTHING_THRESHOLD = 0.01f;
         
         protected override void Awake()
         {
@@ -101,8 +103,6 @@ namespace Player
 
         public void SetCurrentSpeed(float speed)
         {
-            if (Mathf.Approximately(CurrentSpeed, speed)) return;
-            
             if (_movementSmoothingCoroutine != null)
             {
                 StopCoroutine(_movementSmoothingCoroutine);
@@ -113,7 +113,7 @@ namespace Player
         
         private IEnumerator MovementSmoothing(float speed)
         {
-            while (!Mathf.Approximately(CurrentSpeed, speed))
+            while (Mathf.Abs(CurrentSpeed - speed) > SMOOTHING_THRESHOLD )
             {
                 CurrentSpeed = Mathf.Lerp(CurrentSpeed, speed, movementsStats.AccelerationSpeed * Time.deltaTime);
                 PlayerAnimatorController.OnMovementSpeedChanged(CurrentSpeed);

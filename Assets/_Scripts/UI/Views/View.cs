@@ -1,7 +1,7 @@
 using _Scripts.Managers;
 using UnityEngine;
 
-namespace UI
+namespace _Scripts.UI
 {
     public class View : MonoBehaviour
     {
@@ -17,7 +17,6 @@ namespace UI
         protected UIManager UIManager { get; private set; }
     
         protected bool IsShown { get; private set; }
-        
         protected bool CanBeShown => UIManager.CurrentView == null;
         
         protected virtual void Awake()

@@ -2,24 +2,27 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerExperienceSystem : MonoBehaviour
+namespace _Scripts.Player
 {
-    public Action<ElementType, float> OnExperienceChanged;
-
-    private readonly Dictionary<ElementType, float> _elementTypeToExperience = new();
-    
-    public void AddExperience(ElementType elementType, float value)
+    public class PlayerExperienceSystem : MonoBehaviour
     {
-        if (elementType == null) return;
-        
-        if (!_elementTypeToExperience.TryAdd(elementType, value))
+        public Action<ElementType, float> OnExperienceChanged;
+
+        private readonly Dictionary<ElementType, float> _elementTypeToExperience = new();
+    
+        public void AddExperience(ElementType elementType, float value)
         {
-            _elementTypeToExperience[elementType] += value;
+            if (elementType == null) return;
+        
+            if (!_elementTypeToExperience.TryAdd(elementType, value))
+            {
+                _elementTypeToExperience[elementType] += value;
+            }
+
+            OnExperienceChanged?.Invoke(elementType, _elementTypeToExperience[elementType]);
         }
 
-        OnExperienceChanged?.Invoke(elementType, _elementTypeToExperience[elementType]);
+        public float GetExperienceValue(ElementType elementType) =>
+            _elementTypeToExperience.GetValueOrDefault(elementType, 0f);
     }
-
-    public float GetExperienceValue(ElementType elementType) =>
-        _elementTypeToExperience.GetValueOrDefault(elementType, 0f);
 }

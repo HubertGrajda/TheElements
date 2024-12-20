@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ebcbe51ceed4f1c8535ae8c0292062d, type: 3}
+  m_Name: SmallRocks
+  m_EditorClassIdentifier: 
+  <IsChildOfSpawnPoint>k__BackingField: 1
+  <CastingBehaviour>k__BackingField: {fileID: 11400000, guid: 4276e7f95646c7447bc856084c1d3329, type: 2}
+  <SpellLimiterConfig>k__BackingField: {fileID: 11400000, guid: 59cb61edc97a667478bd1f091462f4c3, type: 2}
+  <SpellUIConfig>k__BackingField: {fileID: 11400000, guid: 6d1b4b7598f1b48458afa1405235d606, type: 2}
+  <ElementType>k__BackingField: {fileID: 11400000, guid: c147ba83097847643a61c8dec81ea4a0, type: 2}
+  <SpellPrefab>k__BackingField: {fileID: 9044910054904303696, guid: 42d3e636402797a4a873b4f8b998f690, type: 3}

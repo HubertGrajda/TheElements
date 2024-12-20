@@ -2,16 +2,19 @@ using _Scripts.Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Slider))]
-public class VolumeSlider : MonoBehaviour
+namespace _Scripts.Audio
 {
-    [SerializeField] private string mixerVolumeTag;
-    
-    private Slider _slider;
-    
-    private void Start()
+    [RequireComponent(typeof(Slider))]
+    public class VolumeSlider : MonoBehaviour
     {
-       _slider = GetComponent<Slider>();
-       _slider.value = AudioManager.Instance.GetCurrentVolume(mixerVolumeTag);
+        [SerializeField] private string mixerVolumeTag;
+    
+        private Slider _slider;
+    
+        private void Start()
+        {
+            _slider = GetComponent<Slider>();
+            _slider.value = AudioManager.Instance.GetCurrentVolume(mixerVolumeTag);
+        }
     }
 }

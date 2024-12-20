@@ -4,6 +4,6 @@ namespace _Scripts.Spells
 {
     public abstract class SpellLimiterConfigBase : ScriptableObject
     {
-        public abstract SpellLimiter GetInstance(Spell spell);
+        public abstract SpellLimiter CreateLimiterInstance();
     }
 }

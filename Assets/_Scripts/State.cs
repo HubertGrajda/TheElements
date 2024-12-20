@@ -1,40 +1,43 @@
 using System.Linq;
 
-public abstract class State
+namespace _Scripts
 {
-    protected virtual bool CanBeEntered => true;
-    protected virtual bool CanBeEnded => true;
-    
-    protected State(StateMachine fsm)
+    public abstract class State
     {
-        _fsm = fsm;
-    }
+        protected virtual bool CanBeEntered => true;
+        protected virtual bool CanBeEnded => true;
     
-    private readonly StateMachine _fsm;
-    
-    public virtual void EnterState()
-    {
-    }
-
-    public virtual void UpdateState()
-    {
-        if (TryGetStateToSwitch(out var stateToSwitch))
+        protected State(StateMachine fsm)
         {
-            _fsm.ChangeState(stateToSwitch);
+            _fsm = fsm;
         }
-    }
+    
+        private readonly StateMachine _fsm;
+    
+        public virtual void EnterState()
+        {
+        }
 
-    public virtual void EndState()
-    {
-    }
+        public virtual void UpdateState()
+        {
+            if (TryGetStateToSwitch(out var stateToSwitch))
+            {
+                _fsm.ChangeState(stateToSwitch);
+            }
+        }
 
-    private bool TryGetStateToSwitch(out State stateToSwitch)
-    {
-        stateToSwitch = default;
-        if (!CanBeEnded) return false;
+        public virtual void EndState()
+        {
+        }
 
-        stateToSwitch = _fsm.States.FirstOrDefault(x => x.CanBeEntered && x != this);
+        private bool TryGetStateToSwitch(out State stateToSwitch)
+        {
+            stateToSwitch = default;
+            if (!CanBeEnded) return false;
+
+            stateToSwitch = _fsm.States.FirstOrDefault(x => x.CanBeEntered && x != this);
         
-        return stateToSwitch != null;
+            return stateToSwitch != null;
+        }
     }
 }

@@ -5478,8 +5478,8 @@ GameObject:
   - component: {fileID: 5380670479380318317}
   - component: {fileID: 4262700958851185944}
   - component: {fileID: 7020673602649369425}
-  - component: {fileID: 3678872300180890585}
-  - component: {fileID: 16164026946942061}
+  - component: {fileID: 8732487253525966219}
+  - component: {fileID: 6638215889442746137}
   m_Layer: 0
   m_Name: EarthElemental
   m_TagString: Enemy
@@ -5763,7 +5763,7 @@ MonoBehaviour:
   - m_Rig: {fileID: 2916011343464702423}
     m_Active: 1
   m_Effectors: []
---- !u!114 &3678872300180890585
+--- !u!114 &8732487253525966219
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5772,12 +5772,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7464430647804796661}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97ab450af5403a348bb8b6b14cf7ba9e, type: 3}
+  m_Script: {fileID: 11500000, guid: fc75fc7407583a244a3ffe480c59550b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destructionDelay: 3.88
+  destructionDelay: 3.5
   stats: {fileID: 11400000, guid: d8f62926bbc9062439b80b8ec10ec877, type: 2}
---- !u!114 &16164026946942061
+--- !u!114 &6638215889442746137
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5786,10 +5786,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7464430647804796661}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbadc53d82da2d745ab6be93cc3bc947, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d7e9b72818647a4fa34635d5ca2e117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpawnPoint: {fileID: 1415280373971585420}
+  spawnPoint: {fileID: 1415280373971585420}
+  rangeAttackSpell: {fileID: 11400000, guid: 71266421788ee91408958c3d6dd3ce5e, type: 2}
 --- !u!1 &7543817632297452555
 GameObject:
   m_ObjectHideFlags: 0
@@ -6950,38 +6951,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyUI
       objectReference: {fileID: 0}
+    - target: {fileID: 8457420312167406037, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
+      propertyPath: healthSystem
+      value: 
+      objectReference: {fileID: 8732487253525966219}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7341713542521471271, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8592645143524759318}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
 --- !u!224 &3485703171219681921 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7618435703253864920, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
   m_PrefabInstance: {fileID: 6477771074059232089}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4325333510378431102 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7341713542521471271, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
-  m_PrefabInstance: {fileID: 6477771074059232089}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8592645143524759318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4325333510378431102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e4ef7396ac473eac233d2addd4c3c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smoothingDuration: 0.5
-  healthSystem: {fileID: 3678872300180890585}
 --- !u!224 &4770352967402010924 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2005817928202836597, guid: f0de3900314456946a0eaabbbb910d71, type: 3}

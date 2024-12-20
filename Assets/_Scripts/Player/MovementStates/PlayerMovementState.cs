@@ -1,18 +1,20 @@
-﻿using Player;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class PlayerMovementState : State
+namespace _Scripts.Player
 {
-    protected PlayerMovementStateMachine Fsm { get;}
-    protected PlayerMovementStatsConfig Stats { get;}
-    protected CharacterController CharacterController { get;}
-
-    protected bool IsGrounded => Fsm.GroundDetector.IsGrounded;
-    
-    protected PlayerMovementState(PlayerMovementStateMachine fsm) : base(fsm)
+    public abstract class PlayerMovementState : State
     {
-        Fsm = fsm;
-        Stats = Fsm.MovementStats;
-        CharacterController = fsm.CharacterController;
+        protected PlayerMovementStateMachine Fsm { get;}
+        protected PlayerMovementStatsConfig Stats { get;}
+        protected CharacterController CharacterController { get;}
+
+        protected bool IsGrounded => Fsm.GroundDetector.IsGrounded;
+    
+        protected PlayerMovementState(PlayerMovementStateMachine fsm) : base(fsm)
+        {
+            Fsm = fsm;
+            Stats = Fsm.MovementStats;
+            CharacterController = fsm.CharacterController;
+        }
     }
 }

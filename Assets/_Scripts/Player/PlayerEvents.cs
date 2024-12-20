@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerEvents : MonoBehaviour
+namespace _Scripts.Player
 {
-    public UnityAction Step;
-    public UnityAction Jump;
+    public class PlayerEvents : MonoBehaviour
+    {
+        public UnityAction Step;
+        public UnityAction Jump;
     
-    public void OnStep() => Step?.Invoke();
-    public void OnJump() => Jump?.Invoke();
+        public void OnStep() => Step?.Invoke();
+        public void OnJump() => Jump?.Invoke();
+    }
 }

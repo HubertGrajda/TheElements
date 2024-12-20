@@ -1,7 +1,7 @@
 using _Scripts.Managers;
 using UnityEngine;
 
-namespace UI
+namespace _Scripts.UI
 {
     public class CursorController : MonoBehaviour
     {
@@ -18,7 +18,7 @@ namespace UI
             _uiManager = UIManager.Instance;
             _currentPointer = defaultPointer;
         
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         
             AddListeners();
@@ -45,8 +45,11 @@ namespace UI
 
         private void ToggleCursor(View view, bool show)
         {
+            Cursor.lockState = show ? CursorLockMode.Confined : CursorLockMode.Locked;
+            Cursor.visible = false;
+            
             if (!view.ShowCursor) return;
-
+            
             if (_currentPointer == null)
             {
                 _currentPointer = defaultPointer;

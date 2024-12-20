@@ -3,12 +3,14 @@ using UnityEngine;
 
 namespace _Scripts.Spells
 {
+    [RequireComponent(typeof(Collider))]
     public class TriggerableBehaviour : MonoBehaviour
     {
         [SerializeField] protected List<OnColliderTriggerBehaviourBase> triggerBehaviours;
         
         private readonly Dictionary<Collider, Triggerable> _colliderToTriggerable = new();
         private float _timer;
+        private List<Collider> _parentColliders;
         
         private class Triggerable
         {
@@ -26,8 +28,15 @@ namespace _Scripts.Spells
             public void OnTriggerableStay() => Behaviour.OnTriggerableStay(_component);
         }
         
+        private void Start()
+        {
+            GetComponentsInParent(false, _parentColliders); //TODO: Exclude layers
+        }
+
         protected void OnTriggerEnter(Collider other)
         {
+            if (_parentColliders != null && _parentColliders.Contains(other)) return;
+            
             foreach (var behaviour in triggerBehaviours)
             {
                 var behaviourType = behaviour.GetType();

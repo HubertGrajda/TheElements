@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ebcbe51ceed4f1c8535ae8c0292062d, type: 3}
+  m_Name: FireBall
+  m_EditorClassIdentifier: 
+  <IsChildOfSpawnPoint>k__BackingField: 1
+  <CastingBehaviour>k__BackingField: {fileID: 11400000, guid: 83ca4328652798f468e486a1fa599724, type: 2}
+  <SpellLimiterConfig>k__BackingField: {fileID: 11400000, guid: 91e19215d7855b0459ff6fc71b71fb9a, type: 2}
+  <SpellUIConfig>k__BackingField: {fileID: 11400000, guid: fbb6bac5f6a47554d8effb6bc632fba4, type: 2}
+  <ElementType>k__BackingField: {fileID: 11400000, guid: 227829f502ce33b45adaa89026c5f4d5, type: 2}
+  <SpellPrefab>k__BackingField: {fileID: 7452301236222581763, guid: ddfaac1cccdec734d897844455fc8126, type: 3}

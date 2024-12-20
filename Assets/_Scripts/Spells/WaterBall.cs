@@ -1,5 +1,4 @@
 using System.Collections;
-using _Scripts.Managers;
 using UnityEngine;
 
 namespace _Scripts.Spells
@@ -17,14 +16,9 @@ namespace _Scripts.Spells
         {
             base.Launch();
             
-            var screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            var ray = CameraManager.Instance.CameraMain.ScreenPointToRay(screenCenter);
-            
-            var target = Physics.Raycast(ray, out var hit) 
-                ? hit.point 
-                : ray.GetPoint(50f);
-            
             SetMaterial();
+            
+            var target = SpellLauncher.GetTarget();
             StartCoroutine(MoveToTarget(target));
         }
         

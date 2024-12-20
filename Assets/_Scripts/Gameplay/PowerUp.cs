@@ -1,20 +1,24 @@
 using _Scripts.Managers;
+using _Scripts.Player;
 using UnityEngine;
 
-public class PowerUp : MonoBehaviour, ICollectable     
+namespace _Scripts
 {
-    [SerializeField] private AudioClip collectingSound;
-    [SerializeField] private ElementType powerUpType;
-    [SerializeField] private int value;
-
-    public void Collect()
+    public class PowerUp : MonoBehaviour, ICollectable     
     {
-        AudioSource.PlayClipAtPoint(collectingSound, transform.position);
-        
-        if (PlayerManager.Instance.TryGetPlayerComponent(out PlayerExperienceSystem experienceSystem))
+        [SerializeField] private AudioClip collectingSound;
+        [SerializeField] private ElementType powerUpType;
+        [SerializeField] private int value;
+
+        public void Collect()
         {
-            experienceSystem.AddExperience(powerUpType, value);
-            Destroy(gameObject);
+            AudioSource.PlayClipAtPoint(collectingSound, transform.position);
+        
+            if (PlayerManager.Instance.TryGetPlayerComponent(out PlayerExperienceSystem experienceSystem))
+            {
+                experienceSystem.AddExperience(powerUpType, value);
+                Destroy(gameObject);
+            }
         }
     }
 }

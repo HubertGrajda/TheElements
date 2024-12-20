@@ -5,53 +5,45 @@ using UnityEngine.VFX;
 namespace _Scripts.Spells
 {
     [RequireComponent(typeof(Collider))]
-    [RequireComponent(typeof(VisualEffect))]
     public abstract class Spell : MonoBehaviour, ISpell, IPoolable
     {
         [field: SerializeField] public SpellConfig SpellData { get; private set; }
-        
+        [field: SerializeField] public VisualEffect Vfx { get; private set; }
+
+        [SerializeField] private float disableDelay = 5f;
         [SerializeField] protected float speed;
 
-        protected VisualEffect Vfx { get; private set; }
         protected Collider SpellCollider { get; private set; }
+        protected bool Launched { get; private set; }
+        public bool Cancelled { get; private set; }
+        protected Transform SpawnPoint { get; private set; }
+        protected SpellLauncher SpellLauncher { get; private set; }
         
         public virtual bool CanBeLaunched => true;
-        public bool CanBeUsed =>
-            _spellLimiter == null && !TryGetSpellLimiter(out _spellLimiter) ||
-            _spellLimiter.IsLimited == false;
-
-        protected bool Launched { get; private set; }
-        protected bool Cancelled { get; private set; }
-        
-        private Animator _casterAnimator;
-        private SpellLimiterController _spellLimiterController;
-        private SpellLimiter _spellLimiter;
         
         protected virtual void Awake()
         {
             SpellCollider = GetComponent<Collider>();
-            Vfx = GetComponent<VisualEffect>();
         }
         
-        public virtual void Use(Animator casterAnimator)
+        public virtual void Use(SpellLauncher spellLauncher)
         {
             Launched = false;
             Cancelled = false;
             
-            _casterAnimator = casterAnimator;
-
-            if (TryGetSpellLimiter(out _spellLimiter))
-            {
-                _spellLimiter.OnSpellUsage();
-                _spellLimiter.OnBecameLimited += Cancel;
-            }
+            SpellLauncher = spellLauncher;
+            SpawnPoint = spellLauncher.SpawnPoint;
             
-            Cast();
+            transform.position = SpawnPoint.position;
+            
+            if (SpellData.IsChildOfSpawnPoint)
+            {
+                transform.SetParent(SpawnPoint);
+            }
         }
 
         public virtual void Cast()
         {
-            SpellData.CastingBehaviour.StartCasting(_casterAnimator);
         }
 
         public virtual void PrepareToLaunch()
@@ -67,15 +59,6 @@ namespace _Scripts.Spells
         
         public virtual void Cancel()
         {
-            if (Cancelled) return;
-            
-            SpellData.CastingBehaviour.StopCasting(_casterAnimator);
-
-            if (TryGetSpellLimiter(out _spellLimiter))
-            {
-                _spellLimiter.OnSpellCanceled();
-            }
-            
             Cancelled = true;
         }
         
@@ -88,24 +71,16 @@ namespace _Scripts.Spells
         
         private IEnumerator DisableWithLastParticle()
         {
-            yield return new WaitWhile(() => Vfx.aliveParticleCount > 1);
+            var timer = 0f;
+            while (timer < disableDelay)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
             
             gameObject.SetActive(false);
         }
 
         protected void OnDisable() => StopAllCoroutines();
-
-        public bool TryGetSpellLimiter(out SpellLimiter limiter)
-        {
-            limiter = default;
-            
-            var limiterConfig = SpellData.SpellLimiterConfig;
-
-            if (limiterConfig == null) return false;
-            
-            limiter = limiterConfig.GetInstance(this);
-            
-            return limiter != null;
-        }
     }
 }

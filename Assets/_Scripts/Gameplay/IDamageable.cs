@@ -1,7 +1,9 @@
 
-public interface IDamageable
+namespace _Scripts
 {
-    void TakeDamage(int damage);
-    void Death();
+    public interface IDamageable
+    {
+        void TakeDamage(int damage);
+        void Death();
+    }
 }
- 

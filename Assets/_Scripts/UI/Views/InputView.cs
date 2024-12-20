@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace UI
+namespace _Scripts.UI
 {
     public abstract class InputView : View
     {

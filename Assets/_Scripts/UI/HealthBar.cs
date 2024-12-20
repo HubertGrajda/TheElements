@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace UI
+namespace _Scripts.UI
 {
     [RequireComponent(typeof(Slider))]
     public abstract class HealthBar : MonoBehaviour
@@ -11,7 +11,7 @@ namespace UI
 
         private Slider _slider;
         private Coroutine _setHealthBarCoroutine;
-        private BaseHealthSystem _healthSystem;
+        private HealthSystem _healthSystem;
         
         private void Awake()
         {
@@ -19,17 +19,17 @@ namespace UI
             _slider.minValue = 0;
         }
 
-        protected void Init(BaseHealthSystem healthSystem)
+        protected void Init(HealthSystem healthSystem)
         {
             _healthSystem = healthSystem;
             _slider.maxValue = healthSystem.CurrentHealth;
             _slider.value = healthSystem.CurrentHealth;
             
-            healthSystem.OnHealthChanged += OnHealthChanged;
+            healthSystem.OnDamaged += OnDamaged;
             healthSystem.OnDeath += OnDeath;
         }
 
-        private void OnHealthChanged(int value)
+        private void OnDamaged(int value)
         {
             if (_setHealthBarCoroutine != null)
             {
@@ -41,7 +41,7 @@ namespace UI
 
         protected virtual void OnDeath()
         {
-            _healthSystem.OnHealthChanged -= OnHealthChanged;
+            _healthSystem.OnDamaged -= OnDamaged;
             _healthSystem.OnDeath -= OnDeath;
         }
 

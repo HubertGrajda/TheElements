@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace _Scripts.UI
 {
     public class SettingsMenu : Menu
     {

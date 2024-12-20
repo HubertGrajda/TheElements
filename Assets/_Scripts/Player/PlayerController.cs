@@ -1,18 +1,21 @@
 using _Scripts.Managers;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+namespace _Scripts.Player
 {
-    private PlayerManager _playerManager;
+    public class PlayerController : MonoBehaviour
+    {
+        private PlayerManager _playerManager;
     
-    private void Awake()
-    {
-        _playerManager = PlayerManager.Instance;
-        _playerManager.SetUpPlayerComponent(this);
-    }
+        private void Awake()
+        {
+            _playerManager = PlayerManager.Instance;
+            _playerManager.SetUpPlayerComponent(this);
+        }
 
-    private void OnDestroy()
-    {
-        _playerManager.Clear();
+        private void OnDestroy()
+        {
+            _playerManager.Clear();
+        }
     }
 }

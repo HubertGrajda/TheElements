@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using _Scripts.Managers;
+using _Scripts.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace _Scripts.UI
 {
     [RequireComponent(typeof(Slider))]
     public class ExperienceSlider : MonoBehaviour

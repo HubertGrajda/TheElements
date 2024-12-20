@@ -1,41 +1,44 @@
 ﻿using System;
 using UnityEngine;
 
-public class GroundDetector : MonoBehaviour
+namespace _Scripts
 {
-    [SerializeField] private Transform detectionCenter;
-    [SerializeField] private float detectionRadius;
-    
-    [SerializeField] private LayerMask detectionLayer;
-    
-    public bool IsGrounded { get; private set; }
-    public event Action<bool> OnGroundedChanged;
-
-    private readonly Collider[] _detected = new Collider[1];
-
-    private float _thresholdTimer;
-    
-    private const float THRESHOLD_TIME = 0.3f;
-    private void Update()
+    public class GroundDetector : MonoBehaviour
     {
-        var groundDetected = 
-            Physics.OverlapSphereNonAlloc(detectionCenter.position, detectionRadius, _detected, detectionLayer) > 0;
+        [SerializeField] private Transform detectionCenter;
+        [SerializeField] private float detectionRadius;
+    
+        [SerializeField] private LayerMask detectionLayer;
+    
+        public bool IsGrounded { get; private set; }
+        public event Action<bool> OnGroundedChanged;
 
-        if (IsGrounded == groundDetected) return;
-        
-        _thresholdTimer += Time.deltaTime;
+        private readonly Collider[] _detected = new Collider[1];
 
-        if (IsGrounded && _thresholdTimer < THRESHOLD_TIME) return;
-        
-        IsGrounded = groundDetected;
-        OnGroundedChanged?.Invoke(groundDetected);
-        _thresholdTimer = 0f;
-    }
+        private float _thresholdTimer;
+    
+        private const float THRESHOLD_TIME = 0.3f;
+        private void Update()
+        {
+            var groundDetected = 
+                Physics.OverlapSphereNonAlloc(detectionCenter.position, detectionRadius, _detected, detectionLayer) > 0;
 
-    private void OnDrawGizmos()
-    {
-        if (detectionCenter == null) return;
+            if (IsGrounded == groundDetected) return;
         
-        Gizmos.DrawSphere(detectionCenter.position, detectionRadius);
+            _thresholdTimer += Time.deltaTime;
+
+            if (IsGrounded && _thresholdTimer < THRESHOLD_TIME) return;
+        
+            IsGrounded = groundDetected;
+            OnGroundedChanged?.Invoke(groundDetected);
+            _thresholdTimer = 0f;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (detectionCenter == null) return;
+        
+            Gizmos.DrawSphere(detectionCenter.position, detectionRadius);
+        }
     }
 }
