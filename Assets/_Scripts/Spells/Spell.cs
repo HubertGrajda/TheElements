@@ -30,11 +30,12 @@ namespace _Scripts.Spells
         {
             Launched = false;
             Cancelled = false;
-            
+
+            SpellCollider.excludeLayers = spellLauncher.ExcludeLayerMask;
             SpellLauncher = spellLauncher;
             SpawnPoint = spellLauncher.SpawnPoint;
-            
             transform.position = SpawnPoint.position;
+            SpellCollider.enabled = false;
             
             if (SpellData.IsChildOfSpawnPoint)
             {
@@ -54,6 +55,7 @@ namespace _Scripts.Spells
         {
             PrepareToLaunch();
             gameObject.SetActive(true);
+            SpellCollider.enabled = true;
             Launched = true;
         }
         
@@ -66,12 +68,13 @@ namespace _Scripts.Spells
         {
             if (!gameObject.activeInHierarchy) return;
             
-            StartCoroutine(DisableWithLastParticle());
+            StartCoroutine(DisableAfterDelay());
         }
         
-        private IEnumerator DisableWithLastParticle()
+        private IEnumerator DisableAfterDelay()
         {
             var timer = 0f;
+            
             while (timer < disableDelay)
             {
                 timer += Time.deltaTime;

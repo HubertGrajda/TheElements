@@ -26,7 +26,7 @@ namespace _Scripts.Managers
             }
         }
     
-        private readonly Dictionary<string, Pool<IPoolable>> _poolDictionary = new ();
+        private readonly Dictionary<string, Pool<IPoolable>> _poolDictionary = new();
 
         private T AddToPool<T>(T type) where T : MonoBehaviour, IPoolable
         {
@@ -44,28 +44,13 @@ namespace _Scripts.Managers
     
         public T SpawnFromPool<T>(T type, Vector3 position, Quaternion rotation) where T : MonoBehaviour, IPoolable
         {
-            var pool = GetOrCreatePool(type);
+            var pooled = GetFromPool(type);
         
-            foreach (var poolable in pool.Spawned)
-            {
-                var objectToPool = poolable as T;
+            pooled.gameObject.SetActive(true);
+            pooled.transform.position = position;
+            pooled.transform.rotation = rotation;
             
-                if (objectToPool == null || objectToPool.gameObject.activeInHierarchy) continue;
-
-                objectToPool.gameObject.SetActive(true);
-                objectToPool.transform.position = position;
-                objectToPool.transform.rotation = rotation;
-            
-                return objectToPool;
-            }
-
-            var addedObject = AddToPool(type);
-        
-            addedObject.gameObject.SetActive(true);
-            addedObject.transform.position = position;
-            addedObject.transform.rotation = rotation;
-            
-            return addedObject;
+            return pooled;
         }
 
         public T GetFromPool<T>(T type) where T : MonoBehaviour, IPoolable

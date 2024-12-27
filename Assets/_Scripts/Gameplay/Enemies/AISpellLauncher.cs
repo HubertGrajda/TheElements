@@ -10,10 +10,23 @@ namespace _Scripts.AI
         [SerializeField] private SpellConfig rangeAttackSpell;
 
         private PlayerController _playerController;
-    
+        private HealthSystem _healthSystem;
+        
         protected void Start()
         {
             PlayerManager.Instance.TryGetPlayerComponent(out _playerController);
+            if (TryGetComponent(out _healthSystem))
+            {
+                _healthSystem.OnDamaged += OnDamaged;
+            }
+        }
+
+        private void OnDamaged(int _)
+        {
+            if (IsLaunching)
+            {
+                CancelSpell();
+            }
         }
 
         protected override bool TryGetSpellToUse(out SpellConfig spellConfig)

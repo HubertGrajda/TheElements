@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806ff6b7e5fb45ff89f9fdcc6e110413, type: 3}
   m_Name: SmallRocksCooldown
   m_EditorClassIdentifier: 
-  cooldown: 1
+  cooldown: 5

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 namespace _Scripts.UI
 {
@@ -8,7 +9,8 @@ namespace _Scripts.UI
     public abstract class HealthBar : MonoBehaviour
     {
         [SerializeField] private float smoothingDuration = 0.5f;
-
+        [SerializeField] protected TMP_Text healthPointsText;
+        
         private Slider _slider;
         private Coroutine _setHealthBarCoroutine;
         private HealthSystem _healthSystem;
@@ -24,19 +26,21 @@ namespace _Scripts.UI
             _healthSystem = healthSystem;
             _slider.maxValue = healthSystem.CurrentHealth;
             _slider.value = healthSystem.CurrentHealth;
+            RefreshHealthText();
             
             healthSystem.OnDamaged += OnDamaged;
             healthSystem.OnDeath += OnDeath;
         }
 
-        private void OnDamaged(int value)
+        private void OnDamaged(int _)
         {
+            RefreshHealthText();
+            
             if (_setHealthBarCoroutine != null)
             {
                 StopCoroutine(_setHealthBarCoroutine);
             }
-            
-            _setHealthBarCoroutine = StartCoroutine(SetHealthBar(value));
+            _setHealthBarCoroutine = StartCoroutine(SetHealthBar(_healthSystem.CurrentHealth));
         }
 
         protected virtual void OnDeath()
@@ -59,6 +63,13 @@ namespace _Scripts.UI
 
             _slider.value = value;
             _setHealthBarCoroutine = null;
+        }
+
+        private void RefreshHealthText()
+        {
+            if (healthPointsText == null) return;
+            
+            healthPointsText.text = $"{_healthSystem.CurrentHealth} / {_slider.maxValue}";
         }
     }
 }

@@ -462,7 +462,7 @@ GameObject:
   - component: {fileID: 3240196243320532508}
   - component: {fileID: 3740498483456271848}
   - component: {fileID: 2029066046912437473}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: fireElemental
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -479,7 +479,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.16, y: 0.16, z: 0.16}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6007609923528136988}
@@ -729,6 +729,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 8881770540352207400}
+  <ExcludeLayerMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 256
   rangeAttackSpell: {fileID: 11400000, guid: 988fc65cb842f974e946e64290791a3e, type: 2}
 --- !u!1 &1974788466918114162
 GameObject:
@@ -2212,6 +2215,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3169014984060319303}
     m_Modifications:
+    - target: {fileID: 320182814449664018, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
+      propertyPath: m_fontSize
+      value: 16.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 320182814449664018, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
+      propertyPath: m_margin.x
+      value: -7.9959106
+      objectReference: {fileID: 0}
+    - target: {fileID: 320182814449664018, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
+      propertyPath: m_margin.z
+      value: 8.589486
+      objectReference: {fileID: 0}
+    - target: {fileID: 320182814449664018, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 16.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1159623736567337023, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
+      propertyPath: healthSystem
+      value: 
+      objectReference: {fileID: 3740498483456271848}
     - target: {fileID: 2005817928202836597, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2242,7 +2265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2005817928202836597, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 133.3
+      value: 135
       objectReference: {fileID: 0}
     - target: {fileID: 2005817928202836597, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2303,6 +2326,10 @@ PrefabInstance:
     - target: {fileID: 2426964900274456490, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618435703253864920, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 27.3
       objectReference: {fileID: 0}
     - target: {fileID: 8236173518077178367, guid: f0de3900314456946a0eaabbbb910d71, type: 3}
       propertyPath: m_Name

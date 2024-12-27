@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.z
       value: 8.574187
       objectReference: {fileID: 0}
+    - target: {fileID: 6655857161702705346, guid: 1c9df25884c768c4687bac877cddf259, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 6655857162050768282, guid: 1c9df25884c768c4687bac877cddf259, type: 3}
       propertyPath: m_VertexColorAlwaysGammaSpace
       value: 0

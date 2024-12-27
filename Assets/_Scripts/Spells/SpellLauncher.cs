@@ -25,6 +25,8 @@ namespace _Scripts.Spells
 
         protected SpellCastingBehaviour CurrentCastingBehaviour => _spellConfig?.CastingBehaviour;
     
+        [field: SerializeField] public LayerMask ExcludeLayerMask { get; private set; } 
+        
         protected void Awake()
         {
             Animator = GetComponent<Animator>();

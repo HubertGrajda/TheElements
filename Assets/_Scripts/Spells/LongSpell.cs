@@ -25,5 +25,13 @@ namespace _Scripts.Spells
         protected virtual void Perform()
         {
         }
+
+        public override void Cancel()
+        {
+            if (Cancelled) return;
+            
+            base.Cancel();
+            SpellCollider.enabled = false;
+        }
     }
 }

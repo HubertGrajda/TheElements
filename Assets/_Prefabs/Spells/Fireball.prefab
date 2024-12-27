@@ -51,7 +51,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <SpellData>k__BackingField: {fileID: 11400000, guid: 988fc65cb842f974e946e64290791a3e, type: 2}
   <Vfx>k__BackingField: {fileID: 6039768105767937933}
-  speed: 8
+  disableDelay: 4
+  speed: 12
   model: {fileID: 8038392609401311425}
   vfxOnHitSize: 2
   vfxOnHitGrowingTime: 0.2
@@ -98,9 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerBehaviours:
   - {fileID: 11400000, guid: 96ed747001656f84787822dc2098d98a, type: 2}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 116
 --- !u!135 &5144250901287985047
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -309,10 +307,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 439
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

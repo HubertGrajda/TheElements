@@ -24,7 +24,7 @@ namespace _Scripts
             if (_isDead) return;
         
             CurrentHealth -= damage;
-            OnDamaged?.Invoke(CurrentHealth);
+            OnDamaged?.Invoke(damage);
         
             if (CurrentHealth <= 0)
             {

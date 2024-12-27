@@ -1,24 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using _Scripts.Managers;
 using UnityEngine;
 
 namespace _Scripts.Spells
 {
     public class SmallRocks : Spell
     {
-        [SerializeField] private List<SimpleProjectile> projectiles;
+        [SerializeField] private SimpleProjectile projectilePrefab;
         [SerializeField] private float shootingDelay;
+        [SerializeField] private int projectilesCount;
         
-        private float _timer;
-        private int _currentProjectileIndex;
+        private readonly List<SimpleProjectile> _preparedProjectiles = new();
 
         public override void Cast()
         {
             base.Cast();
-            
-            foreach (var projectile in projectiles)
+            for (var i = 0; i < projectilesCount; i++)
             {
-                projectile.Prepare(SpellLauncher.SpawnPoint);
+                var projectile = ObjectPoolingManager.Instance.GetFromPool(projectilePrefab);
+                projectile.Prepare(SpellLauncher);
+                _preparedProjectiles.Add(projectile);
             }
         }
 
@@ -31,6 +33,9 @@ namespace _Scripts.Spells
 
         private IEnumerator StartShooting()
         {
+            var projectiles = new List<SimpleProjectile>(_preparedProjectiles);
+            _preparedProjectiles.Clear();
+            
             foreach (var projectile in projectiles)
             {
                 if (projectile == null) continue;

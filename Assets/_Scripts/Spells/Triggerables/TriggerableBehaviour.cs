@@ -9,8 +9,7 @@ namespace _Scripts.Spells
         [SerializeField] protected List<OnColliderTriggerBehaviourBase> triggerBehaviours;
         
         private readonly Dictionary<Collider, Triggerable> _colliderToTriggerable = new();
-        private float _timer;
-        private List<Collider> _parentColliders;
+        private readonly Dictionary<Triggerable, float> _triggerableToTimer = new();
         
         private class Triggerable
         {
@@ -28,15 +27,8 @@ namespace _Scripts.Spells
             public void OnTriggerableStay() => Behaviour.OnTriggerableStay(_component);
         }
         
-        private void Start()
-        {
-            GetComponentsInParent(false, _parentColliders); //TODO: Exclude layers
-        }
-
         protected void OnTriggerEnter(Collider other)
         {
-            if (_parentColliders != null && _parentColliders.Contains(other)) return;
-            
             foreach (var behaviour in triggerBehaviours)
             {
                 var behaviourType = behaviour.GetType();
@@ -50,6 +42,7 @@ namespace _Scripts.Spells
                 var triggerable = new Triggerable(triggerableComponent, behaviour);
                 triggerable.OnTriggerableEnter();
                 
+                _triggerableToTimer.Add(triggerable, triggerable.Behaviour.RetriggerTime);
                 _colliderToTriggerable.Add(other, triggerable);
             }
         }
@@ -58,13 +51,13 @@ namespace _Scripts.Spells
         {
             if (!_colliderToTriggerable.TryGetValue(other, out var triggerable)) return;
             
-            if (_timer <= 0)
+            if (_triggerableToTimer.TryGetValue(triggerable, out var timer) && timer <= 0)
             {
-                _timer = triggerable.Behaviour.RetriggerTime;
+                _triggerableToTimer[triggerable] = triggerable.Behaviour.RetriggerTime;
                 triggerable.OnTriggerableStay();
             }
             
-            _timer -= Time.deltaTime;
+            _triggerableToTimer[triggerable] -= Time.deltaTime;
         }
 
         protected void OnTriggerExit(Collider other)
@@ -72,6 +65,8 @@ namespace _Scripts.Spells
             if (!_colliderToTriggerable.TryGetValue(other, out var triggerable)) return;
             
             triggerable.OnTriggerableExit();
+            
+            _triggerableToTimer.Remove(triggerable);
             _colliderToTriggerable.Remove(other);
         }
 
@@ -84,6 +79,7 @@ namespace _Scripts.Spells
                 triggerable.OnTriggerableExit();
             }
             
+            _triggerableToTimer.Clear();
             _colliderToTriggerable.Clear();
         }
     }
