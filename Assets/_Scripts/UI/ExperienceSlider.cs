@@ -10,6 +10,7 @@ namespace _Scripts.UI
     public class ExperienceSlider : MonoBehaviour
     {
         [SerializeField] private ElementType elementType;
+        [SerializeField] private QuickTextVisualizer experiencePointsPrefab;
 
         [SerializeField] private float valueChangingDuration = 0.7f;
 
@@ -55,8 +56,9 @@ namespace _Scripts.UI
             {
                 StopCoroutine(_valueChangingCoroutine);
             }
-
+            
             _valueChangingCoroutine = StartCoroutine(ChangeValueOverTime(valueChangingDuration, experience));
+            experiencePointsPrefab.Show($"{(int)experience}");
         }
 
         private IEnumerator ChangeValueOverTime(float time, float value)

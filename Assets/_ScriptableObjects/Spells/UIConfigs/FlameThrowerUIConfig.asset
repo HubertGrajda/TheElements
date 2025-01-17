@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e5561c7a9b3400c8282d9b394419c37, type: 3}
   m_Name: FlameThrowerUIConfig
   m_EditorClassIdentifier: 
-  <SpellSprite>k__BackingField: {fileID: 21300000, guid: da06dc222bd047f40bffe678c4267810, type: 3}
+  <SpellSprite>k__BackingField: {fileID: 21300000, guid: a1ea0f7f9e4d5304d9f98b435891d535, type: 3}

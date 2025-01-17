@@ -68,6 +68,7 @@ namespace _Scripts.Managers
                     continue;
                 }
 
+                if (!objectToPool.CanBePooled) continue;
                 if (objectToPool.gameObject.activeInHierarchy) continue;
 
                 pooled = objectToPool;

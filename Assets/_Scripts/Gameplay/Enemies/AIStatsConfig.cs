@@ -15,5 +15,7 @@ namespace _Scripts.AI
         [field: SerializeField] public float ShootingFrequency { get; private set; }
 
         [field: SerializeField] public float MeleeAttackCooldown { get; private set; }
+        
+        [field: SerializeField] public float Experience { get; private set; }
     }
 }

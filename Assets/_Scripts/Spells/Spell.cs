@@ -16,11 +16,14 @@ namespace _Scripts.Spells
         protected Collider SpellCollider { get; private set; }
         protected bool Launched { get; private set; }
         public bool Cancelled { get; private set; }
+        private bool _used;
+        
         protected Transform SpawnPoint { get; private set; }
         protected SpellLauncher SpellLauncher { get; private set; }
         
         public virtual bool CanBeLaunched => true;
-        
+        public bool CanBePooled => !_used;
+
         protected virtual void Awake()
         {
             SpellCollider = GetComponent<Collider>();
@@ -28,6 +31,7 @@ namespace _Scripts.Spells
         
         public virtual void Use(SpellLauncher spellLauncher)
         {
+            _used = true;
             Launched = false;
             Cancelled = false;
 
@@ -84,6 +88,10 @@ namespace _Scripts.Spells
             gameObject.SetActive(false);
         }
 
-        protected void OnDisable() => StopAllCoroutines();
+        protected void OnDisable()
+        {
+            StopAllCoroutines();
+            _used = false;
+        }
     }
 }

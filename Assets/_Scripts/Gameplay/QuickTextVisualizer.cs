@@ -15,6 +15,7 @@ namespace _Scripts
         
         public void Show(string value)
         {
+            text.DOKill();
             text.alpha = 0;
             text.text = value;
             gameObject.SetActive(true);

@@ -19,6 +19,5 @@ MonoBehaviour:
   <RangedAttackMaxDistance>k__BackingField: 6
   <FollowingTargetRange>k__BackingField: 10
   <ShootingFrequency>k__BackingField: 0.5
-  <ShootingForce>k__BackingField: 6
-  <Projectile>k__BackingField: {fileID: 8728013711873449644, guid: 42d3e636402797a4a873b4f8b998f690, type: 3}
   <MeleeAttackCooldown>k__BackingField: 0
+  <Experience>k__BackingField: 30

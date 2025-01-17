@@ -7,6 +7,7 @@ namespace _Scripts.Spells
     {
         [SerializeField] private int damage;
         [SerializeField] private bool dealDamageInTime;
+        [SerializeField] private ElementType elementType;
         
         protected override void OnTriggerableEnter(IDamageable other)
         {
@@ -26,7 +27,7 @@ namespace _Scripts.Spells
         
         private void DealDamage(IDamageable damageable)
         {
-            damageable.TakeDamage(damage);
+            damageable.TakeDamage(damage, elementType);
         }
     }
 }

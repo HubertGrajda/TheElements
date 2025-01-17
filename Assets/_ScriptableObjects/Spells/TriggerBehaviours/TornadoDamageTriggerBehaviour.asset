@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <RetriggerTime>k__BackingField: 2
   damage: 5
+  elementType: {fileID: 11400000, guid: 7d5f52f17544ad24d907ff18e5ddeae2, type: 2}
   dealDamageInTime: 1

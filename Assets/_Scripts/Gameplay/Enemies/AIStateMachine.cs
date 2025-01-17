@@ -18,8 +18,7 @@ namespace _Scripts.AI
         public Animator Anim { get; private set; }
 
         private HealthSystem _healthSystem;
-
-    
+        
         protected void Awake()
         {
             Agent = GetComponent<NavMeshAgent>();

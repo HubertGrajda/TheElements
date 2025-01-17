@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Scripts
@@ -10,7 +11,9 @@ namespace _Scripts
     
         [SerializeField] protected float destructionDelay;
         [SerializeField] protected BaseStatsConfig stats;
-    
+
+        public Dictionary<ElementType, int> ElementTypeToDamageTaken { get; } = new();
+
         private bool _isDead;
         public int CurrentHealth { get; private set; }
 
@@ -19,12 +22,14 @@ namespace _Scripts
             CurrentHealth = stats.maxHealth;
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, ElementType elementType)
         {
             if (_isDead) return;
         
             CurrentHealth -= damage;
             OnDamaged?.Invoke(damage);
+            
+            ElementTypeToDamageTaken[elementType] = ElementTypeToDamageTaken.GetValueOrDefault(elementType) + damage;
         
             if (CurrentHealth <= 0)
             {
