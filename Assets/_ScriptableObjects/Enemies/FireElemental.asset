@@ -18,6 +18,7 @@ MonoBehaviour:
   <RangedAttackMinDistance>k__BackingField: 4.55
   <RangedAttackMaxDistance>k__BackingField: 7
   <FollowingTargetRange>k__BackingField: 13
+  <TriggeredDetectionRange>k__BackingField: 40
   <ShootingFrequency>k__BackingField: 3
   <MeleeAttackCooldown>k__BackingField: 0
   <Experience>k__BackingField: 10

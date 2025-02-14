@@ -9,10 +9,13 @@ namespace _Scripts.AI
         protected Animator Animator { get; }
         protected AIStateMachine Fsm { get; }
         protected AIStatsConfig Stats { get; }
-    
-        protected Transform TargetTransform => Fsm.PlayerTransform;
-        protected bool HasTarget => TargetTransform != null;
-        protected float DistanceToTarget => Vector3.Distance(Fsm.transform.position, TargetTransform.position);
+        protected HealthSystem HealthSystem { get; }
+        
+        protected bool HasTarget => Fsm.TargetTransform != null;
+
+        protected float DistanceToTarget => HasTarget
+            ? Vector3.Distance(Fsm.transform.position, Fsm.TargetTransform.position)
+            : Mathf.Infinity;
 
         protected AIState(AIStateMachine fsm) : base(fsm)
         {
@@ -20,6 +23,7 @@ namespace _Scripts.AI
             Agent = Fsm.Agent;
             Animator = Fsm.Anim;
             Stats = Fsm.Stats;
+            HealthSystem = Fsm.HealthSystem;
         }
     }
 }

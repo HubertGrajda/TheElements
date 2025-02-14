@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e5561c7a9b3400c8282d9b394419c37, type: 3}
   m_Name: SmallRocksUIConfig
   m_EditorClassIdentifier: 
-  <SpellSprite>k__BackingField: {fileID: 21300034, guid: fd0b7189c26761e4c833b6c9734d6cd4, type: 3}
+  <SpellSprite>k__BackingField: {fileID: 21300000, guid: f28a9112f871b844d8047b7466f4046a, type: 3}

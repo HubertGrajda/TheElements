@@ -18,7 +18,7 @@ namespace _Scripts.AI
         {
             base.UpdateState();
         
-            Fsm.transform.LookAt(TargetTransform);
+            Fsm.transform.LookAt(Fsm.TargetTransform);
         
             if (_timer < 0)
             {

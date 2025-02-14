@@ -8,22 +8,24 @@ namespace _Scripts.AI
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(AISpellLauncher))]
+    [RequireComponent(typeof(HealthSystem))]
     public class AIStateMachine : StateMachine
     {
         [field: SerializeField] public AIStatsConfig Stats { get; private set; }
     
         public AISpellLauncher SpellLauncher { get; private set; }
-        public Transform PlayerTransform { get; private set; }
+        public HealthSystem HealthSystem { get; private set; }
         public NavMeshAgent Agent { get; private set; }
         public Animator Anim { get; private set; }
-
-        private HealthSystem _healthSystem;
+        public Transform TargetTransform { get; private set; }
         
         protected void Awake()
         {
             Agent = GetComponent<NavMeshAgent>();
             Anim = GetComponent<Animator>();
             SpellLauncher = GetComponent<AISpellLauncher>();
+            HealthSystem = GetComponent<HealthSystem>();
         
             AddListeners();
         }
@@ -38,34 +40,23 @@ namespace _Scripts.AI
             entryState = States[0];
         }
 
-        protected override void Start()
+        public void ChangeTarget(Transform targetTransform)
         {
-            base.Start();
-
-            if (PlayerManager.Instance.TryGetPlayerComponent(out PlayerController controller))
-            {
-                PlayerTransform = controller.transform;
-            }
+            TargetTransform = targetTransform;
         }
 
         private void OnDestroy() => RemoveListeners();
 
         private void AddListeners()
         {
-            if (TryGetComponent(out _healthSystem))
-            {
-                _healthSystem.OnDeath += OnDeath;
-                _healthSystem.OnDamaged += OnDamaged;
-            }
+            HealthSystem.OnDeath += OnDeath;
+            HealthSystem.OnDamaged += OnDamaged;
         }
 
         private void RemoveListeners()
         {
-            if (_healthSystem != null)
-            {
-                _healthSystem.OnDamaged -= OnDamaged;
-                _healthSystem.OnDeath -= OnDeath;
-            }
+            HealthSystem.OnDamaged -= OnDamaged;
+            HealthSystem.OnDeath -= OnDeath;
         }
     
         private void OnDamaged(int _)

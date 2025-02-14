@@ -5,16 +5,16 @@ namespace _Scripts.AI
 {
     public class MovementAIState : AIState
     {
-        protected override bool CanBeEntered => HasTarget && DistanceToTarget < Stats.FollowingTargetRange;
+        protected override bool CanBeEntered => HasTarget && DistanceToTarget < Stats.TriggeredDetectionRange;
 
         public MovementAIState(AIStateMachine fsm) : base(fsm)
         {
         }
     
         private float _currentSpeed;
+        
         private Coroutine _increaseSpeedCoroutine;
         private Coroutine _decreaseSpeedCoroutine;
-    
     
         public override void EnterState()
         {
@@ -26,7 +26,7 @@ namespace _Scripts.AI
             base.UpdateState();
         
             Agent.speed = Stats.MovementSpeed * _currentSpeed;
-            Agent.destination = TargetTransform.position;
+            Agent.destination = Fsm.TargetTransform.position;
         }
         public override void EndState()
         {

@@ -5720,6 +5720,7 @@ GameObject:
   - component: {fileID: 8732487253525966219}
   - component: {fileID: 6638215889442746137}
   - component: {fileID: 2152462139136760113}
+  - component: {fileID: 2911458463600031035}
   m_Layer: 8
   m_Name: EarthElemental
   m_TagString: Enemy
@@ -6047,6 +6048,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c667d622b103497eb96185b3950475c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2911458463600031035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7464430647804796661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cde661c6e274143b136b619451272af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionTag: Player
+  detectionLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  cooldown: 1
+  detectionLimit: 1
+  detectionRange: 15
 --- !u!1 &7543817632297452555
 GameObject:
   m_ObjectHideFlags: 0

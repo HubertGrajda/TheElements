@@ -11,6 +11,7 @@ namespace _Scripts.AI
         [field: SerializeField] public float RangedAttackMinDistance { get; private set; }
         [field: SerializeField] public float RangedAttackMaxDistance { get; private set; }
         [field: SerializeField] public float FollowingTargetRange { get; private set; }
+        [field: SerializeField] public float TriggeredDetectionRange { get; private set; }
     
         [field: SerializeField] public float ShootingFrequency { get; private set; }
 
