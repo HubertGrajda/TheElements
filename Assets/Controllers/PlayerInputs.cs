@@ -429,6 +429,24 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpellsView"",
+                    ""type"": ""Button"",
+                    ""id"": ""582f2776-62b4-4a5f-a52b-a8fdd03b8155"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NumKeys"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c4fa024-47fd-4ca4-a5d9-e4c0d3e75fe4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -451,6 +469,61 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ElementTypeSelectionView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""82284052-6098-47f8-b5b5-972257f2056c"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpellsView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07296f7a-2d85-41f6-8d5a-52d009ce7966"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale"",
+                    ""groups"": """",
+                    ""action"": ""NumKeys"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6da9f772-8a3c-474b-9ede-d5271eebc54b"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": """",
+                    ""action"": ""NumKeys"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""433e45c0-2300-42da-8db2-01e31607c2dd"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": """",
+                    ""action"": ""NumKeys"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7581b8ba-2f7c-417c-aa09-17e818a85352"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": """",
+                    ""action"": ""NumKeys"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -548,6 +621,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_PauseView = m_UI.FindAction("PauseView", throwIfNotFound: true);
         m_UI_ElementTypeSelectionView = m_UI.FindAction("ElementTypeSelectionView", throwIfNotFound: true);
+        m_UI_SpellsView = m_UI.FindAction("SpellsView", throwIfNotFound: true);
+        m_UI_NumKeys = m_UI.FindAction("NumKeys", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_IncreaseMovementSpeed = m_Debug.FindAction("IncreaseMovementSpeed", throwIfNotFound: true);
@@ -774,12 +849,16 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_PauseView;
     private readonly InputAction m_UI_ElementTypeSelectionView;
+    private readonly InputAction m_UI_SpellsView;
+    private readonly InputAction m_UI_NumKeys;
     public struct UIActions
     {
         private @PlayerInputs m_Wrapper;
         public UIActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @PauseView => m_Wrapper.m_UI_PauseView;
         public InputAction @ElementTypeSelectionView => m_Wrapper.m_UI_ElementTypeSelectionView;
+        public InputAction @SpellsView => m_Wrapper.m_UI_SpellsView;
+        public InputAction @NumKeys => m_Wrapper.m_UI_NumKeys;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -795,6 +874,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @ElementTypeSelectionView.started += instance.OnElementTypeSelectionView;
             @ElementTypeSelectionView.performed += instance.OnElementTypeSelectionView;
             @ElementTypeSelectionView.canceled += instance.OnElementTypeSelectionView;
+            @SpellsView.started += instance.OnSpellsView;
+            @SpellsView.performed += instance.OnSpellsView;
+            @SpellsView.canceled += instance.OnSpellsView;
+            @NumKeys.started += instance.OnNumKeys;
+            @NumKeys.performed += instance.OnNumKeys;
+            @NumKeys.canceled += instance.OnNumKeys;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -805,6 +890,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @ElementTypeSelectionView.started -= instance.OnElementTypeSelectionView;
             @ElementTypeSelectionView.performed -= instance.OnElementTypeSelectionView;
             @ElementTypeSelectionView.canceled -= instance.OnElementTypeSelectionView;
+            @SpellsView.started -= instance.OnSpellsView;
+            @SpellsView.performed -= instance.OnSpellsView;
+            @SpellsView.canceled -= instance.OnSpellsView;
+            @NumKeys.started -= instance.OnNumKeys;
+            @NumKeys.performed -= instance.OnNumKeys;
+            @NumKeys.canceled -= instance.OnNumKeys;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -906,6 +997,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     {
         void OnPauseView(InputAction.CallbackContext context);
         void OnElementTypeSelectionView(InputAction.CallbackContext context);
+        void OnSpellsView(InputAction.CallbackContext context);
+        void OnNumKeys(InputAction.CallbackContext context);
     }
     public interface IDebugActions
     {

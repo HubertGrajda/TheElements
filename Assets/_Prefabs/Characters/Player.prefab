@@ -726,6 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0206613c0ac208a419c77698cf2cdb57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  experienceConfig: {fileID: 11400000, guid: 2f3e979b02ea07f4cb379b0d102e441c, type: 2}
 --- !u!114 &5692109706186141099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -850,20 +851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040f89aeebf5b0c4abb609f9ded53231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Spells>k__BackingField:
-  - {fileID: 11400000, guid: 7eddaf7168cf32549ac651c2fd06eea0, type: 2}
-  - {fileID: 11400000, guid: f0f00e5f874792d4e8db112b3c9fe8ad, type: 2}
-  - {fileID: 11400000, guid: 787cc661c56c2e94d94c498ccbfa2407, type: 2}
-  - {fileID: 11400000, guid: e60c3ae8990d5ec4eae816f1a05cd615, type: 2}
-  - {fileID: 11400000, guid: 207c05724e3f74044b45ab03d88bdb0f, type: 2}
-  - {fileID: 11400000, guid: 988fc65cb842f974e946e64290791a3e, type: 2}
-  - {fileID: 11400000, guid: 71266421788ee91408958c3d6dd3ce5e, type: 2}
   spawnPoint: {fileID: 563417353159211469}
-  bendingStyles:
-  - {fileID: 11400000, guid: d56d55636dd2ed44bab16315528ff00f, type: 2}
-  - {fileID: 11400000, guid: c147ba83097847643a61c8dec81ea4a0, type: 2}
-  - {fileID: 11400000, guid: 227829f502ce33b45adaa89026c5f4d5, type: 2}
-  - {fileID: 11400000, guid: 7d5f52f17544ad24d907ff18e5ddeae2, type: 2}
 --- !u!114 &4041103514207173895
 MonoBehaviour:
   m_ObjectHideFlags: 0

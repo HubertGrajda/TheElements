@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Managers;
-using _Scripts.Spells;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,10 +8,7 @@ namespace _Scripts.Player
 {
     public class PlayerBendingStateMachine : PlayerStateMachine
     {
-        [field: SerializeField] public List<SpellConfig> Spells { get; private set; }
-
         [SerializeField] private Transform spawnPoint;
-        [SerializeField] private List<ElementType> bendingStyles;
     
         private readonly Dictionary<ElementType, BendingState> _elementToBendingState = new();
 
@@ -24,43 +20,51 @@ namespace _Scripts.Player
     
         protected override void InitStates(out State entryState)
         {
-            foreach (var elementType in bendingStyles)
+            entryState = default;
+            
+            foreach (var elementType in _spellsManager.BendingStyles)
             {
                 _elementToBendingState.Add(elementType, new BendingState(this, elementType));
             }
-
+            
+            if (_elementToBendingState.Count == 0) return;
+            
             entryState = _elementToBendingState.First().Value;
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _spellsManager = SpellsManager.Instance;
         }
 
         protected override void Start()
         {
-            _spellsManager = SpellsManager.Instance;
-        
             base.Start();
 
-            InitBendingStates();
             OnBendingSlotStarted(INITIAL_BENDING_SLOT_NUMBER);
             AddListeners();
         }
 
-        private void InitBendingStates()
-        {
-            foreach (var bendingState in _elementToBendingState.Values)
-            {
-                SpellsManager.Instance.OnSelectedSpellChanged?.Invoke(bendingState.SelectedSpell);
-            }
-        }
-    
         private void AddListeners()
         {
             PlayerActions.NumKeys.started += OnNumKeyStarted;
+            _spellsManager.OnBendingStyleUnlocked += OnBendingStyleUnlocked;
         }
 
         private void RemoveListeners()
         {
             PlayerActions.NumKeys.started -= OnNumKeyStarted;
+            _spellsManager.OnBendingStyleUnlocked -= OnBendingStyleUnlocked;
         }
     
+        private void OnBendingStyleUnlocked(ElementType elementType)
+        {
+            var bendingState = new BendingState(this, elementType);
+            _elementToBendingState.Add(elementType, bendingState);
+            ChangeState(bendingState);
+        }
+        
         private void OnNumKeyStarted(InputAction.CallbackContext context)
         {
             var value = (int)context.ReadValue<float>();
@@ -70,12 +74,11 @@ namespace _Scripts.Player
     
         private void OnBendingSlotStarted(int slotNumber)
         {
-            var slotIndex = slotNumber - 1;
-        
-            if (slotIndex < 0) return;
-            if (bendingStyles.Count <= slotIndex) return;
+            var activeElementType = _spellsManager.BendingStyles.FirstOrDefault(x => x.Index == slotNumber);
+            
+            if (activeElementType == null) return;
 
-            ChangeState(bendingStyles[slotIndex]);
+            ChangeState(activeElementType);
         }
 
         public void ChangeState(ElementType elementType)
@@ -83,7 +86,7 @@ namespace _Scripts.Player
             if (!_elementToBendingState.TryGetValue(elementType, out var bendingState)) return;
         
             ChangeState(bendingState);
-            _spellsManager.OnSelectedElementChanged?.Invoke(elementType);
+            _spellsManager.OnActiveElementChanged?.Invoke(elementType);
         }
     
         private void OnDestroy()

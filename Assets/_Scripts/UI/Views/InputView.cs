@@ -26,8 +26,10 @@ namespace _Scripts.UI
             Show();
         }
         
-        private void AddListeners()
+        protected virtual void AddListeners()
         {
+            if (inputAction == null) return;
+            
             inputAction.started += ToggleByInput;
         
             if (holdRequired)
@@ -36,7 +38,7 @@ namespace _Scripts.UI
             }
         }
 
-        private void RemoveListeners()
+        protected virtual void RemoveListeners()
         {
             if (inputAction == null) return;
             

@@ -26,7 +26,7 @@ namespace _Scripts.Player
         {
             _playerActions.CastSpell.started += OnCastSpellInputStarted;
             _playerActions.CastSpell.canceled += OnCastSpellInputCanceled;
-            _spellsManager.OnSelectedSpellChanged += OnSelectedSpellChanged;
+            _spellsManager.OnActiveSpellChanged += OnActiveSpellChanged;
         }
     
         private void RemoveListeners()
@@ -35,18 +35,21 @@ namespace _Scripts.Player
         
             _playerActions.CastSpell.started -= OnCastSpellInputStarted;
             _playerActions.CastSpell.canceled -= OnCastSpellInputCanceled;
-            _spellsManager.OnSelectedSpellChanged -= OnSelectedSpellChanged;
+            _spellsManager.OnActiveSpellChanged -= OnActiveSpellChanged;
         }
 
         private void OnCastSpellInputStarted(InputAction.CallbackContext ctx) => UseSpell();
 
         private void OnCastSpellInputCanceled(InputAction.CallbackContext ctx)
         {
-            CurrentCastingBehaviour.ToggleCastingAnimation(this, false);
+            var castingBehaviour = CurrentCastingBehaviour;
+            if (castingBehaviour == null) return;
+            
+            castingBehaviour.ToggleCastingAnimation(this, false);
             CancelSpell();
         }
 
-        private void OnSelectedSpellChanged(SpellConfig obj)
+        private void OnActiveSpellChanged(ElementType elementType, SpellConfig spellConfig)
         {
             var castingBehaviour = CurrentCastingBehaviour;
             if (castingBehaviour == null) return;
@@ -57,7 +60,7 @@ namespace _Scripts.Player
     
         protected override bool TryGetSpellToUse(out SpellConfig spellConfig)
         {
-            spellConfig = _playerBendingStateMachine.CurrentBendingState?.SelectedSpell;
+            spellConfig = _playerBendingStateMachine.CurrentBendingState?.ActiveSpell;
             return spellConfig != null;
         }
 

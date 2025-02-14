@@ -39,7 +39,7 @@ namespace _Scripts.Spells
         {
             base.PrepareToLaunch();
             
-            var experience = _experienceSystem.GetExperienceValue(SpellData.ElementType);
+            var experience = _experienceSystem.GetCurrentExperience(SpellData.ElementType);
             var additionalSize = experience * sizeForExperienceModifier;
             _currSize = size + additionalSize;
             Vfx.SetFloat(SIZE, _currSize);

@@ -11,7 +11,10 @@ namespace _Scripts
         protected virtual void Start()
         {
             InitStates(out var state);
-            CurrentState = state;
+            
+            if (state == null) return;
+            
+            ChangeState(state);
         }
 
         protected virtual void Update()
@@ -21,7 +24,7 @@ namespace _Scripts
 
         public void ChangeState(State nextState)
         {
-            CurrentState.EndState();
+            CurrentState?.EndState();
             CurrentState = nextState;
             CurrentState.EnterState();
         }

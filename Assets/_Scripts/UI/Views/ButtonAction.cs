@@ -6,17 +6,18 @@ namespace _Scripts.UI
     [RequireComponent(typeof(Button))]
     public abstract class ButtonAction : MonoBehaviour
     {
-        private Button _button;
+        protected Button Button { get; private set; }
+        
         protected virtual bool IsValid => true;
         
         private void Awake()
         {
-            _button = GetComponent<Button>();
+            Button = GetComponent<Button>();
             Prepare();
             
             if (!IsValid) return;
             
-            _button.onClick.AddListener(OnClick);
+            Button.onClick.AddListener(OnClick);
         }
         
         protected abstract void OnClick();

@@ -35,6 +35,7 @@ namespace _Scripts.UI
         public void Close()
         {
             gameObject.SetActive(false);
+            UIManager.SetCurrentMenu(null);
         }
         
         protected abstract void InitUIElements();

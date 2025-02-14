@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using _Scripts.Managers;
 using _Scripts.Player;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,9 @@ namespace _Scripts.UI
         [SerializeField] private ElementType elementType;
         [SerializeField] private QuickTextVisualizer experiencePointsPrefab;
 
+        [SerializeField] private TMP_Text currentExperienceText;
+        [SerializeField] private TMP_Text requiredExperienceText;
+        
         [SerializeField] private float valueChangingDuration = 0.7f;
 
         private PlayerExperienceSystem _experienceSystem;
@@ -20,25 +24,35 @@ namespace _Scripts.UI
 
         private void Awake()
         {
+            if (!PlayerManager.Instance.TryGetPlayerComponent(out _experienceSystem)) return;
+            
             _slider = GetComponent<Slider>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            if (PlayerManager.Instance.TryGetPlayerComponent(out _experienceSystem))
-            {
-                AddListeners();
-            }
+            Prepare();
+            AddListeners();
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             RemoveListeners();
         }
-        
+
         private void AddListeners()
         {
             _experienceSystem.OnExperienceChanged += OnExperienceChanged;
+            _experienceSystem.OnLevelChanged += OnLevelChanged;
+        }
+
+        private void OnLevelChanged(ElementType element, int previousLevel, int currentLevel)
+        {
+            if (element != elementType) return;
+            
+            SetMinMaxValues(
+                _experienceSystem.GetRequiredExperience(previousLevel),
+                _experienceSystem.GetRequiredExperience(currentLevel));
         }
 
         private void RemoveListeners()
@@ -47,8 +61,16 @@ namespace _Scripts.UI
             
             _experienceSystem.OnExperienceChanged -= OnExperienceChanged;
         }
+
+        private void Prepare()
+        {
+            var currentLevel = _experienceSystem.GetCurrentLevel(elementType);
+            
+            OnLevelChanged(elementType, currentLevel -1, currentLevel);
+            SetValue(_experienceSystem.GetCurrentExperience(elementType));
+        }
         
-        private void OnExperienceChanged(ElementType type, float experience)
+        private void OnExperienceChanged(ElementType type, float experience, float difference)
         {
             if (type != elementType) return;
 
@@ -58,7 +80,7 @@ namespace _Scripts.UI
             }
             
             _valueChangingCoroutine = StartCoroutine(ChangeValueOverTime(valueChangingDuration, experience));
-            experiencePointsPrefab.Show($"{(int)experience}");
+            experiencePointsPrefab.Show($"{(int)difference}");
         }
 
         private IEnumerator ChangeValueOverTime(float time, float value)
@@ -68,12 +90,33 @@ namespace _Scripts.UI
             
             while (timer < time)
             {
-                _slider.value = Mathf.Lerp(initialValue, value, timer / time);
+                SetValue(Mathf.Lerp(initialValue, value, timer / time));
                 timer += Time.deltaTime;
                 yield return null;
             }
 
+            SetValue(value);
+        }
+
+        private void SetValue(float value)
+        {
             _slider.value = value;
+
+            if (currentExperienceText)
+            {
+                currentExperienceText.text = $"{(int)value}";
+            }
+        }
+
+        private void SetMinMaxValues(float min, float max)
+        {
+            _slider.minValue = min;
+            _slider.maxValue = max;
+
+            if (requiredExperienceText)
+            {
+                requiredExperienceText.text = $"{(int)_slider.maxValue}";
+            }
         }
     }
 }

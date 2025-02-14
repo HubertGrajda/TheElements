@@ -32,15 +32,15 @@ namespace _Scripts.UI
 
         private void AddListeners()
         {
-            _spellsManager.OnSelectedSpellChanged += OnSelectedSpellChanged;
-            _spellsManager.OnSelectedElementChanged += OnSelectedElementChanged;
+            _spellsManager.OnActiveSpellChanged += OnActiveSpellChanged;
+            _spellsManager.OnActiveElementChanged += OnSelectedElementChanged;
             _playerSpellLauncher.OnSpellUsed += OnSpellUsed;
         }
         
         private void RemoveListeners()
         {
-            _spellsManager.OnSelectedSpellChanged -= OnSelectedSpellChanged;
-            _spellsManager.OnSelectedElementChanged -= OnSelectedElementChanged;
+            _spellsManager.OnActiveSpellChanged -= OnActiveSpellChanged;
+            _spellsManager.OnActiveElementChanged -= OnSelectedElementChanged;
             _playerSpellLauncher.OnSpellUsed -= OnSpellUsed;
         }
 
@@ -51,12 +51,12 @@ namespace _Scripts.UI
             selectedImage.gameObject.SetActive(elementType == visualizedType);
         }
 
-        private void OnSelectedSpellChanged(SpellConfig spell)
+        private void OnActiveSpellChanged(ElementType elementType, SpellConfig spellConfig)
         {
-            if (visualizedType != spell.ElementType) return;
-
-            VisualizeSliderImages(spell);
-            VisualizeSliderValue(spell);
+            if (visualizedType != elementType) return;
+            
+            VisualizeSliderImages(spellConfig);
+            VisualizeSliderValue(spellConfig);
         }
 
         private void OnSpellUsed(SpellConfig spell)
@@ -68,6 +68,16 @@ namespace _Scripts.UI
 
         private void VisualizeSliderImages(SpellConfig spell)
         {
+            if (spell == null)
+            {
+                spellImage.gameObject.SetActive(false);
+                spellImageFill.gameObject.SetActive(false);
+                return;
+            }
+            
+            spellImage.gameObject.SetActive(true);
+            spellImageFill.gameObject.SetActive(true);
+            
             var spellUIConfig = spell.SpellUIConfig;
             
             if (spellImageFill != null)
@@ -83,6 +93,8 @@ namespace _Scripts.UI
 
         private void VisualizeSliderValue(SpellConfig spellConfig)
         {
+            if (spellConfig == null) return;
+            
             if (_visualizedSpellLimiter != null)
             {
                 _visualizedSpellLimiter.OnCurrentValueChanged -= OnCurrentValueChanged;

@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca6cf0de05c47898b88aaf1676e67d9, type: 3}
   m_Name: Fire
   m_EditorClassIdentifier: 
+  <InitialSpell>k__BackingField: {fileID: 11400000, guid: 7eddaf7168cf32549ac651c2fd06eea0, type: 2}
+  <Icon>k__BackingField: {fileID: 21300000, guid: da06dc222bd047f40bffe678c4267810, type: 3}
+  <Index>k__BackingField: 3

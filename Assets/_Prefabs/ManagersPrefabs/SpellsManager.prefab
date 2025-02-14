@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7554621831279307587}
-  - component: {fileID: 3482194607324671224}
   - component: {fileID: 5297783884134806440}
   m_Layer: 0
   m_Name: SpellsManager
@@ -33,18 +32,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3482194607324671224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3166847008205232205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65f28b1c12144ef18d4a0a7b5e113914, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5297783884134806440
 MonoBehaviour:
   m_ObjectHideFlags: 0
