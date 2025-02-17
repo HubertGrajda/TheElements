@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using _Scripts.Managers;
+using _Scripts.Inputs;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;

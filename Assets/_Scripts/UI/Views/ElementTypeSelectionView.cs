@@ -1,4 +1,5 @@
-using _Scripts.Managers;
+using _Scripts.Cameras;
+using _Scripts.Inputs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

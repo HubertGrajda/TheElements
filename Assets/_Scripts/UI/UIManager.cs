@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using _Scripts.UI;
+using _Scripts.Inputs;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace _Scripts.Managers
+namespace _Scripts.UI
 {
     public class UIManager : Singleton<UIManager>
     {
@@ -14,7 +14,6 @@ namespace _Scripts.Managers
         private readonly Stack<Menu> _previousMenus = new();
         public Menu CurrentMenu { get; private set; }
         public View CurrentView { get; set; }
-
         public HUD CurrentHUD { get; private set; }
         
         public UnityAction<View> OnViewOpened;

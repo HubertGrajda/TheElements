@@ -1,4 +1,4 @@
-using _Scripts.Managers;
+using _Scripts.Inputs;
 using UnityEngine;
 
 namespace _Scripts.UI

@@ -1,7 +1,7 @@
 ﻿using Cinemachine;
 using UnityEngine;
 
-namespace _Scripts.Managers
+namespace _Scripts.Cameras
 {
     public class CameraManager : Singleton<CameraManager>
     {

@@ -1,8 +1,9 @@
 using System.Collections;
+using _Scripts.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace _Scripts.Managers
+namespace _Scripts
 {
     public class ScenesManager : Singleton<ScenesManager>
     {

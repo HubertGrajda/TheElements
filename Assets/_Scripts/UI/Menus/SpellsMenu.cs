@@ -1,5 +1,5 @@
-﻿using _Scripts.Managers;
-using _Scripts.Player;
+﻿using _Scripts.Player;
+using _Scripts.Spells;
 using TMPro;
 using UnityEngine;
 

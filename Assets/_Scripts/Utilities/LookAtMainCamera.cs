@@ -1,4 +1,4 @@
-﻿using _Scripts.Managers;
+﻿using _Scripts.Cameras;
 using UnityEngine;
 
 namespace _Scripts

@@ -1,4 +1,4 @@
-using _Scripts.Managers;
+using _Scripts.Cameras;
 using _Scripts.Player;
 
 namespace _Scripts.UI

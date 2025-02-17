@@ -1,10 +1,8 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using _Scripts.Player;
 using UnityEngine;
 
-namespace _Scripts.Managers
+namespace _Scripts.Player
 {
     public class PlayerManager : Singleton<PlayerManager>
     {

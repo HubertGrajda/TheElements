@@ -1,6 +1,6 @@
+using _Scripts.Inputs;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using _Scripts.Managers;
 
 namespace _Scripts
 {

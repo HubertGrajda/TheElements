@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
-using _Scripts.Managers;
+using _Scripts.Audio;
+using _Scripts.Cameras;
 using UnityEngine;
 
 namespace _Scripts.Player

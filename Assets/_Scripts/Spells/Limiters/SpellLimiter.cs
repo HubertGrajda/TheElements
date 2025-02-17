@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using _Scripts.Managers;
 using UnityEngine;
 
 namespace _Scripts.Spells

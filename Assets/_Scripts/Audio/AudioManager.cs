@@ -1,10 +1,9 @@
 using UnityEngine;
 using System;
 using System.Linq;
-using _Scripts.Audio;
 using UnityEngine.Audio;
 
-namespace _Scripts.Managers
+namespace _Scripts.Audio
 {
     public class AudioManager : Singleton<AudioManager>
     {

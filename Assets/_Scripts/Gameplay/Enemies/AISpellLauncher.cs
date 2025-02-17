@@ -1,4 +1,3 @@
-using _Scripts.Managers;
 using _Scripts.Player;
 using _Scripts.Spells;
 using UnityEngine;

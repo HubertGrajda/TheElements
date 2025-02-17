@@ -1,4 +1,3 @@
-using _Scripts.Managers;
 using Cinemachine;
 using UnityEngine;
 

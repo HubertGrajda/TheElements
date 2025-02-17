@@ -1,4 +1,4 @@
-﻿namespace _Scripts.Managers
+﻿namespace _Scripts.Debugging
 {
     public class DebugManager : Singleton<DebugManager>
     {

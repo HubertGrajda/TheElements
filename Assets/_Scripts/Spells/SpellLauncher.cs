@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Scripts.Managers;
+using _Scripts.Pooling;
 using UnityEngine;
 
 namespace _Scripts.Spells

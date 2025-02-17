@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-namespace _Scripts.Managers
+namespace _Scripts.Pooling
 {
     public class ObjectPoolingManager : Singleton<ObjectPoolingManager>
     {

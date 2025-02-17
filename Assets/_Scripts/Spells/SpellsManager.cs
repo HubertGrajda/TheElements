@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Player;
-using _Scripts.Spells;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace _Scripts.Managers
+namespace _Scripts.Spells
 {
     public class SpellsManager : Singleton<SpellsManager>, ISaveable<SpellsData>
     {

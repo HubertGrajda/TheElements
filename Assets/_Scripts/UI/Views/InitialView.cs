@@ -1,4 +1,4 @@
-using _Scripts.Managers;
+using _Scripts.Spells;
 
 namespace _Scripts.UI
 {

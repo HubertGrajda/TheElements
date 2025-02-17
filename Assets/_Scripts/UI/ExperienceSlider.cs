@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using _Scripts.Managers;
 using _Scripts.Player;
 using TMPro;
 using UnityEngine;

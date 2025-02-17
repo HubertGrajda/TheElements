@@ -1,4 +1,4 @@
-namespace _Scripts.Managers
+namespace _Scripts.Inputs
 {
     public class InputsManager : Singleton<InputsManager>
     {

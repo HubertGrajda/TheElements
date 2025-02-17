@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Scripts.Managers
+namespace _Scripts
 {
     public class SaveHandler : MonoBehaviour
     {

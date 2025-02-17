@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using _Scripts.Inputs;
 using _Scripts.Spells;
 using UnityEngine.InputSystem;
-using _Scripts.Managers;
 
 namespace _Scripts.Player
 {

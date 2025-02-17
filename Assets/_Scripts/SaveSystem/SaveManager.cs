@@ -3,7 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace _Scripts.Managers
+namespace _Scripts
 {
     public class SaveManager : Singleton<SaveManager>
     {

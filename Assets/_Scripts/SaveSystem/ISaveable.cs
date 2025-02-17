@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Scripts.Managers
+namespace _Scripts
 {
     public interface ISaveable<TSaveData> : ISaveableBase where TSaveData : SaveData
     {
@@ -19,7 +19,7 @@ namespace _Scripts.Managers
         
         public void Load(TSaveData data);
     }
-    
+
     public interface ISaveableBase
     {
         string SaveKey { get; }

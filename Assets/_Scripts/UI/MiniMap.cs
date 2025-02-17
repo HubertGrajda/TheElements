@@ -1,4 +1,5 @@
-﻿using _Scripts.Managers;
+﻿using _Scripts.Cameras;
+using _Scripts.Player;
 using UnityEngine;
 
 namespace _Scripts.UI

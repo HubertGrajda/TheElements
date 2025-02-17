@@ -1,7 +1,8 @@
 using System.Collections;
+using _Scripts.Inputs;
 using UnityEngine;
 
-namespace _Scripts.Managers
+namespace _Scripts
 {
     public class GameManager : Singleton<GameManager>
     {

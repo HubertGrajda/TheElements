@@ -1,5 +1,4 @@
-﻿using _Scripts.Managers;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Scripts.Cameras
 {
