@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7554621831279307587}
   - component: {fileID: 5297783884134806440}
+  - component: {fileID: 377360172520350634}
   m_Layer: 0
   m_Name: SpellsManager
   m_TagString: Untagged
@@ -44,3 +45,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f33963b4604f00a7f9d62501a6d65a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ElementTypes>k__BackingField: {fileID: 11400000, guid: 8843d350f8f75a24c95a2bc6c5c3ee23, type: 2}
+  <Spells>k__BackingField: {fileID: 11400000, guid: dd5ef3bcd395cad42ba721eb83387926, type: 2}
+--- !u!114 &377360172520350634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3166847008205232205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d40bf0ff83904d0a8329c098759e6141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: 

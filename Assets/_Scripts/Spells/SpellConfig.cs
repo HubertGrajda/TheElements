@@ -12,10 +12,4 @@ namespace _Scripts.Spells
         [field: SerializeField] public ElementType ElementType { get; private set;}
         [field: SerializeField] public Spell SpellPrefab { get; private set;}
     }
-
-    public abstract class SpellLaunchingBehaviour : ScriptableObject
-    {
-        [field: SerializeField] public bool IsChildOfSpawnPoint {get; private set;}
-        
-    }
 }
