@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e5561c7a9b3400c8282d9b394419c37, type: 3}
   m_Name: TornadoUIConfig
   m_EditorClassIdentifier: 
-  <SpellSprite>k__BackingField: {fileID: 21300000, guid: 36ec4eb08e02fd64582a786919e9b7ce, type: 3}
+  <SpellSprite>k__BackingField: {fileID: 21300000, guid: b2f7cae7fb0db0944b57116f54b6e391, type: 3}
