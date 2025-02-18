@@ -4,6 +4,6 @@ namespace _Scripts
 {
     public abstract class BaseStatsConfig : ScriptableObject
     {
-        public int maxHealth;
+        [field: SerializeField] public int MaxHealth { get; private set; }
     }
 }

@@ -12,9 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa12aa1b83ba6b488eb0353ead6b783, type: 3}
   m_Name: PlayerBaseStats
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  waterResistance: 0
-  fireResistance: 0
-  earthResistance: 0
-  airResistance: 0
-  defence: 0
+  <MaxHealth>k__BackingField: 100

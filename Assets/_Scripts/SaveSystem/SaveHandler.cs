@@ -9,20 +9,29 @@ namespace _Scripts
         [field: SerializeField] public string Id { get; private set; }
         
         private ISaveableBase[] _saveables;
-        
-        private void Awake()
-        {
-            _saveables = GetComponents<ISaveableBase>();
-        }
+        private ISaveableBase[] Saveables => _saveables ??= GetComponents<ISaveableBase>();
 
         [ContextMenu("Generate Id")]
-        private void GenerateId() => Id = Guid.NewGuid().ToString();
+        public void GenerateId() => Id = Guid.NewGuid().ToString();
+
+        private void Awake()
+        {
+            Validate();
+        }
+
+        private void Validate()
+        {
+            if (string.IsNullOrWhiteSpace(Id))
+            {
+                Debug.LogError("Id cannot be empty");
+            }
+        }
         
         public Dictionary<string, SaveData> Save()
         {
             var saveData = new Dictionary<string, SaveData>();
             
-            foreach (var saveable in _saveables)
+            foreach (var saveable in Saveables)
             {
                 saveData[saveable.SaveKey] = saveable.Save();
             }
@@ -32,12 +41,17 @@ namespace _Scripts
 
         public void Load(Dictionary<string, SaveData> data)
         {
-            foreach (var saveable in _saveables)
+            foreach (var saveable in Saveables)
             {
                 if (!data.TryGetValue(saveable.SaveKey, out var saveData)) continue;
                 
                 saveable.Load(saveData);
             }
+        }
+
+        private void OnDestroy()
+        {
+            SaveManager.Instance.SaveState(Id, Save());
         }
     }
 }

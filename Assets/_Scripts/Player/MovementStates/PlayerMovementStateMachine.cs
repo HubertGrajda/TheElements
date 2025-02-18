@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using _Scripts.Cameras;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace _Scripts.Player
@@ -8,7 +9,7 @@ namespace _Scripts.Player
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(GroundDetector))]
     [RequireComponent(typeof(PlayerAnimatorController))]
-    public class PlayerMovementStateMachine : PlayerStateMachine
+    public class PlayerMovementStateMachine : PlayerStateMachine, ISaveable<PositionData>
     {
         public Action<JumpingState.JumpingSubState> OnJumpingSubStateChanged;
         public Action<bool> OnCrouchingStateChanged;
@@ -155,5 +156,34 @@ namespace _Scripts.Player
         }
 
         private void OnDestroy() => RemoveListeners();
+        
+        public SaveData Save() => new PositionData(transform.position);
+
+        public void Load(PositionData data)
+        {
+            if (!data.TryGetData(out var position)) return;
+            
+            transform.position = position;
+        }
+    }
+
+    public class PositionData : SaveData
+    {
+        [JsonProperty] private float _x;
+        [JsonProperty] private float _y;
+        [JsonProperty] private float _z;
+        
+        public PositionData(Vector3 position)
+        {
+            _x = position.x;
+            _y = position.y;
+            _z = position.z;
+        }
+
+        public bool TryGetData(out Vector3 position)
+        {
+            position = new Vector3(_x, _y, _z);
+            return true;
+        }
     }
 }

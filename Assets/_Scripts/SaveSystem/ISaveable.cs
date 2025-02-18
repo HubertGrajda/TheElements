@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _Scripts
 {
-    public interface ISaveable<TSaveData> : ISaveableBase where TSaveData : SaveData
+    public interface ISaveable<in TSaveData> : ISaveableBase where TSaveData : SaveData
     {
         string ISaveableBase.SaveKey => GetType().Name;
         

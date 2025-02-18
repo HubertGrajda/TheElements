@@ -566,6 +566,7 @@ GameObject:
   - component: {fileID: 2029066046912437473}
   - component: {fileID: 5923520497561475661}
   - component: {fileID: 6161478522303013415}
+  - component: {fileID: 186920345672985947}
   m_Layer: 8
   m_Name: fireElemental
   m_TagString: Enemy
@@ -869,6 +870,19 @@ MonoBehaviour:
   cooldown: 1
   detectionLimit: 1
   detectionRange: 15
+--- !u!114 &186920345672985947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473849914644856908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d40bf0ff83904d0a8329c098759e6141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: 
 --- !u!1 &1557269291669077387
 GameObject:
   m_ObjectHideFlags: 0

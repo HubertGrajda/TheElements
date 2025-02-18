@@ -9,10 +9,11 @@ namespace _Scripts
     {
         private static string Path => $"{Application.persistentDataPath}/Save.json";
         
-        [JsonProperty] private Dictionary<string, Dictionary<string, SaveData>> _saveData;
+        [JsonProperty] private static Dictionary<string, Dictionary<string, SaveData>> _saveData;
 
-        protected void Start()
+        protected override void Awake()
         {
+            base.Awake();
             Load();
         }
 
@@ -25,7 +26,7 @@ namespace _Scripts
             
             foreach (var saveHandler in saveHandlers)
             {
-                _saveData[saveHandler.Id] = saveHandler.Save();
+                SaveState(saveHandler.Id, saveHandler.Save());
             }
             
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
@@ -37,7 +38,11 @@ namespace _Scripts
         [ContextMenu("Load")]
         public void Load()
         {
-            if (!File.Exists(Path)) return;
+            if (!File.Exists(Path))
+            {
+                _saveData ??= new Dictionary<string, Dictionary<string, SaveData>>();
+                return;
+            }
             
             var json = File.ReadAllText(Path);
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
@@ -60,6 +65,13 @@ namespace _Scripts
             if (!File.Exists(Path)) return;
             
             File.Delete(Path);
+        }
+        
+        public void SaveState(string id, Dictionary<string, SaveData> stateInfo)
+        {
+            if (string.IsNullOrEmpty(id)) return;
+            
+            _saveData[id] = stateInfo;
         }
     }
 }

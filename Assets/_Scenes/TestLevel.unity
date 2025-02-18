@@ -136,6 +136,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 337977029}
     m_Modifications:
+    - target: {fileID: 186920345672985947, guid: ba31b410067746543b27aab0ef8462b2, type: 3}
+      propertyPath: <Id>k__BackingField
+      value: f2077c0d-ab92-4de2-bd70-e32659430310
+      objectReference: {fileID: 0}
     - target: {fileID: 1473849914644856908, guid: ba31b410067746543b27aab0ef8462b2, type: 3}
       propertyPath: m_Name
       value: fireElemental (2)
@@ -606,6 +610,10 @@ PrefabInstance:
     - target: {fileID: 7464430647804796661, guid: 809936663ff39d540a17ecb11d78603a, type: 3}
       propertyPath: m_Name
       value: EarthElemental
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040900703410834065, guid: 809936663ff39d540a17ecb11d78603a, type: 3}
+      propertyPath: <Id>k__BackingField
+      value: 0e9b7843-49bd-432b-9c2c-f3869b5bcfda
       objectReference: {fileID: 0}
     - target: {fileID: 8668274586211230963, guid: 809936663ff39d540a17ecb11d78603a, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7542,6 +7550,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 337977029}
     m_Modifications:
+    - target: {fileID: 186920345672985947, guid: ba31b410067746543b27aab0ef8462b2, type: 3}
+      propertyPath: <Id>k__BackingField
+      value: 87576937-81e1-4703-8afa-b11e456d1b8a
+      objectReference: {fileID: 0}
     - target: {fileID: 1473849914644856908, guid: ba31b410067746543b27aab0ef8462b2, type: 3}
       propertyPath: m_Name
       value: fireElemental (1)
@@ -8958,6 +8970,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 337977029}
     m_Modifications:
+    - target: {fileID: 186920345672985947, guid: ba31b410067746543b27aab0ef8462b2, type: 3}
+      propertyPath: <Id>k__BackingField
+      value: 0ba18ab8-58b6-43aa-85ad-b9bf8bbb2e0f
+      objectReference: {fileID: 0}
     - target: {fileID: 1473849914644856908, guid: ba31b410067746543b27aab0ef8462b2, type: 3}
       propertyPath: m_Name
       value: fireElemental

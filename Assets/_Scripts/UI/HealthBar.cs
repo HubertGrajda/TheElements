@@ -24,15 +24,15 @@ namespace _Scripts.UI
         protected void Init(HealthSystem healthSystem)
         {
             _healthSystem = healthSystem;
-            _slider.maxValue = healthSystem.CurrentHealth;
+            _slider.maxValue = healthSystem.MaxHealth;
             _slider.value = healthSystem.CurrentHealth;
             RefreshHealthText();
-            
-            healthSystem.OnDamaged += OnDamaged;
+
+            healthSystem.OnHealthChanged += OnHealthChanged;
             healthSystem.OnDeath += OnDeath;
         }
 
-        private void OnDamaged(int _)
+        private void OnHealthChanged(int health)
         {
             RefreshHealthText();
             
@@ -40,12 +40,12 @@ namespace _Scripts.UI
             {
                 StopCoroutine(_setHealthBarCoroutine);
             }
-            _setHealthBarCoroutine = StartCoroutine(SetHealthBar(_healthSystem.CurrentHealth));
+            _setHealthBarCoroutine = StartCoroutine(SetHealthBar(health));
         }
 
         protected virtual void OnDeath()
         {
-            _healthSystem.OnDamaged -= OnDamaged;
+            _healthSystem.OnHealthChanged -= OnHealthChanged;
             _healthSystem.OnDeath -= OnDeath;
         }
 

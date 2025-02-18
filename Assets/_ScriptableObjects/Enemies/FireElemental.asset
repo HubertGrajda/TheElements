@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e5fc23ad0125ec499f3ffa987ce3b36, type: 3}
   m_Name: FireElemental
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  <MaxHealth>k__BackingField: 10
   <MovementSpeed>k__BackingField: 1
   <MeleeAttackRange>k__BackingField: 1.73
   <RangedAttackMinDistance>k__BackingField: 4.55
