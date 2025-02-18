@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using _Scripts.Audio;
 using _Scripts.Cameras;
 using UnityEngine;
 
@@ -148,11 +147,6 @@ namespace _Scripts.Player
             {
                 _playerVelocity.y = movementsStats.GroundedGravity;
             }
-        }
-
-        private void PlayFootstepSound(string soundName)
-        {
-            AudioManager.Instance.PlaySound(soundName);
         }
 
         private void OnDeath()
