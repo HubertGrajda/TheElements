@@ -9,7 +9,7 @@ namespace _Scripts.Player
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(GroundDetector))]
     [RequireComponent(typeof(PlayerAnimatorController))]
-    public class PlayerMovementStateMachine : PlayerStateMachine, ISaveable<PositionData>
+    public class PlayerMovementStateMachine : PlayerStateMachine, ISaveable<PositionData>, IKnockbackable
     {
         public Action<JumpingState.JumpingSubState> OnJumpingSubStateChanged;
         public Action<bool> OnCrouchingStateChanged;
@@ -164,6 +164,25 @@ namespace _Scripts.Player
             if (!data.TryGetData(out var position)) return;
             
             transform.position = position;
+        }
+
+        public void ApplyKnockback(Vector3 force, float duration)
+        {
+            StopAllCoroutines();
+            StartCoroutine(KnockbackCoroutine(force, duration));
+        }
+
+        private IEnumerator KnockbackCoroutine(Vector3 force, float duration)
+        {
+            var timer = 0f;
+
+            while (timer < duration)
+            {
+                var strength = Mathf.Lerp(1f, 0f, timer / duration);
+                CharacterController.Move(force * (strength * Time.deltaTime));
+                timer += Time.deltaTime;
+                yield return null;
+            }
         }
     }
 

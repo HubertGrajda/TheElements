@@ -20,5 +20,5 @@ MonoBehaviour:
   <FollowingTargetRange>k__BackingField: 10
   <TriggeredDetectionRange>k__BackingField: 30
   <ShootingFrequency>k__BackingField: 0.5
-  <MeleeAttackCooldown>k__BackingField: 0
+  <MeleeAttackCooldown>k__BackingField: 1.5
   <Experience>k__BackingField: 30

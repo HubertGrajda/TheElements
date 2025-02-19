@@ -2,41 +2,48 @@
 
 namespace _Scripts.Spells
 {
-    public abstract class OnColliderTriggerBehaviour<TComponent> : OnColliderTriggerBehaviourBase
+    public abstract class TriggerBehaviour<TComponent> : TriggerBehaviourBase
     {
-        public override void OnTriggerableEnter(Component other)
+        public sealed override void OnTriggerableEnter(Component other, BehaviourTrigger trigger)
         {
             if (other is not TComponent component) return;
             
-            OnTriggerableEnter(component);
+            OnTriggerableEnter(component, trigger);
         }
 
-        public override void OnTriggerableExit(Component other)
+        public sealed override void OnTriggerableExit(Component other, BehaviourTrigger trigger)
         {
             if (other is not TComponent component) return;
             
-            OnTriggerableExit(component);
+            OnTriggerableExit(component, trigger);
         }
 
-        public override void OnTriggerableStay(Component other)
+        public sealed override void OnTriggerableStay(Component other, BehaviourTrigger trigger)
         {
             if (other is not TComponent component) return;
             
-            OnTriggerableStay(component);
+            OnTriggerableStay(component, trigger);
         }
-        
-        protected abstract void OnTriggerableEnter(TComponent other);
-        protected abstract void OnTriggerableExit(TComponent other);
-        protected abstract void OnTriggerableStay(TComponent other);
-        
+
+        protected virtual void OnTriggerableEnter(TComponent other, BehaviourTrigger trigger)
+        {
+        }
+
+        protected virtual void OnTriggerableExit(TComponent other, BehaviourTrigger trigger)
+        {
+        }
+
+        protected virtual void OnTriggerableStay(TComponent other, BehaviourTrigger trigger)
+        {
+        }
     }
 
-    public abstract class OnColliderTriggerBehaviourBase : ScriptableObject
+    public abstract class TriggerBehaviourBase : ScriptableObject
     {
         [field: SerializeField] public float RetriggerTime { get; private set; }
         
-        public abstract void OnTriggerableEnter(Component other);
-        public abstract void OnTriggerableExit(Component other);
-        public abstract void OnTriggerableStay(Component other);
+        public abstract void OnTriggerableEnter(Component other, BehaviourTrigger trigger);
+        public abstract void OnTriggerableExit(Component other, BehaviourTrigger trigger);
+        public abstract void OnTriggerableStay(Component other, BehaviourTrigger trigger);
     }
 }

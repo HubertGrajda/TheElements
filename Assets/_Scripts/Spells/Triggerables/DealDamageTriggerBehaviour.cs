@@ -3,26 +3,22 @@
 namespace _Scripts.Spells
 {
     [CreateAssetMenu(menuName = "Spells/TriggerBehaviour/DealDamage", fileName = "New Deal Damage Trigger")]
-    public class DealDamageTriggerBehaviour : OnColliderTriggerBehaviour<IDamageable>
+    public class DealDamageTriggerBehaviour : TriggerBehaviour<IDamageable>
     {
         [SerializeField] private int damage;
         [SerializeField] private bool dealDamageInTime;
         [SerializeField] private ElementType elementType;
         
-        protected override void OnTriggerableEnter(IDamageable other)
+        protected override void OnTriggerableEnter(IDamageable damageable, BehaviourTrigger _)
         {
-            DealDamage(other);
+            DealDamage(damageable);
         }
 
-        protected override void OnTriggerableExit(IDamageable other)
-        {
-        }
-
-        protected override void OnTriggerableStay(IDamageable other)
+        protected override void OnTriggerableStay(IDamageable damageable, BehaviourTrigger _)
         {
             if (!dealDamageInTime) return;
             
-            DealDamage(other);
+            DealDamage(damageable);
         }
         
         private void DealDamage(IDamageable damageable)

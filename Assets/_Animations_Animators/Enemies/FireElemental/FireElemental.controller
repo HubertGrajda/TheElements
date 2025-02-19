@@ -332,7 +332,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castTime: 0.275
   launchTime: 0.485
-  cancelOnExit: 0
 --- !u!1101 &-375969813411943652
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -530,7 +529,9 @@ AnimatorState:
   - {fileID: -8189197011835388472}
   - {fileID: -7710908195798961698}
   - {fileID: -4572202409735699601}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 4040228614466018541}
+  - {fileID: 7264774317571077724}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -545,6 +546,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &4040228614466018541
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4b67a6c420da94f95c9e00940b3f6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  castTime: 0.664
+  eventName: MeleeAttackOn
 --- !u!1101 &6688616295328225289
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -570,6 +585,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &7264774317571077724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4b67a6c420da94f95c9e00940b3f6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  castTime: 0.903
+  eventName: MeleeAttackOff
 --- !u!114 &7672597378396076871
 MonoBehaviour:
   m_ObjectHideFlags: 1
