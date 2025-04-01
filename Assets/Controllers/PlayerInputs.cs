@@ -161,6 +161,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""6c95507f-755b-4c5b-beb2-0f64bd0d9afe"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -405,6 +414,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""NumKeys"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""996ea9c3-47ce-497d-a284-ac7d43f2e52d"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -617,6 +637,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Player_NextSpell = m_Player.FindAction("NextSpell", throwIfNotFound: true);
         m_Player_PreviousSpell = m_Player.FindAction("PreviousSpell", throwIfNotFound: true);
         m_Player_NumKeys = m_Player.FindAction("NumKeys", throwIfNotFound: true);
+        m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_PauseView = m_UI.FindAction("PauseView", throwIfNotFound: true);
@@ -704,6 +725,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_NextSpell;
     private readonly InputAction m_Player_PreviousSpell;
     private readonly InputAction m_Player_NumKeys;
+    private readonly InputAction m_Player_Look;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -723,6 +745,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @NextSpell => m_Wrapper.m_Player_NextSpell;
         public InputAction @PreviousSpell => m_Wrapper.m_Player_PreviousSpell;
         public InputAction @NumKeys => m_Wrapper.m_Player_NumKeys;
+        public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -777,6 +800,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @NumKeys.started += instance.OnNumKeys;
             @NumKeys.performed += instance.OnNumKeys;
             @NumKeys.canceled += instance.OnNumKeys;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -826,6 +852,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @NumKeys.started -= instance.OnNumKeys;
             @NumKeys.performed -= instance.OnNumKeys;
             @NumKeys.canceled -= instance.OnNumKeys;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -992,6 +1021,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnNextSpell(InputAction.CallbackContext context);
         void OnPreviousSpell(InputAction.CallbackContext context);
         void OnNumKeys(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
