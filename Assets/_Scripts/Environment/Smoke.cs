@@ -5,7 +5,7 @@ using UnityEngine.VFX;
 namespace _Scripts
 {
     [RequireComponent(typeof(VisualEffect))]
-    public class SmokeAdjustment : MonoBehaviour, IColorProvider, IAirInteractable
+    public class Smoke : MonoBehaviour, IColorProvider, IAirInteractable
     {
         [SerializeField] private bool canBeAffected;
         [SerializeField] private float rate = 500;
@@ -37,6 +37,11 @@ namespace _Scripts
         {
             ChangeRotationSpeed(0f);
         }
+
+        public void OnInteractionStay(GameObject trigger)
+        {
+            transform.position = trigger.transform.position;
+        }
     
         private void ChangeRotationSpeed(float value, float time = 2f)
         {
@@ -45,7 +50,7 @@ namespace _Scripts
                 StopCoroutine(_changeRotationCoroutine);
             }
 
-            StartCoroutine(ChangeRotationSpeedOverTime(value, time));
+            _changeRotationCoroutine = StartCoroutine(ChangeRotationSpeedOverTime(value, time));
         }
     
         private IEnumerator ChangeRotationSpeedOverTime(float targetSpeed, float time)

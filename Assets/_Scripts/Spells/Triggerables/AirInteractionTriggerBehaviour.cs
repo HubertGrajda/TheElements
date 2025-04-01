@@ -10,9 +10,14 @@ namespace _Scripts.Spells
             airInteractable.OnInteractionStart();
         }
 
-        protected override void OnTriggerableStay(IAirInteractable airInteractable, BehaviourTrigger _)
+        protected override void OnTriggerableStay(IAirInteractable airInteractable, BehaviourTrigger trigger)
         {
-            airInteractable.OnInteractionStart();
+            airInteractable.OnInteractionStay(trigger.gameObject);
+        }
+        
+        protected override void OnTriggerableExit(IAirInteractable airInteractable, BehaviourTrigger _)
+        {
+            airInteractable.OnInteractionEnd();
         }
     }
 }
